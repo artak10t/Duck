@@ -5,18 +5,18 @@ class BoxComponent : public Component
 private:
 	std::vector<Vertex> vertices =
 	{
-		{Vector3(1, 1, -1), Vector3(1, 0, 1), Vector3(1), Vector2(1, 1)},
-		{Vector3(1, -1, -1), Vector3(0, 1, 1), Vector3(1), Vector2(1, 0)},
-		{Vector3(-1, -1, -1), Vector3(1, 1, 0), Vector3(1), Vector2(0, 0)},
-		{Vector3(-1, 1, -1), Vector3(0, 1, 1), Vector3(1), Vector2(0, 1)},
-		{Vector3(1, 1, 1), Vector3(1, 0, 1), Vector3(1), Vector2(0, 1)},
-		{Vector3(1, -1, 1), Vector3(1, 1, 0), Vector3(1), Vector2(0, 0)},
-		{Vector3(-1, -1, 1), Vector3(0, 1, 1), Vector3(1), Vector2(1, 0)},
-		{Vector3(-1, 1, 1), Vector3(1, 0, 0), Vector3(1), Vector2(1, 1)},
-		{Vector3(-1, 1, 1), Vector3(0, 1, 1), Vector3(1), Vector2(0, 0)},
-		{Vector3(1, -1, 1), Vector3(1, 0, 1), Vector3(1), Vector2(1, 1)},
-		{Vector3(1, 1, 1), Vector3(1, 1, 0), Vector3(1), Vector2(1, 0)},
-		{Vector3(-1, -1, 1), Vector3(0, 1, 1), Vector3(1), Vector2(0, 1)},
+		{Vector3(1, 1, -1), Vector3(1, 0, 1), Vector2(1, 1)},
+		{Vector3(1, -1, -1), Vector3(0, 1, 1), Vector2(1, 0)},
+		{Vector3(-1, -1, -1), Vector3(1, 1, 0), Vector2(0, 0)},
+		{Vector3(-1, 1, -1), Vector3(0, 1, 1), Vector2(0, 1)},
+		{Vector3(1, 1, 1), Vector3(1, 0, 1), Vector2(0, 1)},
+		{Vector3(1, -1, 1), Vector3(1, 1, 0), Vector2(0, 0)},
+		{Vector3(-1, -1, 1), Vector3(0, 1, 1), Vector2(1, 0)},
+		{Vector3(-1, 1, 1), Vector3(1, 0, 0), Vector2(1, 1)},
+		{Vector3(-1, 1, 1), Vector3(0, 1, 1), Vector2(0, 0)},
+		{Vector3(1, -1, 1), Vector3(1, 0, 1), Vector2(1, 1)},
+		{Vector3(1, 1, 1), Vector3(1, 1, 0), Vector2(1, 0)},
+		{Vector3(-1, -1, 1), Vector3(0, 1, 1), Vector2(0, 1)},
 	};
 
 	std::vector<unsigned int> indices =
@@ -43,7 +43,7 @@ public:
 		if (!Camera::GetMain())
 			return;
 
-		shader->SetMatrix4("position", entity->transform.LocalToWorld());
+		shader->SetMatrix4("model", entity->transform.LocalToWorld());
 		texture->Bind();
 		shader->Bind();
 		mesh.Draw();

@@ -28,6 +28,8 @@ add_library($ENV{ENGINE_NAME} STATIC
 	"Graphics/Shader.cpp"
 	"Graphics/Texture.h"
 	"Graphics/Texture.cpp"
+	"Graphics/Model.h"
+	"Graphics/Model.cpp"
 	"Scene/Entity.h"
 	"Scene/Component.h"
 	"Scene/Scene.h" 

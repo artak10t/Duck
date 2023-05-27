@@ -32,13 +32,9 @@ namespace Duck
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 
-		// Bind Color vertex attribute
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-
 		// Bind UV vertex attribute
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
 
 		// Unbind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -57,7 +53,7 @@ namespace Duck
 		glDeleteVertexArrays(1, &_vao);
 	}
 
-	void Mesh::Draw()
+	const void Mesh::Draw()
 	{
 		glBindVertexArray(_vao);
 		glDrawElements(GL_TRIANGLES, _indicesCount, GL_UNSIGNED_INT, 0);

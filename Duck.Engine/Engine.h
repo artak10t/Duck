@@ -15,6 +15,7 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
+#include "Graphics/Model.h"
 
 //Scene
 #include "Scene/Component.h"
@@ -23,6 +24,8 @@
 
 namespace Duck
 {
+	// Pure virtual class App
+	// Game should implement it
 	class App
 	{
 	public:
@@ -35,6 +38,7 @@ namespace Duck
 	template<typename App>
 	void Start()
 	{
+		// Init App
 		Window::Init();
 		Input::Init();
 		Resources::Init();
@@ -42,16 +46,20 @@ namespace Duck
 		App* app = new App{};
 		app->Init();
 		Clock updateClock;
+
+		// App Loop
 		while (Window::IsOpen())
 		{
-			//Logic
-			float deltaTime = updateClock.Seconds();
+			// Events
 			Input::PollEvents();
+
+			// Logic
+			float deltaTime = updateClock.Seconds();
 			app->Update(deltaTime);
 			Scene::Update(deltaTime);
 			updateClock.Restart();
 
-			//Rendering
+			// Rendering
 			Renderer::ClearBuffer();
 			Renderer::UpdateGlobalUBO();
 			app->Draw();
@@ -59,6 +67,8 @@ namespace Duck
 			Scene::Refresh();
 			Window::SwapBuffers();
 		}
+
+		// Destroy App
 		app->Destroy();
 		Scene::Destroy();
 		delete app;

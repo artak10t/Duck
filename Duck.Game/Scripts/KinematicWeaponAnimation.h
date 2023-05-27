@@ -30,8 +30,8 @@ public:
 	float Smooth = 8;
 
 	//Sway Position
-	float PositionStep = 0.025f;
-	float PositionMax = 0.125f;
+	float PositionStep = 0.005f;
+	float PositionMax = 0.075f;
 
 	//Sway Rotation
 	float RotationStep = 0.125f;

@@ -6,10 +6,17 @@ using namespace Duck;
 #include "Scripts/Weapon.h"
 #include "Scripts/KinematicWeaponAnimation.h"
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING
+//*VERIFY MODEL LOADER HIERARCHY
 //Add Vector Smooth Damp, double check if quaternion slerp and lerp work correct (Compare with glm), 
 // double check if Transform constructors work correctly
+//Logger info for important stuff such as resource loaded
 //Redo Assets and Resources system (Follow youtube tutorial)
+//Remove all warnings
+//Compile libraries with engine compilation (No precompiled libraries)
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
+//Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
+//Events System (Cherno)
+//GLM SIMD Optimization
 //Text Rendering, UI (render always forward) renderer, console
 //Implement lighting (LATER)
 //YAML Entity prefab system (Similar how SS14 does). Resources.Load<Prefab>()
@@ -27,8 +34,7 @@ public:
 	void Init()
 	{
 		pivot->transform.parent = &camera.transform;
-		pivot->transform.position = Vector3(.75f, -.75f, 1.5f);
-		pivot->transform.scale = Vector3(.25, .25, .5);
+		pivot->transform.position = Vector3(.25f, -.35f, .5f);
 		weapon->transform.parent = &pivot->transform;
 		weapon->AddComponent<Weapon>();
 		weapon->AddComponent<KinematicWeaponAnimation>();

@@ -10,7 +10,6 @@ namespace Duck
 	{
 		Vector3 position;
 		Vector3 normal;
-		Vector3 color;
 		Vector2 uv;
 	};
 
@@ -19,7 +18,7 @@ namespace Duck
 	public:
 		Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 		~Mesh();
-		void Draw();
+		const void Draw();
 
 	private:
 		std::vector<Vertex> _vertices;
