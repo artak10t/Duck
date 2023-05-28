@@ -16,14 +16,18 @@ namespace Duck
         Logger::Debug("1: %i", primitive->attributes[1].type);
         Logger::Debug("2: %i", primitive->attributes[2].type);
 
-        // Process Submesh
+        // Process Attributes
         for (unsigned int i = 0; i < primitive->attributes[0].data->count; i++)
         {
-            Vertex vertex = { Vector3(0), Vector3(0), Vector3(0) };
+            Vertex vertex = { Vector3(0), Vector3(0), Vector2(0) };
 
-            cgltf_accessor_read_float(primitive->attributes[0].data, i, &vertex.position.x, 3);
-            cgltf_accessor_read_float(primitive->attributes[1].data, i, &vertex.normal.x, 3);
-            cgltf_accessor_read_float(primitive->attributes[2].data, i, &vertex.uv.x, 2);
+            cgltf_accessor_read_float(primitive->attributes[0].data, i, &vertex.position[0], 3);
+            cgltf_accessor_read_float(primitive->attributes[1].data, i, &vertex.normal[0], 3);
+            cgltf_accessor_read_float(primitive->attributes[2].data, i, &vertex.uv[0], 2);
+
+            //Flip UV Vertically
+            vertex.uv.y *= -1;
+            vertex.uv.y += 1;
             
             vertices.push_back(vertex);
         }

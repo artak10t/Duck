@@ -31,7 +31,7 @@ private:
 
 	Mesh mesh = Mesh(vertices, indices);
 	Shader* shader = Resources::Load<Shader>("Default.shader");
-	Texture* texture = Resources::Load<Texture>("used-stainless-steel2_albedo.png");
+	Texture* texture = Resources::Load<Texture>("uv.png");
 public:
 	void Init()
 	{

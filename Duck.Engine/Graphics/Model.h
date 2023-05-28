@@ -2,8 +2,9 @@
 #include "../pch.h"
 
 #include "Mesh.h"
-//#include "Texture.h"
+#include "Texture.h"
 
+//Supports gltf format only
 namespace Duck 
 {
 	class Model final
@@ -15,5 +16,6 @@ namespace Duck
 
 	private:
 		std::vector<Mesh*> _meshes;
+		std::vector<Texture*> _textures;
 	};
 }

@@ -5,7 +5,7 @@ class Weapon : public Component
 private:
 	Model model = Model("C:/Users/Spartak/Desktop/Duck/Duck.Game/Assets/Weapon.glb");
 	Shader* shader = Resources::Load<Shader>("Weapon.shader");
-	Texture* texture = Resources::Load<Texture>("used-stainless-steel2_albedo.png");
+	Texture* texture = Resources::Load<Texture>("Weapon_texture.png", Texture::FilterMode::Point, Texture::WrapMode::Clamp);
 public:
 	void Init()
 	{
