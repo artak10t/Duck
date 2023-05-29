@@ -24,7 +24,7 @@ namespace FlyCamera
 
 		speed = std::clamp(speed + Input::MouseScrollDelta().y, 1.f, 1000.f);
 
-		if (Input::KeyDown(Input::MouseRight))
+		if (Input::KeyDown(Input::Tab))
 		{
 			fullscreen = !fullscreen;
 			Input::LockCursor(fullscreen);

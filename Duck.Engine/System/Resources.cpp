@@ -10,7 +10,7 @@
 #define ASSETS_FOLDER_NAME "Assets"
 
 //Shader Loading Defaults
-#define SHADER_TYPE_TOKEN "#type"
+#define SHADER_TYPE_TOKEN "@type"
 #define SHADER_TYPE_VERTEX "vertex"
 #define SHADER_TYPE_FRAGMENT "fragment"
 
@@ -105,17 +105,17 @@ namespace Duck::Resources
 		if (_cachedTextures.find(file) != _cachedTextures.end())
 			return _cachedTextures.at(file);
 
-		//Get Path
+		// Get Path
 		std::string path = _assetsPath + file;
 
-		//Load Texture
+		// Load Texture
 		stbi_set_flip_vertically_on_load(true);
 		int channels, width, height;
 		unsigned char* textureData = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		if (stbi_failure_reason())
 			DUCK_ASSERT(false, "Texture - %s '%s'", stbi_failure_reason(), file);
 
-		//Cache Texture
+		// Cache Texture
 		_cachedTextures.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
 		stbi_image_free(textureData);
 

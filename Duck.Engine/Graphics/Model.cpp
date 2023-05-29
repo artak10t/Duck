@@ -21,11 +21,16 @@ namespace Duck
         {
             Vertex vertex = { Vector3(0), Vector3(0), Vector2(0) };
 
+            // Read Position
             cgltf_accessor_read_float(primitive->attributes[0].data, i, &vertex.position[0], 3);
+
+            // Read Normal
             cgltf_accessor_read_float(primitive->attributes[1].data, i, &vertex.normal[0], 3);
+
+            // Read UV
             cgltf_accessor_read_float(primitive->attributes[2].data, i, &vertex.uv[0], 2);
 
-            //Flip UV Vertically
+            // Flip UV Vertically
             vertex.uv.y *= -1;
             vertex.uv.y += 1;
             

@@ -8,7 +8,7 @@ namespace Duck
 	private:
 		Vector3 _light = Vector3(1.f);
 		Vector3 _color = Vector3(1.f);
-		float _intensity = 1.f;
+		float _intensity = .25f;
 
 	public:
 		AmbientLight()

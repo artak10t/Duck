@@ -6,9 +6,9 @@ class KinematicWeaponAnimation : public Component
 private:
 	Vector2 _deltaMouse = { 0, 0 };
 
-	//Bob Animation
+	// Bob
 
-	//Recoil Animation
+	// Recoil
 
 	void SwayPosition(float deltaTime)
 	{
@@ -26,14 +26,14 @@ private:
 	}
 
 public:
-	//General
+	// General
 	float Smooth = 8;
 
-	//Sway Position
+	// Sway Position
 	float PositionStep = 0.005f;
 	float PositionMax = 0.075f;
 
-	//Sway Rotation
+	// Sway Rotation
 	float RotationStep = 0.125f;
 
 	void Update(float deltaTime)

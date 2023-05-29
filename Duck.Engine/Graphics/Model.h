@@ -4,7 +4,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 
-//Supports gltf format only
+// Supports gltf models only
 namespace Duck 
 {
 	class Model final

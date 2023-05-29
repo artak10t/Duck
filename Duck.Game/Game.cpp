@@ -34,7 +34,7 @@ public:
 	void Init()
 	{
 		pivot->transform.parent = &camera.transform;
-		pivot->transform.position = Vector3(.25f, -.35f, .5f);
+		pivot->transform.position = Vector3(.25f, -.4f, .3f);
 		weapon->transform.parent = &pivot->transform;
 		weapon->AddComponent<Weapon>();
 		weapon->AddComponent<KinematicWeaponAnimation>();
