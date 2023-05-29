@@ -119,6 +119,8 @@ namespace Duck::Resources
 		_cachedTextures.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
 		stbi_image_free(textureData);
 
+		Logger::Info("Texture - '%s' Loaded", file);
+
 		return _cachedTextures.at(file);
 	}
 
@@ -139,16 +141,18 @@ namespace Duck::Resources
 		if (_cachedShaders.find(file) != _cachedShaders.end())
 			return _cachedShaders.at(file);
 
-		//Get Path
+		// Get Path
 		std::string path = _assetsPath + file;
 
-		//Load Shader
+		// Load Shader
 		std::string vertexData;
 		std::string fragmentData;
 		DUCK_ASSERT(_loadShader(path.c_str(), vertexData, fragmentData), "Shader - File doesn't exist '%s'", file);
 
-		//Cache Shader
+		// Cache Shader
 		_cachedShaders.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
+
+		Logger::Info("Shader - '%s' Loaded", file);
 
 		return _cachedShaders.at(file);
 	}

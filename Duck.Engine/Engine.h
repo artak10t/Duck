@@ -25,7 +25,6 @@
 namespace Duck
 {
 	// Pure virtual class App
-	// Game should implement it
 	class App
 	{
 	public:

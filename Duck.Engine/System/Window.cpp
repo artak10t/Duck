@@ -15,7 +15,6 @@
 namespace Duck::Window
 {
 	//Remove dependency from OpenGL
-	//Make renderer abstract
 	//Clearer code for _lastPosition, _lastWidth, _lastResoultion
 	//Make things above more logical and clean
 	static GLFWwindow* _window = nullptr;
@@ -45,6 +44,7 @@ namespace Duck::Window
 
 	void Init()
 	{
+		// Initialize
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -55,7 +55,7 @@ namespace Duck::Window
 
 		glfwWindowHint(GLFW_MAXIMIZED, DEFAULT_MAXIMIZED);
 
-		//Create Window
+		// Create Window
 		_window = glfwCreateWindow(_video->width, _video->height, DEFAULT_TITLE, NULL, NULL);
 		_lastResolutionWidth = _video->width;
 		_lastResolutionHeight = _video->height;
@@ -63,10 +63,11 @@ namespace Duck::Window
 
 		assert(_window != nullptr);
 
-		//Set Context
+		// Set Context
 		glfwMakeContextCurrent(_window);
 		glfwSetFramebufferSizeCallback(_window, _reizeCallback);
 
+		// Initialize Renderer
 		Renderer::Init();
 
 		glViewport(0, 0, _lastResolutionWidth, _lastResolutionHeight);

@@ -7,9 +7,6 @@ using namespace Duck;
 #include "Scripts/KinematicWeaponAnimation.h"
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING
 //*VERIFY MODEL LOADER HIERARCHY
-//Add Vector Smooth Damp, double check if quaternion slerp and lerp work correct (Compare with glm), 
-// double check if Transform constructors work correctly
-//Logger info for important stuff such as resource loaded
 //Redo Assets and Resources system (Follow youtube tutorial)
 //Compile libraries with engine compilation (No precompiled libraries)
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)

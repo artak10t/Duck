@@ -5,6 +5,8 @@
 #include "Camera.h"
 #include "Lighting.h"
 
+#include "../System/Logger.h"
+
 namespace Duck::Renderer
 {
 	static unsigned int _cameraUBO = 0;
@@ -38,6 +40,8 @@ namespace Duck::Renderer
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, _lightingUBO);
+
+		Logger::Info("OpenGL - Renderer Initialized");
 	}
 
 	void ClearBuffer()
