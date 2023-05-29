@@ -89,7 +89,6 @@
  * `dest_size`. You can then parse this data using your own JSON parser
  * or, if you've included the cgltf implementation using the integrated JSMN JSON parser.
  */
-
 #ifndef CGLTF_H_INCLUDED__
 #define CGLTF_H_INCLUDED__
 

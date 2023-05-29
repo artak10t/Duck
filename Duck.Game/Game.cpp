@@ -11,7 +11,6 @@ using namespace Duck;
 // double check if Transform constructors work correctly
 //Logger info for important stuff such as resource loaded
 //Redo Assets and Resources system (Follow youtube tutorial)
-//Remove all warnings
 //Compile libraries with engine compilation (No precompiled libraries)
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
