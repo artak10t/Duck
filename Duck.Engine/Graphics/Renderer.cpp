@@ -68,15 +68,15 @@ namespace Duck::Renderer
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
-	void ShadingMode(PolygonMode mode)
+	void ShadingMode(Polygon mode)
 	{
 		switch (mode)
 		{
-		case PolygonMode::Shaded:
+		case Polygon::Shaded:
 			glEnable(GL_CULL_FACE);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			break;
-		case PolygonMode::Wireframe:
+		case Polygon::Wireframe:
 			glDisable(GL_CULL_FACE);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			break;

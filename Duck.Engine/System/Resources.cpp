@@ -96,11 +96,12 @@ namespace Duck::Resources
 	template<>
 	Texture* Load<Texture>(const char* file)
 	{
-		return Load<Texture>(file, Texture::FilterMode::Bilinear, Texture::WrapMode::Repeat);
+		//WHY HAS TO PASS PARAMETERS AGAIN
+		return Load<Texture>(file, Texture::Filter::Bilinear, Texture::Wrap::Repeat);
 	}
 
 	template<>
-	Texture* Load<Texture>(const char* file, const Texture::FilterMode filtering, const Texture::WrapMode wrapping)
+	Texture* Load<Texture>(const char* file, const Texture::Filter filtering, const Texture::Wrap wrapping)
 	{
 		if (_cachedTextures.find(file) != _cachedTextures.end())
 			return _cachedTextures.at(file);

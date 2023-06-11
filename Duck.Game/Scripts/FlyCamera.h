@@ -35,9 +35,9 @@ namespace FlyCamera
 			wireframe = !wireframe;
 
 			if (wireframe)
-				Renderer::ShadingMode(Renderer::PolygonMode::Wireframe);
+				Renderer::ShadingMode(Renderer::Polygon::Wireframe);
 			else
-				Renderer::ShadingMode(Renderer::PolygonMode::Shaded);
+				Renderer::ShadingMode(Renderer::Polygon::Shaded);
 		}
 
 		if (fullscreen)

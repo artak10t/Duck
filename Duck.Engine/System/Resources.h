@@ -17,7 +17,7 @@ namespace Duck::Resources
 	Texture* Load<Texture>(const char* file);
 	//FIX: Pass by reference
 	template<>
-	Texture* Load<Texture>(const char* file, const Texture::FilterMode filtering, const Texture::WrapMode wrapping);
+	Texture* Load<Texture>(const char* file, const Texture::Filter filtering, const Texture::Wrap wrapping);
 	template<>
 	void Unload<Texture>(const char* file);
 

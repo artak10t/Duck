@@ -7,10 +7,12 @@ using namespace Duck;
 #include "Scripts/KinematicWeaponAnimation.h"
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING
 //*VERIFY MODEL LOADER HIERARCHY
-//Redo Assets and Resources system (Follow youtube tutorial)
-//Compile libraries with engine compilation (No precompiled libraries)
+//Redo Assets and Resources system (Follow youtube tutorial), Rename Renderer Polygone
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
+//Compile libraries with engine compilation (No precompiled libraries)
+//Precompile shader (Run an executable program for compiling shaders)
+//Baked lighting (Run an executable for baking lights)
 //Events System (Cherno)
 //GLM SIMD Optimization
 //Text Rendering, UI (render always forward) renderer, console

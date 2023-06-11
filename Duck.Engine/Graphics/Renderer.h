@@ -7,7 +7,7 @@
 */
 namespace Duck::Renderer
 {
-	enum class PolygonMode
+	enum class Polygon
 	{
 		Shaded,
 		Wireframe
@@ -44,5 +44,5 @@ namespace Duck::Renderer
 	 * @param PolygonMode can be Shaded or Wireframe.
 	 * @return void
 	 */
-	void ShadingMode(PolygonMode mode);
+	void ShadingMode(Polygon mode);
 }

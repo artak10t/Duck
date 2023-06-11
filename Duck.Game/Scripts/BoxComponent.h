@@ -5,18 +5,18 @@ class BoxComponent : public Component
 private:
 	std::vector<Vertex> vertices =
 	{
-		{Vector3(1, 1, -1), Vector3(1, 0, 1), Vector2(1, 1)},
-		{Vector3(1, -1, -1), Vector3(0, 1, 1), Vector2(1, 0)},
-		{Vector3(-1, -1, -1), Vector3(1, 1, 0), Vector2(0, 0)},
-		{Vector3(-1, 1, -1), Vector3(0, 1, 1), Vector2(0, 1)},
-		{Vector3(1, 1, 1), Vector3(1, 0, 1), Vector2(0, 1)},
-		{Vector3(1, -1, 1), Vector3(1, 1, 0), Vector2(0, 0)},
-		{Vector3(-1, -1, 1), Vector3(0, 1, 1), Vector2(1, 0)},
-		{Vector3(-1, 1, 1), Vector3(1, 0, 0), Vector2(1, 1)},
-		{Vector3(-1, 1, 1), Vector3(0, 1, 1), Vector2(0, 0)},
-		{Vector3(1, -1, 1), Vector3(1, 0, 1), Vector2(1, 1)},
-		{Vector3(1, 1, 1), Vector3(1, 1, 0), Vector2(1, 0)},
-		{Vector3(-1, -1, 1), Vector3(0, 1, 1), Vector2(0, 1)},
+		{Vector3(1, 1, -1), Vector3(1, 1, -1), Vector2(1, 1)},
+		{Vector3(1, -1, -1), Vector3(1, -1, -1), Vector2(1, 0)},
+		{Vector3(-1, -1, -1), Vector3(-1, -1, -1), Vector2(0, 0)},
+		{Vector3(-1, 1, -1), Vector3(-1, 1, -1), Vector2(0, 1)},
+		{Vector3(1, 1, 1), Vector3(1, 1, 1), Vector2(0, 1)},
+		{Vector3(1, -1, 1), Vector3(1, -1, 1), Vector2(0, 0)},
+		{Vector3(-1, -1, 1), Vector3(-1, -1, 1), Vector2(1, 0)},
+		{Vector3(-1, 1, 1), Vector3(-1, 1, 1), Vector2(1, 1)},
+		{Vector3(-1, 1, 1), Vector3(-1, 1, 1), Vector2(0, 0)},
+		{Vector3(1, -1, 1), Vector3(1, -1, 1), Vector2(1, 1)},
+		{Vector3(1, 1, 1), Vector3(1, 1, 1), Vector2(1, 0)},
+		{Vector3(-1, -1, 1), Vector3(-1, -1, 1), Vector2(0, 1)},
 	};
 
 	std::vector<unsigned int> indices =
@@ -31,7 +31,7 @@ private:
 
 	Mesh mesh = Mesh(vertices, indices);
 	Shader* shader = Resources::Load<Shader>("Default.shader");
-	Texture* texture = Resources::Load<Texture>("uv.png");
+	Texture* texture = Resources::Load<Texture>("metalbox_diffuse.png");
 public:
 	void Init()
 	{
