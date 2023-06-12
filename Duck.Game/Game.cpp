@@ -1,4 +1,5 @@
 #include <Engine.h>
+
 using namespace Duck;
 
 #include "Scripts/FlyCamera.h"
@@ -9,13 +10,12 @@ using namespace Duck;
 //*VERIFY MODEL LOADER HIERARCHY
 //Redo Assets and Resources system (Follow youtube tutorial)
 //Fix Null main camera
+//Layered rendering (Weapon always on top of everything)
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
-//Compile libraries with engine compilation (No precompiled libraries)
 //Precompile shader (Run an executable program for compiling shaders)
 //Baked lighting (Run an executable for baking lights)
 //Events System (Cherno)
-//GLM SIMD Optimization
 //Text Rendering, UI (render always forward) renderer, console
 //Implement lighting (LATER)
 //YAML Entity prefab system (Similar how SS14 does). Resources.Load<Prefab>()

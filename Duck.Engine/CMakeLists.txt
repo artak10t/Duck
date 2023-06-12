@@ -2,6 +2,7 @@
 
 add_library($ENV{ENGINE_NAME} STATIC 
 	"Engine.h"
+
 	"System/Window.h" 
 	"System/Window.cpp" 
 	"System/Input.h" 
@@ -11,6 +12,18 @@ add_library($ENV{ENGINE_NAME} STATIC
 	"System/Clock.cpp"
 	"System/Resources.h"
 	"System/Resources.cpp"
+
+	"Math/Matrix.h"
+	"Math/Matrix4.h"
+	"Math/Quaternion.h"
+	"Math/Random.h"
+	"Math/Transform.h"
+	"Math/Trigonometry.h"
+	"Math/Vector.h"
+	"Math/Vector2.h"
+	"Math/Vector3.h"
+	"Math/Vector4.h"
+
 	"Graphics/Renderer.h"
 	"Graphics/Renderer.cpp"
 	"Graphics/Lighting.h"
@@ -30,6 +43,7 @@ add_library($ENV{ENGINE_NAME} STATIC
 	"Graphics/Texture.cpp"
 	"Graphics/Model.h"
 	"Graphics/Model.cpp"
+
 	"Scene/Entity.h"
 	"Scene/Component.h"
 	"Scene/Scene.h" 

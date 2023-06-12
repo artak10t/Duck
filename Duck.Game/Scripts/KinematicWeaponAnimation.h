@@ -1,46 +1,52 @@
 #pragma once
-#include <System/Input.h>
 
 class KinematicWeaponAnimation : public Component
 {
 private:
 	Vector2 deltaMouse = { 0, 0 };
-	Vector3 finalPosition = { 0, 0, 0 };
-	Quaternion finalRotation = { 0, 0, 0, 1 };
+	Vector3 targetPosition = { 0, 0, 0 };
+	Quaternion targetRotation = { 0, 0, 0, 1 };
 
 	// Bob
 
 	// Recoil
-	void recoil(float deltaTime)
-	{
-
-	}
 
 	void swayPosition(float deltaTime)
 	{
-		Vector3 invertLook = Vector3(deltaMouse.x, -deltaMouse.y, 0) * -PositionStep;
-		invertLook.x = std::clamp(invertLook.x, -PositionMax, PositionMax);
-		invertLook.y = std::clamp(invertLook.y, -PositionMax, PositionMax);
-		finalPosition = invertLook;
+		Vector3 invertLook = Vector3(deltaMouse.x, -deltaMouse.y, 0) * -SwayPositionStep;
+		invertLook.x = std::clamp(invertLook.x, -SwayPositionMax, SwayPositionMax);
+		invertLook.y = std::clamp(invertLook.y, -SwayPositionMax, SwayPositionMax);
+		targetPosition = invertLook;
 	}
 
 	void swayRotation(float deltaTime)
 	{
-		Vector2 look = deltaMouse * RotationStep;
+		Vector2 look = deltaMouse * SwayRotationStep;
 		Quaternion swayRotation = Quaternion::AngleAxis(look.y, { 1, 0, 0 }) * Quaternion::AngleAxis(look.x, { 0, 1, 0 });
-		finalRotation = swayRotation;
+		targetRotation = swayRotation;
 	}
 
 public:
 	// General
 	float Smooth = 8;
 
+	// Recoil
+	Vector3 RecoilOffset = { .1f, .1f, .1f };
+	float RecoilKickback = 1.f;
+
 	// Sway Position
-	float PositionStep = 0.005f;
-	float PositionMax = 0.075f;
+	float SwayPositionStep = .005f;
+	float SwayPositionMax = .075f;
 
 	// Sway Rotation
-	float RotationStep = 0.125f;
+	float SwayRotationStep = .125f;
+
+	void CallRecoil()
+	{
+		// custom smooth for kickback recoil
+		targetPosition.z -= RecoilKickback;
+		//targetRotation += Quaternion(RecoilOffset.x, )
+	}
 
 	void Update(float deltaTime)
 	{
@@ -48,12 +54,13 @@ public:
 		if (Input::IsCursorLocked())
 			deltaMouse = Input::GetMouseDelta();
 
-		recoil(deltaTime);
 		swayPosition(deltaTime);
 		swayRotation(deltaTime);
 
-		entity->transform.position = Vector::Lerp(entity->transform.position, finalPosition, deltaTime * Smooth);
-		entity->transform.rotation = Quaternion::Slerp(entity->transform.rotation, finalRotation, deltaTime * Smooth);
-	}
+		if (Input::IsKeyDown(Input::MouseLeft))
+			CallRecoil();
 
+		entity->transform.position = Vector::Lerp(entity->transform.position, targetPosition, deltaTime * Smooth);
+		entity->transform.rotation = Quaternion::Slerp(entity->transform.rotation, targetRotation, deltaTime * Smooth);
+	}
 };

@@ -1,26 +1,38 @@
-//Systems
-#include "System/Clock.h"
-#include "System/Input.h"
+// System
+#include "System/Window.h" 
+#include "System/Input.h" 
 #include "System/Logger.h"
+#include "System/Clock.h" 
 #include "System/Resources.h"
-#include "System/Window.h"
 
-//Graphics
-#include "Graphics/Camera.h"
-#include "Graphics/CameraOrthographic.h"
-#include "Graphics/CameraPerspective.h"
-#include "Graphics/GlobalLight.h"
-#include "Graphics/Lighting.h"
-#include "Graphics/Mesh.h"
+// Math
+#include "Math/Matrix.h"
+#include "Math/Matrix4.h"
+#include "Math/Quaternion.h"
+#include "Math/Random.h"
+#include "Math/Transform.h"
+#include "Math/Trigonometry.h"
+#include "Math/Vector.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
+#include "Math/Vector4.h"
+
+// Graphics
 #include "Graphics/Renderer.h"
+#include "Graphics/Lighting.h"
+#include "Graphics/GlobalLight.h"
+#include "Graphics/Camera.h"
+#include "Graphics/CameraPerspective.h"
+#include "Graphics/CameraOrthographic.h"
+#include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
 #include "Graphics/Model.h"
 
-//Scene
-#include "Scene/Component.h"
+// Scene
 #include "Scene/Entity.h"
-#include "Scene/Scene.h"
+#include "Scene/Component.h"
+#include "Scene/Scene.h" 
 
 namespace Duck
 {
