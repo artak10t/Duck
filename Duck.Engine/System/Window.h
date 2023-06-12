@@ -7,9 +7,10 @@ namespace Duck::Window
 	void Destroy();
 	const bool IsOpen();
 
-	void Title(const char* title);
-	void Fullscreen(bool fullscreen);
-	void Resolution(int width, int height);
-	const float& AspectRatio();
-	void VSync(bool vsync);
+	void SetTitle(const char* title);
+	void SetFullscreen(bool fullscreen);
+	void SetResolution(int width, int height);
+	void SetVSync(bool vsync);
+
+	const float& GetAspectRatio();
 }

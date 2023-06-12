@@ -7,7 +7,8 @@ using namespace Duck;
 #include "Scripts/KinematicWeaponAnimation.h"
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING
 //*VERIFY MODEL LOADER HIERARCHY
-//Redo Assets and Resources system (Follow youtube tutorial), Rename Renderer Polygone
+//Redo Assets and Resources system (Follow youtube tutorial)
+//Fix Null main camera
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
 //Compile libraries with engine compilation (No precompiled libraries)
@@ -18,6 +19,7 @@ using namespace Duck;
 //Text Rendering, UI (render always forward) renderer, console
 //Implement lighting (LATER)
 //YAML Entity prefab system (Similar how SS14 does). Resources.Load<Prefab>()
+//Make Scene class and have scene serialization
 //Scriptable Object DataAsset equivalent (Maybe use YAML for data)
 
 class Game : App
@@ -31,6 +33,8 @@ private:
 public:
 	void Init()
 	{
+		Window::SetResolution(800, 600);
+
 		pivot->transform.parent = &camera.transform;
 		pivot->transform.position = Vector3(.25f, -.4f, .3f);
 		weapon->transform.parent = &pivot->transform;
@@ -46,8 +50,8 @@ public:
 	{
 		FlyCamera::Update(deltaTime);
 
-		if (Input::KeyDown(Input::Space))
-			Lighting::GlobalLight.SetIntensity(Lighting::GlobalLight.GetIntensity() + 0.1f);
+		if (Input::IsKeyDown(Input::Space))
+			Lighting::AmbientLight.SetIntensity(Lighting::AmbientLight.GetIntensity() + 0.1f);
 	}
 
 	void Draw()

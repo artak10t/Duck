@@ -3,35 +3,35 @@
 
 namespace Duck::Scene
 {
-	std::vector<std::unique_ptr<Entity>> entities;
+	std::vector<std::unique_ptr<Entity>> Entities;
 
 	//Removes not alive entities
 	void Refresh()
 	{
-		entities.erase(std::remove_if(std::begin(entities), std::end(entities),
+		Entities.erase(std::remove_if(std::begin(Entities), std::end(Entities),
 			[](const std::unique_ptr<Entity>& mEntity)
 			{
 				return !mEntity->IsAlive();
 			}),
-			std::end(entities));
+			std::end(Entities));
 	}
 
 	void Update(float deltaTime)
 	{
-		for (int i = 0; i < entities.size(); i++)
-			entities[i]->Update(deltaTime);
+		for (int i = 0; i < Entities.size(); i++)
+			Entities[i]->Update(deltaTime);
 	}
 
 	void Draw()
 	{
-		for (int i = 0; i < entities.size(); i++)
-			entities[i]->Draw();
+		for (int i = 0; i < Entities.size(); i++)
+			Entities[i]->Draw();
 	}
 
 	void Destroy()
 	{
-		for (int i = 0; i < entities.size(); i++)
-			entities[i]->Destroy();
+		for (int i = 0; i < Entities.size(); i++)
+			Entities[i]->Destroy();
 
 		Refresh();
 	}
@@ -40,7 +40,7 @@ namespace Duck::Scene
 	{
 		Entity* e = new Entity();
 		std::unique_ptr<Entity> uPtr{ e };
-		entities.emplace_back(std::move(uPtr));
+		Entities.emplace_back(std::move(uPtr));
 		return e;
 	}
 }

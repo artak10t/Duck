@@ -1,8 +1,7 @@
 #pragma once
-#include "AmbientLight.h"
+#include "GlobalLight.h"
 
 namespace Duck::Lighting
 {
-	//CHANGE VARIABLE NAME TO AMBIENTLIGHT
-	inline AmbientLight GlobalLight;
+	inline GlobalLight AmbientLight;
 }

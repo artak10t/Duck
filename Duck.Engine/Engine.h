@@ -6,10 +6,10 @@
 #include "System/Window.h"
 
 //Graphics
-#include "Graphics/AmbientLight.h"
 #include "Graphics/Camera.h"
 #include "Graphics/CameraOrthographic.h"
 #include "Graphics/CameraPerspective.h"
+#include "Graphics/GlobalLight.h"
 #include "Graphics/Lighting.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/Renderer.h"

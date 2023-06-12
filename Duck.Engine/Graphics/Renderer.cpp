@@ -9,8 +9,9 @@
 
 namespace Duck::Renderer
 {
-	static unsigned int _cameraUBO = 0;
-	static unsigned int _lightingUBO = 0;
+	//Uniform Buffer Objects
+	static unsigned int cameraUBO = 0;
+	static unsigned int lightingUBO = 0;
 
 	void Init()
 	{
@@ -28,25 +29,25 @@ namespace Duck::Renderer
 		glFrontFace(GL_CW);
 
 		// Create Camera UBO
-		glGenBuffers(1, &_cameraUBO);
-		glBindBuffer(GL_UNIFORM_BUFFER, _cameraUBO);
+		glGenBuffers(1, &cameraUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(Matrix4) + sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 0, _cameraUBO);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, cameraUBO);
 
 		// Create Lighting UBO
-		glGenBuffers(1, &_lightingUBO);
-		glBindBuffer(GL_UNIFORM_BUFFER, _lightingUBO);
+		glGenBuffers(1, &lightingUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 1, _lightingUBO);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightingUBO);
 
 		Logger::Info("OpenGL - Renderer Initialized");
 	}
 
 	void ClearBuffer()
 	{
-		glClearColor(BufferColor.r, BufferColor.g, BufferColor.b, BufferColor.a);
+		glClearColor(Color.r, Color.g, Color.b, Color.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
@@ -55,7 +56,7 @@ namespace Duck::Renderer
 		// If main camera exists update global uniform camera data
 		if (Camera::GetMain())
 		{
-			glBindBuffer(GL_UNIFORM_BUFFER, _cameraUBO);
+			glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrix4), &Camera::GetMain()->Projection()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(Matrix4), sizeof(Matrix4), &Camera::GetMain()->View()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(Matrix4), sizeof(Vector3), &Camera::GetMain()->transform.position);
@@ -63,20 +64,20 @@ namespace Duck::Renderer
 		}
 
 		//Lighting UBO
-		glBindBuffer(GL_UNIFORM_BUFFER, _lightingUBO);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &Lighting::GlobalLight.GetLight());
+		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &Lighting::AmbientLight.GetLight());
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
-	void ShadingMode(Polygon mode)
+	void SetView(View mode)
 	{
 		switch (mode)
 		{
-		case Polygon::Shaded:
+		case View::Shaded:
 			glEnable(GL_CULL_FACE);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			break;
-		case Polygon::Wireframe:
+		case View::Wireframe:
 			glDisable(GL_CULL_FACE);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			break;

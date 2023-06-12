@@ -17,11 +17,11 @@
 //REFACTOR, POOR IMPLEMENTATION
 namespace Duck::Resources
 {
-	static std::string _assetsPath = "";
-	static std::unordered_map<const char*, Texture*> _cachedTextures;
-	static std::unordered_map<const char*, Shader*> _cachedShaders;
+	static std::string assetsPath = "";
+	static std::unordered_map<const char*, Texture*> cachedTextures;
+	static std::unordered_map<const char*, Shader*> cachedShaders;
 
-	static bool _loadShader(const char* path, std::string& vertexData, std::string& fragmentData)
+	static bool loadShader(const char* path, std::string& vertexData, std::string& fragmentData)
 	{
 		std::ifstream in(path, std::ios::in, std::ios::binary);
 		if (in)
@@ -72,24 +72,24 @@ namespace Duck::Resources
 			path = (char*)malloc(length + 1);
 			wai_getExecutablePath(path, length, &dirname_length);
 			path[dirname_length] = '\0';
-			_assetsPath = std::string(path) + "/" + ASSETS_FOLDER_NAME + "/";
+			assetsPath = std::string(path) + "/" + ASSETS_FOLDER_NAME + "/";
 			free(path);
 		}
 	}
 
 	void Clear()
 	{
-		for (std::unordered_map<const char*, Texture*>::iterator itr = _cachedTextures.begin(); itr != _cachedTextures.end(); itr++)
+		for (std::unordered_map<const char*, Texture*>::iterator itr = cachedTextures.begin(); itr != cachedTextures.end(); itr++)
 		{
 			delete (itr->second);
 		}
-		_cachedTextures.clear();
+		cachedTextures.clear();
 
-		for (std::unordered_map<const char*, Shader*>::iterator itr = _cachedShaders.begin(); itr != _cachedShaders.end(); itr++)
+		for (std::unordered_map<const char*, Shader*>::iterator itr = cachedShaders.begin(); itr != cachedShaders.end(); itr++)
 		{
 			delete (itr->second);
 		}
-		_cachedShaders.clear();
+		cachedShaders.clear();
 	}
 
 	//Texture
@@ -103,11 +103,11 @@ namespace Duck::Resources
 	template<>
 	Texture* Load<Texture>(const char* file, const Texture::Filter filtering, const Texture::Wrap wrapping)
 	{
-		if (_cachedTextures.find(file) != _cachedTextures.end())
-			return _cachedTextures.at(file);
+		if (cachedTextures.find(file) != cachedTextures.end())
+			return cachedTextures.at(file);
 
 		// Get Path
-		std::string path = _assetsPath + file;
+		std::string path = assetsPath + file;
 
 		// Load Texture
 		stbi_set_flip_vertically_on_load(true);
@@ -117,54 +117,54 @@ namespace Duck::Resources
 			DUCK_ASSERT(false, "Texture - %s '%s'", stbi_failure_reason(), file);
 
 		// Cache Texture
-		_cachedTextures.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
+		cachedTextures.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
 		stbi_image_free(textureData);
 
 		Logger::Info("Texture - '%s' Loaded", file);
 
-		return _cachedTextures.at(file);
+		return cachedTextures.at(file);
 	}
 
 	template<>
 	void Unload<Texture>(const char* file)
 	{
-		if (_cachedTextures.find(file) == _cachedTextures.end())
+		if (cachedTextures.find(file) == cachedTextures.end())
 			return;
 		
-		delete _cachedTextures.at(file);
-		_cachedTextures.erase(file);
+		delete cachedTextures.at(file);
+		cachedTextures.erase(file);
 	}
 
 	//Shader
 	template<>
 	Shader* Load<Shader>(const char* file)
 	{
-		if (_cachedShaders.find(file) != _cachedShaders.end())
-			return _cachedShaders.at(file);
+		if (cachedShaders.find(file) != cachedShaders.end())
+			return cachedShaders.at(file);
 
 		// Get Path
-		std::string path = _assetsPath + file;
+		std::string path = assetsPath + file;
 
 		// Load Shader
 		std::string vertexData;
 		std::string fragmentData;
-		DUCK_ASSERT(_loadShader(path.c_str(), vertexData, fragmentData), "Shader - File doesn't exist '%s'", file);
+		DUCK_ASSERT(loadShader(path.c_str(), vertexData, fragmentData), "Shader - File doesn't exist '%s'", file);
 
 		// Cache Shader
-		_cachedShaders.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
+		cachedShaders.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
 
 		Logger::Info("Shader - '%s' Loaded", file);
 
-		return _cachedShaders.at(file);
+		return cachedShaders.at(file);
 	}
 
 	template<>
 	void Unload<Shader>(const char* file)
 	{
-		if (_cachedShaders.find(file) == _cachedShaders.end())
+		if (cachedShaders.find(file) == cachedShaders.end())
 			return;
 
-		delete _cachedShaders.at(file);
-		_cachedShaders.erase(file);
+		delete cachedShaders.at(file);
+		cachedShaders.erase(file);
 	}
 }

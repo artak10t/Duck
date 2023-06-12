@@ -3,13 +3,13 @@
 
 namespace Duck
 {
-	CameraOrthographic::CameraOrthographic(const float& zNear, const float& zFar) : Camera(zNear, zFar)
+	CameraOrthographic::CameraOrthographic(const float& near, const float& far) : Camera(near, far)
 	{
 		RecalculateProjectionMatrix();
 	}
 
 	void CameraOrthographic::RecalculateProjectionMatrix()
 	{
-		_projection = Matrix::Orthographic(-Window::AspectRatio(), Window::AspectRatio(), -1.0f, 1.0f, _near, _far);
+		projection = Matrix::Orthographic(-Window::GetAspectRatio(), Window::GetAspectRatio(), -1.0f, 1.0f, near, far);
 	}
 }

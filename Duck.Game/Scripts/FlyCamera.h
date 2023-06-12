@@ -9,40 +9,40 @@ namespace FlyCamera
 
 	void Update(float deltaTime)
 	{
-		if (Input::KeyPress(Input::W))
+		if (Input::IsKeyPressed(Input::W))
 			Camera::GetMain()->transform.position += Camera::GetMain()->transform.Forward() * deltaTime * speed;
-		else if (Input::KeyPress(Input::S))
+		else if (Input::IsKeyPressed(Input::S))
 			Camera::GetMain()->transform.position -= Camera::GetMain()->transform.Forward() * deltaTime * speed;
-		if (Input::KeyPress(Input::D))
+		if (Input::IsKeyPressed(Input::D))
 			Camera::GetMain()->transform.position += Camera::GetMain()->transform.Right() * deltaTime * speed;
-		else if (Input::KeyPress(Input::A))
+		else if (Input::IsKeyPressed(Input::A))
 			Camera::GetMain()->transform.position -= Camera::GetMain()->transform.Right() * deltaTime * speed;
-		if (Input::KeyPress(Input::E))
+		if (Input::IsKeyPressed(Input::E))
 			Camera::GetMain()->transform.position += Camera::GetMain()->transform.Up() * deltaTime * speed;
-		else if (Input::KeyPress(Input::Q))
+		else if (Input::IsKeyPressed(Input::Q))
 			Camera::GetMain()->transform.position -= Camera::GetMain()->transform.Up() * deltaTime * speed;
 
-		speed = std::clamp(speed + Input::MouseScrollDelta().y, 1.f, 1000.f);
+		speed = std::clamp(speed + Input::GetMouseScroll().y, 1.f, 1000.f);
 
-		if (Input::KeyDown(Input::Tab))
+		if (Input::IsKeyDown(Input::Tab))
 		{
 			fullscreen = !fullscreen;
-			Input::LockCursor(fullscreen);
+			Input::SetCursorLock(fullscreen);
 		}
 
-		if (Input::KeyDown(Input::V))
+		if (Input::IsKeyDown(Input::V))
 		{
 			wireframe = !wireframe;
 
 			if (wireframe)
-				Renderer::ShadingMode(Renderer::Polygon::Wireframe);
+				Renderer::SetView(Renderer::View::Wireframe);
 			else
-				Renderer::ShadingMode(Renderer::Polygon::Shaded);
+				Renderer::SetView(Renderer::View::Shaded);
 		}
 
 		if (fullscreen)
 		{
-			Vector2 delta = Input::MouseDelta() * mouseSensitivity;
+			Vector2 delta = Input::GetMouseDelta() * mouseSensitivity;
 			Quaternion rotation = Camera::GetMain()->transform.rotation;
 			Quaternion horiz = Quaternion::AngleAxis(delta.x, { 0, 1, 0 });
 			Quaternion vert = Quaternion::AngleAxis(delta.y, { 1, 0, 0 });

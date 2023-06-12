@@ -15,7 +15,7 @@ add_library($ENV{ENGINE_NAME} STATIC
 	"Graphics/Renderer.cpp"
 	"Graphics/Lighting.h"
 	"Graphics/Lighting.cpp"
-	"Graphics/AmbientLight.h"
+	"Graphics/GlobalLight.h"
 	"Graphics/Camera.h"
 	"Graphics/Camera.cpp"
 	"Graphics/CameraPerspective.h"

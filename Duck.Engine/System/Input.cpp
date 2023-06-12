@@ -5,133 +5,138 @@
 
 namespace Duck::Input
 {
+	static GLFWwindow* window = nullptr;
+
+	// Keyboard
 	struct KeyState
 	{
 		bool down = false;
-		bool press = false;
+		bool pressed = false;
 		bool up = false;
 	};
-	static std::unordered_map<int, KeyState> _keyMap = {};
-	static bool _isCursorLocked = false;
-	static Vector2 _mouseLastPosition = { 0, 0 };
-	static Vector2 _mouseDelta = { 0, 0 };
-	static Vector2 _mousePosition = { 0, 0 };
-	static Vector2 _mouseScrollDelta = { 0, 0 };
-	static GLFWwindow* _window = nullptr;
+	static std::unordered_map<int, KeyState> keyMap = {};
 
-	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+
+	//Mouse
+	static bool isCursorLocked = false;
+	static Vector2 mouseLastPosition = { 0, 0 };
+	static Vector2 mouseDelta = { 0, 0 };
+	static Vector2 mousePosition = { 0, 0 };
+	static Vector2 mouseScroll = { 0, 0 };
+
+	static void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
 		switch (action)
 		{
 		case GLFW_PRESS:
-			_keyMap[key].down = true;
-			_keyMap[key].press = true;
-			_keyMap[key].up = false;
+			keyMap[key].down = true;
+			keyMap[key].pressed = true;
+			keyMap[key].up = false;
 			break;
 		case GLFW_RELEASE:
-			_keyMap[key].down = false;
-			_keyMap[key].press = false;
-			_keyMap[key].up = true;
+			keyMap[key].down = false;
+			keyMap[key].pressed = false;
+			keyMap[key].up = true;
 			break;
 		}
 	}
 
-	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+	static void onMouseButton(GLFWwindow* window, int button, int action, int mods)
 	{
-		keyCallback(window, button, -1, action, mods);
+		onKey(window, button, -1, action, mods);
 	}
 
-	static void cursorPosCallback(GLFWwindow* window, double x, double y)
+	static void onMousePosition(GLFWwindow* window, double x, double y)
 	{
-		_mousePosition.x = static_cast<float>(x);
-		_mousePosition.y = static_cast<float>(y);
+		mousePosition.x = static_cast<float>(x);
+		mousePosition.y = static_cast<float>(y);
 	}
 
-	static void scrollCallback(GLFWwindow* window, double deltaX, double deltaY)
+	static void onMouseScroll(GLFWwindow* window, double deltaX, double deltaY)
 	{
-		_mouseScrollDelta.x = static_cast<float>(deltaX);
-		_mouseScrollDelta.y = static_cast<float>(deltaY);
+		mouseScroll.x = static_cast<float>(deltaX);
+		mouseScroll.y = static_cast<float>(deltaY);
 	}
 
 
 	void Init()
 	{
-		_window = glfwGetCurrentContext();
+		window = glfwGetCurrentContext();
 
-		assert(_window != NULL);
+		assert(window != NULL);
 
-		glfwSetKeyCallback(_window, keyCallback);
-		glfwSetMouseButtonCallback(_window, mouseButtonCallback);
-		glfwSetCursorPosCallback(_window, cursorPosCallback);
-		glfwSetScrollCallback(_window, scrollCallback);
+		glfwSetKeyCallback(window, onKey);
+		glfwSetMouseButtonCallback(window, onMouseButton);
+		glfwSetCursorPosCallback(window, onMousePosition);
+		glfwSetScrollCallback(window, onMouseScroll);
 	}
 
 	void PollEvents()
 	{
-		_mouseLastPosition = _mousePosition;
-		_mouseScrollDelta = { 0, 0 };
+		mouseLastPosition = mousePosition;
+		mouseScroll = { 0, 0 };
 		glfwPollEvents();
 	}
 
-	bool KeyPress(KeyCode key)
+	bool IsKeyPressed(KeyCode key)
 	{
-		return _keyMap[key].press;
+		return keyMap[key].pressed;
 	}
 
-	bool KeyDown(KeyCode key)
+	bool IsKeyDown(KeyCode key)
 	{
-		if (!_keyMap[key].down)
+		if (!keyMap[key].down)
 			return false;
 
-		_keyMap[key].down = false;
+		keyMap[key].down = false;
 		return true;
 	}
 
-	bool KeyUp(KeyCode key)
+	bool IsKeyUp(KeyCode key)
 	{
-		if (!_keyMap[key].up)
+		if (!keyMap[key].up)
 			return false;
 
-		_keyMap[key].up = false;
+		keyMap[key].up = false;
 		return true;
 	}
 	
-	Vector2& MousePosition()
+	Vector2& GetMousePosition()
 	{
-		return _mousePosition;
+		return mousePosition;
 	}
 
-	Vector2& MouseDelta()
+	Vector2& GetMouseDelta()
 	{
-		_mouseDelta.x = _mousePosition.x - _mouseLastPosition.x;
-		_mouseDelta.y = _mousePosition.y - _mouseLastPosition.y;
+		mouseDelta.x = mousePosition.x - mouseLastPosition.x;
+		mouseDelta.y = mousePosition.y - mouseLastPosition.y;
 
-		return _mouseDelta;
+		return mouseDelta;
 	}
 
-	Vector2& MouseScrollDelta()
+	Vector2& GetMouseScroll()
 	{
-		return _mouseScrollDelta;
+		return mouseScroll;
 	}
 
-	void LockCursor(const bool lock)
+	void SetCursorLock(const bool lock)
 	{
-		_isCursorLocked = lock;
+		isCursorLocked = lock;
 
 		if (lock)
 		{
-			glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-			glfwSetInputMode(_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 		}
 		else
 		{
-			glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			glfwSetInputMode(_window, GLFW_RAW_MOUSE_MOTION, GLFW_FALSE);
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_FALSE);
 		}
 	}
 
 	const bool IsCursorLocked()
 	{
-		return _isCursorLocked;
+		return isCursorLocked;
 	}
 }

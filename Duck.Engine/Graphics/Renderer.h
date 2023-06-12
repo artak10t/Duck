@@ -2,47 +2,26 @@
 #include "Camera.h"
 #include "../Math/Vector4.h"
 
-/**
-* OpenGL renderer implementation.
-*/
 namespace Duck::Renderer
 {
-	enum class Polygon
+	enum class View
 	{
 		Shaded,
 		Wireframe
 	};
 
-	/**
-	 * Default buffer color after clear.
-	 */
-	inline Vector4 BufferColor = { 0.6f, 0.7f, 0.9f, 1 };
+	// Default buffer color after clear.
+	inline Vector4 Color = { 0.6f, 0.7f, 0.9f, 1 };
 
-	/**
-	 * Initialization of renderer. Should be done after window creation.
-	 * @param none
-	 * @return void
-	 */
+	// Initialization of renderer. Should be done after window creation.
 	void Init();
 
-	/**
-	 * Clear current window's buffer.
-	 * @param none
-	 * @return void
-	 */
+	// Clear current window's buffer.
 	void ClearBuffer();
 
-	/**
-	 * Updates global uniform data for a shader program.
-	 * @param none
-	 * @return void
-	 */
+	// Updates global uniform data for all shader programs.
 	void UpdateGlobalUBO();
 
-	/**
-	 * Set renderer shading mode.
-	 * @param PolygonMode can be Shaded or Wireframe.
-	 * @return void
-	 */
-	void ShadingMode(Polygon mode);
+	// Set renderer shading mode.
+	void SetView(View mode);
 }

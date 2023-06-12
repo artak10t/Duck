@@ -118,12 +118,12 @@ namespace Duck::Input
 	void Init();
 	void PollEvents();
 
-	bool KeyPress(KeyCode key);
-	bool KeyDown(KeyCode key);
-	bool KeyUp(KeyCode key);
-	Vector2& MousePosition();
-	Vector2& MouseDelta();
-	Vector2& MouseScrollDelta();
-	void LockCursor(const bool lock);
+	bool IsKeyPressed(KeyCode key);
+	bool IsKeyDown(KeyCode key);
+	bool IsKeyUp(KeyCode key);
+	Vector2& GetMousePosition();
+	Vector2& GetMouseDelta();
+	Vector2& GetMouseScroll();
+	void SetCursorLock(const bool lock);
 	const bool IsCursorLocked();
 }

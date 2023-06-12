@@ -4,25 +4,31 @@
 class KinematicWeaponAnimation : public Component
 {
 private:
-	Vector2 _deltaMouse = { 0, 0 };
+	Vector2 deltaMouse = { 0, 0 };
+	Vector3 finalPosition = { 0, 0, 0 };
+	Quaternion finalRotation = { 0, 0, 0, 1 };
 
 	// Bob
 
 	// Recoil
-
-	void SwayPosition(float deltaTime)
+	void recoil(float deltaTime)
 	{
-		Vector3 invertLook = Vector3(_deltaMouse.x, -_deltaMouse.y, 0) * -PositionStep;
-		invertLook.x = std::clamp(invertLook.x, -PositionMax, PositionMax);
-		invertLook.y = std::clamp(invertLook.y, -PositionMax, PositionMax);
-		entity->transform.position = Vector::Lerp(entity->transform.position, invertLook, deltaTime * Smooth);
+
 	}
 
-	void SwayRotation(float deltaTime)
+	void swayPosition(float deltaTime)
 	{
-		Vector2 look = _deltaMouse * RotationStep;
-		Quaternion targetRotation = Quaternion::AngleAxis(look.y, { 1, 0, 0 }) * Quaternion::AngleAxis(look.x, { 0, 1, 0 });
-		entity->transform.rotation = Quaternion::Slerp(entity->transform.rotation, targetRotation, deltaTime * Smooth);
+		Vector3 invertLook = Vector3(deltaMouse.x, -deltaMouse.y, 0) * -PositionStep;
+		invertLook.x = std::clamp(invertLook.x, -PositionMax, PositionMax);
+		invertLook.y = std::clamp(invertLook.y, -PositionMax, PositionMax);
+		finalPosition = invertLook;
+	}
+
+	void swayRotation(float deltaTime)
+	{
+		Vector2 look = deltaMouse * RotationStep;
+		Quaternion swayRotation = Quaternion::AngleAxis(look.y, { 1, 0, 0 }) * Quaternion::AngleAxis(look.x, { 0, 1, 0 });
+		finalRotation = swayRotation;
 	}
 
 public:
@@ -38,12 +44,16 @@ public:
 
 	void Update(float deltaTime)
 	{
-		_deltaMouse = { 0, 0 };
+		deltaMouse = { 0, 0 };
 		if (Input::IsCursorLocked())
-			_deltaMouse = Input::MouseDelta();
+			deltaMouse = Input::GetMouseDelta();
 
-		SwayPosition(deltaTime);
-		SwayRotation(deltaTime);
+		recoil(deltaTime);
+		swayPosition(deltaTime);
+		swayRotation(deltaTime);
+
+		entity->transform.position = Vector::Lerp(entity->transform.position, finalPosition, deltaTime * Smooth);
+		entity->transform.rotation = Quaternion::Slerp(entity->transform.rotation, finalRotation, deltaTime * Smooth);
 	}
 
 };

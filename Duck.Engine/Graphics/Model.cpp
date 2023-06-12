@@ -7,14 +7,10 @@
 
 namespace Duck
 {
-    Mesh* _processMesh(const cgltf_primitive* primitive)
+    Mesh* processMesh(const cgltf_primitive* primitive)
     {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-
-        Logger::Debug("0: %i", primitive->attributes[0].type);
-        Logger::Debug("1: %i", primitive->attributes[1].type);
-        Logger::Debug("2: %i", primitive->attributes[2].type);
 
         // Process Attributes
         for (unsigned int i = 0; i < primitive->attributes[0].data->count; i++)
@@ -49,20 +45,20 @@ namespace Duck
         return m;
     }
 
-    static void _processNode(std::vector<Mesh*>* meshes, cgltf_node* node)
+    static void processNode(std::vector<Mesh*>* meshes, cgltf_node* node)
     {
         // Process All Meshes
         if (node->mesh) 
         {
             for (unsigned int i = 0; i < node->mesh->primitives_count; i++)
             {
-                meshes->push_back(_processMesh(&node->mesh->primitives[i]));
+                meshes->push_back(processMesh(&node->mesh->primitives[i]));
             }
         }
 
         // Process Children Nodes
         for (unsigned int i = 0; i < node->children_count; i++)
-            _processNode(meshes, node->children[i]);
+            processNode(meshes, node->children[i]);
     }
 
     Model::Model(const char* path)
@@ -94,22 +90,22 @@ namespace Duck
             return;
         }
 
-        _processNode(&_meshes, data->scene->nodes[0]);
+        processNode(&meshes, data->scene->nodes[0]);
 
         cgltf_free(data);
     }
 
     Model::~Model()
     {
-        for (unsigned int i = 0; i < _meshes.size(); i++)
-            delete _meshes[i];
+        for (unsigned int i = 0; i < meshes.size(); i++)
+            delete meshes[i];
 
-        _meshes.clear();
+        meshes.clear();
     }
 
     const void Model::Draw()
     {
-        for (unsigned int i = 0; i < _meshes.size(); i++)
-            _meshes[i]->Draw();
+        for (unsigned int i = 0; i < meshes.size(); i++)
+            meshes[i]->Draw();
     }
 }

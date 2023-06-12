@@ -34,15 +34,15 @@ namespace Duck
 		}
 
 		// Shader Program
-		_program = glCreateProgram();
-		glAttachShader(_program, vertexShader);
-		glAttachShader(_program, fragmentShader);
-		glLinkProgram(_program);
+		program = glCreateProgram();
+		glAttachShader(program, vertexShader);
+		glAttachShader(program, fragmentShader);
+		glLinkProgram(program);
 
-		glGetProgramiv(_program, GL_LINK_STATUS, &success);
+		glGetProgramiv(program, GL_LINK_STATUS, &success);
 		if (!success) 
 		{
-			glGetProgramInfoLog(_program, 512, NULL, infoLog);
+			glGetProgramInfoLog(program, 512, NULL, infoLog);
 			Logger::Error("Shader - Program failed to link\n%s\n", infoLog);
 		}
 
@@ -50,75 +50,75 @@ namespace Duck
 		glDeleteShader(fragmentShader);
 
 		// Bind Camera UBO
-		unsigned int uniformBlockCamera = glGetUniformBlockIndex(_program, "CameraUBO");
-		glUniformBlockBinding(_program, uniformBlockCamera, 0);
+		unsigned int uniformBlockCamera = glGetUniformBlockIndex(program, "CameraUBO");
+		glUniformBlockBinding(program, uniformBlockCamera, 0);
 
 		// Bind Lighting UBO
-		unsigned int uniformBlockLighting = glGetUniformBlockIndex(_program, "LightingUBO");
-		glUniformBlockBinding(_program, uniformBlockLighting, 1);
+		unsigned int uniformBlockLighting = glGetUniformBlockIndex(program, "LightingUBO");
+		glUniformBlockBinding(program, uniformBlockLighting, 1);
 	}
 
 	Shader::~Shader()
 	{
-		glDeleteProgram(_program);
+		glDeleteProgram(program);
 	}
 
 	void Shader::Bind()
 	{
-		glUseProgram(_program);
+		glUseProgram(program);
 	}
 
 	//Uniforms
 	void Shader::SetInt(const char* name, const int& i)
 	{
 		Bind();
-		glUniform1i(_getUniformLocation(name), i);
+		glUniform1i(getUniformLocation(name), i);
 	}
 
 	void Shader::SetFloat(const char* name, const float& f)
 	{
 		Bind();
-		glUniform1f(_getUniformLocation(name), f);
+		glUniform1f(getUniformLocation(name), f);
 	}
 	
 	void Shader::SetVector2(const char* name, const Vector2& v)
 	{
 		Bind();
-		glUniform2f(_getUniformLocation(name), v.x, v.y);
+		glUniform2f(getUniformLocation(name), v.x, v.y);
 	}
 
 	void Shader::SetVector3(const char* name, const Vector3& v)
 	{
 		Bind();
-		glUniform3f(_getUniformLocation(name), v.x, v.y, v.z);
+		glUniform3f(getUniformLocation(name), v.x, v.y, v.z);
 	}
 
 	void Shader::SetVector4(const char* name, const Vector4& v)
 	{
 		Bind();
-		glUniform4f(_getUniformLocation(name), v.x, v.y, v.z, v.w);
+		glUniform4f(getUniformLocation(name), v.x, v.y, v.z, v.w);
 	}
 
 	void Shader::SetMatrix4(const char* name, const Matrix4& m)
 	{
 		Bind();
-		glUniformMatrix4fv(_getUniformLocation(name), 1, GL_FALSE, &m[0][0]);
+		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &m[0][0]);
 	}
 
 	//Caching Uniforms
-	int Shader::_getUniformLocation(const char* name) const
+	int Shader::getUniformLocation(const char* name) const
 	{
-		if (_cachedUniforms.find(name) != _cachedUniforms.end())
-			return _cachedUniforms[name];
+		if (cachedUniforms.find(name) != cachedUniforms.end())
+			return cachedUniforms[name];
 
-		int l = glGetUniformLocation(_program, name);
+		int l = glGetUniformLocation(program, name);
 		if (l == -1)
 		{
 			Logger::Error("Shader - '%s' Matrix4 Uniform doesn't exist", name);
 			return -1;
 		}
 
-		_cachedUniforms[name] = l;
+		cachedUniforms[name] = l;
 		return l;
 	}
 }

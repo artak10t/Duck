@@ -23,6 +23,6 @@ namespace Duck
 		void Bind(const unsigned int& slot = 0);
 
 	private:
-		unsigned int _textures = 0;
+		unsigned int texture = 0;
 	};
 }

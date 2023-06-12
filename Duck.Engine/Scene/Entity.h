@@ -9,10 +9,11 @@ namespace Duck
 	class Entity
 	{
 	private:
-		static constexpr std::size_t MaxComponents = 32;
+		static constexpr std::size_t maxComponents = 32;
+
 		using ComponentID = std::size_t;
-		using ComponentBitSet = std::bitset<MaxComponents>;
-		using ComponentArray = std::array<Component*, MaxComponents>;
+		using ComponentBitSet = std::bitset<maxComponents>;
+		using ComponentArray = std::array<Component*, maxComponents>;
 
 		static inline ComponentID GetComponentTypeID()
 		{

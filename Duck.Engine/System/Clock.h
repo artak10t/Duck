@@ -10,7 +10,8 @@ namespace Duck
 		float Seconds();
 		long long Milliseconds();
 		void Restart();
+
 	private:
-		std::chrono::steady_clock::time_point _start;
+		std::chrono::steady_clock::time_point start;
 	};
 }
