@@ -6,10 +6,10 @@ using namespace Duck;
 #include "Scripts/BoxComponent.h"
 #include "Scripts/Weapon.h"
 #include "Scripts/KinematicWeaponAnimation.h"
-//*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING
-//*VERIFY MODEL LOADER HIERARCHY
+//*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //Redo Assets and Resources system (Follow youtube tutorial)
 //Fix Null main camera
+//*VERIFY MODEL LOADER HIERARCHY
 //Layered rendering (Weapon always on top of everything)
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
@@ -50,8 +50,17 @@ public:
 	{
 		FlyCamera::Update(deltaTime);
 
+		//FIX WHEN TWO SAME KEYS ARE DOWN (Reset in poll)
 		if (Input::IsKeyDown(Input::Space))
+		{
+			float i = Random::Range(1.f, 5.f);
+			Logger::Debug("%f", i);
+		}
+
+		if (Input::IsKeyDown(Input::Space))
+		{
 			Lighting::AmbientLight.SetIntensity(Lighting::AmbientLight.GetIntensity() + 0.1f);
+		}
 	}
 
 	void Draw()

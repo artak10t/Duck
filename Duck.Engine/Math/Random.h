@@ -1,20 +1,18 @@
 #pragma once
+#include <cstdlib>
 
 namespace Duck::Random
 {
-	inline constexpr float Range(float a, float b)
+	// Set seed of random values
+	inline void SetSeed(const unsigned int& seed)
 	{
-		return 0;
-	}	
-
-	inline constexpr int Range(int a, int b)
-	{
-		return 0;
+		std::srand(seed);
 	}
 
+	// Random value between [min, max] inclusive
 	template<typename T>
-	inline constexpr float Range(T a, T b)
+	inline T Range(const T& min, const T& max)
 	{
-		return Range(static_cast<float>(a), static_cast<float>(b));
+		return min + static_cast<T>(std::rand()) / (static_cast<T>(RAND_MAX / (max - min + 1)));
 	}
 }

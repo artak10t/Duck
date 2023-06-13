@@ -31,7 +31,7 @@ public:
 	float Smooth = 8;
 
 	// Recoil
-	Vector3 RecoilOffset = { .1f, .1f, .1f };
+	Vector3 RecoilOffset = { -20.f, 20.f, 30.f };
 	float RecoilKickback = 1.f;
 
 	// Sway Position
@@ -44,20 +44,21 @@ public:
 	void CallRecoil()
 	{
 		// custom smooth for kickback recoil
+		// custom recoil smoothness, custom recoil initial going back animation
 		targetPosition.z -= RecoilKickback;
-		//targetRotation += Quaternion(RecoilOffset.x, )
+		targetRotation += Quaternion({ RecoilOffset.x, Random::Range(-RecoilOffset.y, RecoilOffset.y), Random::Range(-RecoilOffset.z, RecoilOffset.z) });
 	}
 
 	void Update(float deltaTime)
 	{
-		deltaMouse = { 0, 0 };
+ 		deltaMouse = { 0, 0 };
 		if (Input::IsCursorLocked())
 			deltaMouse = Input::GetMouseDelta();
 
 		swayPosition(deltaTime);
 		swayRotation(deltaTime);
 
-		if (Input::IsKeyDown(Input::MouseLeft))
+		if (Input::IsKeyDown(Input::MouseLeft) && Input::IsCursorLocked())
 			CallRecoil();
 
 		entity->transform.position = Vector::Lerp(entity->transform.position, targetPosition, deltaTime * Smooth);
