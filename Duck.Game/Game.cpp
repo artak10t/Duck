@@ -7,7 +7,6 @@ using namespace Duck;
 #include "Scripts/Weapon.h"
 #include "Scripts/KinematicWeaponAnimation.h"
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
-//Redo Assets and Resources system (Follow youtube tutorial)
 //Fix Null main camera
 //*VERIFY MODEL LOADER HIERARCHY
 //Layered rendering (Weapon always on top of everything)

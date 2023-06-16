@@ -3,7 +3,9 @@
 #include "System/Input.h" 
 #include "System/Logger.h"
 #include "System/Clock.h" 
-#include "System/Resources.h"
+
+// Resources
+#include "Resources/Resources.h"
 
 // Math
 #include "Math/Matrix.h"
@@ -84,7 +86,6 @@ namespace Duck
 		Scene::Destroy();
 		delete app;
 
-		Resources::Clear();
 		Window::Destroy();
 	}
 }

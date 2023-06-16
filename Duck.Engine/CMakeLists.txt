@@ -10,8 +10,13 @@ add_library($ENV{ENGINE_NAME} STATIC
 	"System/Logger.h"
 	"System/Clock.h" 
 	"System/Clock.cpp"
-	"System/Resources.h"
-	"System/Resources.cpp"
+
+	"Resources/Resources.h"
+	"Resources/Resources.cpp"
+	"Resources/AssetTexture.h"
+	"Resources/AssetTexture.cpp"
+	"Resources/AssetShader.h"
+	"Resources/AssetShader.cpp"
 
 	"Math/Matrix.h"
 	"Math/Matrix4.h"
@@ -47,7 +52,7 @@ add_library($ENV{ENGINE_NAME} STATIC
 	"Scene/Entity.h"
 	"Scene/Component.h"
 	"Scene/Scene.h" 
-)
+ )
 
 target_precompile_headers($ENV{ENGINE_NAME} PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:${CMAKE_CURRENT_SOURCE_DIR}/pch.h>")
 target_include_directories($ENV{ENGINE_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/Vendor")
