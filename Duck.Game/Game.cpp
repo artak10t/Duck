@@ -7,16 +7,22 @@ using namespace Duck;
 #include "Scripts/Weapon.h"
 #include "Scripts/KinematicWeaponAnimation.h"
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
-//Fix Null main camera
+//*FIX AssetsPath string to be independent from system and fix green highlights
+//*Fix Null main camera
 //*VERIFY MODEL LOADER HIERARCHY
+//*FIX WHEN TWO SAME KEYS ARE DOWN (Reset in poll, check Game.cpp) BETTER MOUSE DELTA INPLEMENTATION
+//*FIX LOGGER COLOR WHEN RUNNING EXE
+//*FIX ALL WARNINGS
+//*MAKE SCENE INTO CLASS (CHECK THE TUTORIAL AND REDO IT), ADD SCENES MANAGER, SCENE KEEPS TRACK OF LIGHTS
+//Implement lighting (LATER)
 //Layered rendering (Weapon always on top of everything)
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
-//Precompile shader (Run an executable program for compiling shaders)
-//Baked lighting (Run an executable for baking lights)
 //Events System (Cherno)
-//Text Rendering, UI (render always forward) renderer, console
-//Implement lighting (LATER)
+//Precompile shader (Run an executable program for compiling shaders)
+//Text Rendering, UI (render always forward) renderer build native C++ with HTML/CSS UI, console
+//Particle systems
+//LUA SCRIPTING
 //YAML Entity prefab system (Similar how SS14 does). Resources.Load<Prefab>()
 //Make Scene class and have scene serialization
 //Scriptable Object DataAsset equivalent (Maybe use YAML for data)

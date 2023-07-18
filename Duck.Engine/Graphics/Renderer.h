@@ -11,7 +11,7 @@ namespace Duck::Renderer
 	};
 
 	// Default buffer color after clear.
-	inline Vector4 Color = { 0.6f, 0.7f, 0.9f, 1 };
+	inline Vector4 BackgroundColor = { 0.6f, 0.7f, 0.9f, 1 };
 
 	// Initialization of renderer. Should be done after window creation.
 	void Init();

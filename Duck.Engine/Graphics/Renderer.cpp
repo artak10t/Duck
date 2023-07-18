@@ -47,7 +47,7 @@ namespace Duck::Renderer
 
 	void ClearBuffer()
 	{
-		glClearColor(Color.r, Color.g, Color.b, Color.a);
+		glClearColor(BackgroundColor.r, BackgroundColor.g, BackgroundColor.b, BackgroundColor.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 

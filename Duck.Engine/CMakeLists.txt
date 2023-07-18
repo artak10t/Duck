@@ -57,7 +57,7 @@ add_library($ENV{ENGINE_NAME} STATIC
 target_precompile_headers($ENV{ENGINE_NAME} PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:${CMAKE_CURRENT_SOURCE_DIR}/pch.h>")
 target_include_directories($ENV{ENGINE_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/Vendor")
 
-#OpenGL Loader
+# Glad
 add_library(glad "../Vendor/glad/glad.h" "../Vendor/glad/glad.c")
 target_link_libraries($ENV{ENGINE_NAME} PRIVATE glad)
 

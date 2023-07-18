@@ -4,8 +4,31 @@ add_executable ($ENV{GAME_NAME} "Game.cpp" "Scripts/FlyCamera.h" "Scripts/BoxCom
 target_link_libraries($ENV{GAME_NAME} $ENV{ENGINE_NAME})
 target_include_directories($ENV{GAME_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/$ENV{ENGINE_NAME}")
 
-#Copy assets into executable folder
-add_custom_target(load_assets
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/load_assets.cmake
-)
-add_dependencies($ENV{GAME_NAME} load_assets)
+# Copy assets into executable folder
+file (GLOB_RECURSE Assets "Assets/*.*")
+foreach(asset ${Assets})
+	get_filename_component(filename ${asset} NAME)
+	get_filename_component(dir ${asset} DIRECTORY)
+	get_filename_component(dirname ${dir} NAME)
+	
+	set (output "")
+	
+	while(NOT ${dirname} STREQUAL Assets)
+		get_filename_component(path_component ${dir} NAME)
+		set (output "${path_component}/${output}")
+		get_filename_component(dir ${dir} DIRECTORY)
+		get_filename_component(dirname ${dir} NAME)
+	endwhile()
+
+	set(output "${CMAKE_CURRENT_BINARY_DIR}/Assets/${output}/${filename}")
+ 
+	add_custom_command(
+		COMMENT "Updating asset '${filename}'"
+		OUTPUT ${output}
+		DEPENDS $ENV{GAME_NAME} ${asset}
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+		${asset}
+		${output}
+	)
+	add_custom_target(${filename} ALL DEPENDS ${asset} ${output})
+endforeach()

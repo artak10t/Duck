@@ -1,6 +1,6 @@
 #pragma once
 #include "../Math/Vector2.h"
-//BETTER MOUSE DELTA INPLEMENTATION
+
 namespace Duck::Input
 {
 	enum KeyCode
