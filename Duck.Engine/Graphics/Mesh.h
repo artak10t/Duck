@@ -21,12 +21,11 @@ namespace Duck
 		const void Draw();
 
 	private:
-		std::vector<Vertex> vertices;
-		std::vector<unsigned int> indices;
-		int indicesCount = 0;
+		std::vector<Vertex> m_Vertices;
+		std::vector<unsigned int> m_Indices;
 
-		unsigned int vao = 0;
-		unsigned int vbo = 0;
-		unsigned int ebo = 0;
+		unsigned int m_VAO = 0;
+		unsigned int m_VBO = 0;
+		unsigned int m_EBO = 0;
 	};
 }

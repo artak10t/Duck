@@ -5,7 +5,6 @@ namespace Duck::Scene
 {
 	std::vector<std::unique_ptr<Entity>> Entities;
 
-	//Removes not alive entities
 	void Refresh()
 	{
 		Entities.erase(std::remove_if(std::begin(Entities), std::end(Entities),

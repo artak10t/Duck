@@ -6,8 +6,8 @@ namespace Duck
 	Texture::Texture(unsigned char* textureData, const Filter& filtering, const Wrap& wrapping, int width, int height, int channels)
 	{
 		//Create Texture
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		glGenTextures(1, &m_Texture);
+		glBindTexture(GL_TEXTURE_2D, m_Texture);
 
 		//Texture Wrapping
 		switch (wrapping)
@@ -59,6 +59,6 @@ namespace Duck
 	void Texture::Bind(const unsigned int& slot)
 	{
 		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		glBindTexture(GL_TEXTURE_2D, m_Texture);
 	}
 }

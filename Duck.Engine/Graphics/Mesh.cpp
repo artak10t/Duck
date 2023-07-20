@@ -5,23 +5,22 @@ namespace Duck
 {
 	Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
 	{
-		this->vertices = vertices;
-		this->indices = indices;
-		indicesCount = static_cast<int>(indices.size());
+		m_Vertices = vertices;
+		m_Indices = indices;
 
-		glGenVertexArrays(1, &vao);
-		glGenBuffers(1, &vbo);
-		glGenBuffers(1, &ebo);
+		glGenVertexArrays(1, &m_VAO);
+		glGenBuffers(1, &m_VBO);
+		glGenBuffers(1, &m_EBO);
 
 		// Bind VAO
-		glBindVertexArray(vao);
+		glBindVertexArray(m_VAO);
 
 		// Bind VBO
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
 		// Bind EBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
 		// Bind Position vertex attribute
@@ -48,15 +47,15 @@ namespace Duck
 
 	Mesh::~Mesh()
 	{
-		glDeleteBuffers(1, &ebo);
-		glDeleteBuffers(1, &vbo);
-		glDeleteVertexArrays(1, &vao);
+		glDeleteBuffers(1, &m_EBO);
+		glDeleteBuffers(1, &m_VBO);
+		glDeleteVertexArrays(1, &m_VAO);
 	}
 
 	const void Mesh::Draw()
 	{
-		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(m_VAO);
+		glDrawElements(GL_TRIANGLES, GLsizei(m_Indices.size()), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 }

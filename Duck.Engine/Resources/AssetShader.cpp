@@ -9,9 +9,9 @@
 
 namespace Duck::Resources
 {
-	static std::unordered_map<const char*, Shader*> cachedShaders;
+	static std::unordered_map<const char*, Shader*> m_Cache;
 
-	static bool readShaderFile(const char* path, std::string& vertexData, std::string& fragmentData)
+	static bool ReadShaderFile(const char* path, std::string& vertexData, std::string& fragmentData)
 	{
 		std::ifstream in(path, std::ios::in, std::ios::binary);
 		if (in)
@@ -53,32 +53,32 @@ namespace Duck::Resources
 	template<>
 	Shader* Load<Shader>(const char* file)
 	{
-		if (cachedShaders.find(file) != cachedShaders.end())
-			return cachedShaders.at(file);
+		if (m_Cache.find(file) != m_Cache.end())
+			return m_Cache.at(file);
 
 		// Get Path
-		std::string path = AssetsPath + file;
+		std::string path = GetAssetsPath() + file;
 
 		// Load Shader
 		std::string vertexData;
 		std::string fragmentData;
-		DUCK_ASSERT(readShaderFile(path.c_str(), vertexData, fragmentData), "Shader - File doesn't exist '%s'", file);
+		DUCK_ASSERT(ReadShaderFile(path.c_str(), vertexData, fragmentData), "Shader - File doesn't exist '%s'", file);
 
 		// Cache Shader
-		cachedShaders.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
+		m_Cache.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
 
 		Logger::Info("Shader - '%s' Loaded", file);
 
-		return cachedShaders.at(file);
+		return m_Cache.at(file);
 	}
 
 	template<>
 	void Unload<Shader>(const char* file)
 	{
-		if (cachedShaders.find(file) == cachedShaders.end())
+		if (m_Cache.find(file) == m_Cache.end())
 			return;
 
-		delete cachedShaders.at(file);
-		cachedShaders.erase(file);
+		delete m_Cache.at(file);
+		m_Cache.erase(file);
 	}
 }

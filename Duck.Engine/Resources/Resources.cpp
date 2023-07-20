@@ -7,6 +7,8 @@
 
 namespace Duck::Resources
 {
+	static std::string m_AssetsPath = "";
+
 	void Init()
 	{
 		//Set assets folder path
@@ -19,8 +21,13 @@ namespace Duck::Resources
 			path = (char*)malloc(length + 1);
 			wai_getExecutablePath(path, length, &dirname_length);
 			path[dirname_length] = '\0';
-			AssetsPath = std::string(path) + "/" + ASSETS_FOLDER_NAME + "/";
+			m_AssetsPath = std::string(path) + "/" + ASSETS_FOLDER_NAME + "/";
 			free(path);
 		}
+	}
+
+	std::string GetAssetsPath()
+	{
+		return m_AssetsPath;
 	}
 }

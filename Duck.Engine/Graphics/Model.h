@@ -15,7 +15,7 @@ namespace Duck
 		const void Draw();
 
 	private:
-		std::vector<Mesh*> meshes;
-		std::vector<Texture*> textures;
+		std::vector<Mesh*> m_Meshes;
+		std::vector<Texture*> m_Textures;
 	};
 }

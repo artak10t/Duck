@@ -14,7 +14,9 @@ using namespace Duck;
 //*FIX LOGGER COLOR WHEN RUNNING EXE
 //*FIX ALL WARNINGS
 //*MAKE SCENE INTO CLASS (CHECK THE TUTORIAL AND REDO IT), ADD SCENES MANAGER, SCENE KEEPS TRACK OF LIGHTS
-//Implement lighting (LATER)
+//Implement lighting, make Light class hold enum type of the light (Similar to Unity)
+//Refactor model loading and make sure everything works correctly
+//Window - REFACTOR ALL CODE, Clearer code for _lastPosition, _lastWidth, _lastResoultion
 //Layered rendering (Weapon always on top of everything)
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.

@@ -10,8 +10,8 @@
 namespace Duck::Renderer
 {
 	//Uniform Buffer Objects
-	static unsigned int cameraUBO = 0;
-	static unsigned int lightingUBO = 0;
+	static unsigned int m_CameraUBO = 0;
+	static unsigned int m_LightingUBO = 0;
 
 	void Init()
 	{
@@ -29,18 +29,18 @@ namespace Duck::Renderer
 		glFrontFace(GL_CW);
 
 		// Create Camera UBO
-		glGenBuffers(1, &cameraUBO);
-		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+		glGenBuffers(1, &m_CameraUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_CameraUBO);
 		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(Matrix4) + sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 0, cameraUBO);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_CameraUBO);
 
 		// Create Lighting UBO
-		glGenBuffers(1, &lightingUBO);
-		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
+		glGenBuffers(1, &m_LightingUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_LightingUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightingUBO);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_LightingUBO);
 
 		Logger::Info("Renderer Initialized");
 	}
@@ -56,7 +56,7 @@ namespace Duck::Renderer
 		// If main camera exists update global uniform camera data
 		if (Camera::GetMain())
 		{
-			glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+			glBindBuffer(GL_UNIFORM_BUFFER, m_CameraUBO);
 			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrix4), &Camera::GetMain()->Projection()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(Matrix4), sizeof(Matrix4), &Camera::GetMain()->View()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(Matrix4), sizeof(Vector3), &Camera::GetMain()->transform.position);
@@ -64,7 +64,7 @@ namespace Duck::Renderer
 		}
 
 		//Lighting UBO
-		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, m_LightingUBO);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &Lighting::AmbientLight.GetLight());
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}

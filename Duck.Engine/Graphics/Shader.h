@@ -24,8 +24,9 @@ namespace Duck
 		void SetMatrix4(const char* name, const Matrix4& m);
 
 	private:
-		unsigned int program = 0;
-		mutable std::unordered_map<const char*, int> cachedUniforms;
-		int getUniformLocation(const char* name) const;
+		unsigned int m_Program = 0;
+		mutable std::unordered_map<const char*, int> m_Cache;
+
+		int GetUniformLocation(const char* name) const;
 	};
 }

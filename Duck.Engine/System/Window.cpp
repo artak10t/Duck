@@ -16,34 +16,31 @@
 
 namespace Duck::Window
 {
-	//Remove dependency from OpenGL
-	//REFACTOR ALL CODE, Clearer code for _lastPosition, _lastWidth, _lastResoultion
-
 	// OpenGL
-	static GLFWwindow* window = nullptr;
-	static GLFWmonitor* monitor = nullptr;
-	static const GLFWvidmode* vidmode = nullptr;
+	static GLFWwindow* m_Window = nullptr;
+	static GLFWmonitor* m_Monitor = nullptr;
+	static const GLFWvidmode* m_Vidmode = nullptr;
 
 	// Window
-	static bool vsync = DEFAULT_VSYNC;
-	static int lastResolutionWidth = 0, lastResolutionHeight = 0;
-	static int lastWidth = 0, lastHeight = 0;
-	static int lastPosX = 0, lastPosY = 0;
-	static float aspect = 1.6f;
+	static bool m_Vsync = DEFAULT_VSYNC;
+	static int m_LastResolutionWidth = 0, m_LastResolutionHeight = 0;
+	static int m_LastWidth = 0, m_LastHeight = 0;
+	static int m_LastPosX = 0, m_LastPosY = 0;
+	static float m_Aspect = 1.6f;
 
-	static void cameraUpdate(int width, int height)
+	static void UpdateCamera(int width, int height)
 	{
 		if (Camera::GetMain())
 			Camera::GetMain()->RecalculateProjectionMatrix();
 	}
 
-	static void onFramebufferSize(GLFWwindow* window, int width, int height)
+	static void OnFramebufferSize(GLFWwindow* window, int width, int height)
 	{
 		if (!width || !height)
 			return;
 
-		aspect = static_cast<float>(width) / height;
-		cameraUpdate(width, height);
+		m_Aspect = static_cast<float>(width) / height;
+		UpdateCamera(width, height);
 		glViewport(0, 0, width, height);
 	}
 
@@ -55,38 +52,38 @@ namespace Duck::Window
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		monitor = glfwGetPrimaryMonitor();
-		vidmode = glfwGetVideoMode(monitor);
+		m_Monitor = glfwGetPrimaryMonitor();
+		m_Vidmode = glfwGetVideoMode(m_Monitor);
 
 		glfwWindowHint(GLFW_MAXIMIZED, DEFAULT_MAXIMIZED);
 
 		// Create Window
 		if (DEFAULT_MAXIMIZED)
 		{
-			window = glfwCreateWindow(vidmode->width, vidmode->height, DEFAULT_TITLE, NULL, NULL);
-			lastResolutionWidth = vidmode->width;
-			lastResolutionHeight = vidmode->height;
-			aspect = static_cast<float>(vidmode->width) / vidmode->height;
+			m_Window = glfwCreateWindow(m_Vidmode->width, m_Vidmode->height, DEFAULT_TITLE, NULL, NULL);
+			m_LastResolutionWidth = m_Vidmode->width;
+			m_LastResolutionHeight = m_Vidmode->height;
+			m_Aspect = static_cast<float>(m_Vidmode->width) / m_Vidmode->height;
 		}
 		else
 		{
-			window = glfwCreateWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_TITLE, NULL, NULL);
-			lastResolutionWidth = DEFAULT_WIDTH;
-			lastResolutionHeight = DEFAULT_HEIGHT;
-			aspect = static_cast<float>(DEFAULT_WIDTH) / DEFAULT_HEIGHT;
+			m_Window = glfwCreateWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_TITLE, NULL, NULL);
+			m_LastResolutionWidth = DEFAULT_WIDTH;
+			m_LastResolutionHeight = DEFAULT_HEIGHT;
+			m_Aspect = static_cast<float>(DEFAULT_WIDTH) / DEFAULT_HEIGHT;
 		}
 
-		assert(window != nullptr);
+		assert(m_Window != nullptr);
 
 		// Set Context
-		glfwMakeContextCurrent(window);
-		glfwSetFramebufferSizeCallback(window, onFramebufferSize);
+		glfwMakeContextCurrent(m_Window);
+		glfwSetFramebufferSizeCallback(m_Window, OnFramebufferSize);
 
 		// Initialize Renderer
 		Renderer::Init();
 
-		glViewport(0, 0, lastResolutionWidth, lastResolutionHeight);
-		cameraUpdate(lastResolutionWidth, lastResolutionHeight);
+		glViewport(0, 0, m_LastResolutionWidth, m_LastResolutionHeight);
+		UpdateCamera(m_LastResolutionWidth, m_LastResolutionHeight);
 
 		glfwSwapInterval(DEFAULT_VSYNC);
 		SetFullscreen(DEFAULT_FULLSCREEN);
@@ -94,54 +91,54 @@ namespace Duck::Window
 
 	void SwapBuffers()
 	{
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(m_Window);
 	}
 
 	void Destroy()
 	{
-		glfwDestroyWindow(window);
+		glfwDestroyWindow(m_Window);
 		glfwTerminate();
 	}
 
 	const bool IsOpen()
 	{
-		return !glfwWindowShouldClose(window);
+		return !glfwWindowShouldClose(m_Window);
 	}
 
 	void SetTitle(const char* title)
 	{
-		glfwSetWindowTitle(window, title);
+		glfwSetWindowTitle(m_Window, title);
 	}
 
 	void SetFullscreen(bool fullscreen)
 	{
 		if (fullscreen)
 		{
-			glfwGetWindowPos(window, &lastPosX, &lastPosY);
-			glfwGetWindowSize(window, &lastWidth, &lastHeight);
-			glfwSetWindowMonitor(window, monitor, 0, 0, lastResolutionWidth, lastResolutionHeight, vidmode->refreshRate);
+			glfwGetWindowPos(m_Window, &m_LastPosX, &m_LastPosY);
+			glfwGetWindowSize(m_Window, &m_LastWidth, &m_LastHeight);
+			glfwSetWindowMonitor(m_Window, m_Monitor, 0, 0, m_LastResolutionWidth, m_LastResolutionHeight, m_Vidmode->refreshRate);
 		}
 		else
 		{
-			glfwSetWindowMonitor(window, NULL, lastPosX, lastPosY, lastWidth, lastHeight, 0);
+			glfwSetWindowMonitor(m_Window, NULL, m_LastPosX, m_LastPosY, m_LastWidth, m_LastHeight, 0);
 		}
 
-		SetVSync(vsync);
+		SetVSync(m_Vsync);
 	}
 
 	void SetResolution(int width, int height)
 	{
-		glfwRestoreWindow(window);
-		glfwSetWindowSize(window, width, height);
-		lastResolutionWidth = width;
-		lastResolutionHeight = height;
-		lastWidth = width;
-		lastHeight = height;
+		glfwRestoreWindow(m_Window);
+		glfwSetWindowSize(m_Window, width, height);
+		m_LastResolutionWidth = width;
+		m_LastResolutionHeight = height;
+		m_LastWidth = width;
+		m_LastHeight = height;
 	}
 
 	const float& GetAspectRatio()
 	{
-		return aspect;
+		return m_Aspect;
 	}
 
 	void SetVSync(bool vsync)

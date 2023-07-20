@@ -5,7 +5,7 @@
 
 namespace Duck::Input
 {
-	static GLFWwindow* window = nullptr;
+	static GLFWwindow* m_Window = nullptr;
 
 	// Keyboard
 	struct KeyState
@@ -14,129 +14,129 @@ namespace Duck::Input
 		bool pressed = false;
 		bool up = false;
 	};
-	static std::unordered_map<int, KeyState> keyMap = {};
+	static std::unordered_map<int, KeyState> m_KeyMap = {};
 
 
 	//Mouse
-	static bool isCursorLocked = false;
-	static Vector2 mouseLastPosition = { 0, 0 };
-	static Vector2 mouseDelta = { 0, 0 };
-	static Vector2 mousePosition = { 0, 0 };
-	static Vector2 mouseScroll = { 0, 0 };
+	static bool m_IsCursorLocked = false;
+	static Vector2 m_MouseLastPosition = { 0, 0 };
+	static Vector2 m_MouseDelta = { 0, 0 };
+	static Vector2 m_MousePosition = { 0, 0 };
+	static Vector2 m_MouseScroll = { 0, 0 };
 
-	static void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
+	static void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
 		switch (action)
 		{
 		case GLFW_PRESS:
-			keyMap[key].down = true;
-			keyMap[key].pressed = true;
-			keyMap[key].up = false;
+			m_KeyMap[key].down = true;
+			m_KeyMap[key].pressed = true;
+			m_KeyMap[key].up = false;
 			break;
 		case GLFW_RELEASE:
-			keyMap[key].down = false;
-			keyMap[key].pressed = false;
-			keyMap[key].up = true;
+			m_KeyMap[key].down = false;
+			m_KeyMap[key].pressed = false;
+			m_KeyMap[key].up = true;
 			break;
 		}
 	}
 
-	static void onMouseButton(GLFWwindow* window, int button, int action, int mods)
+	static void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 	{
-		onKey(window, button, -1, action, mods);
+		OnKey(window, button, -1, action, mods);
 	}
 
-	static void onMousePosition(GLFWwindow* window, double x, double y)
+	static void OnMousePosition(GLFWwindow* window, double x, double y)
 	{
-		mousePosition.x = static_cast<float>(x);
-		mousePosition.y = static_cast<float>(y);
+		m_MousePosition.x = static_cast<float>(x);
+		m_MousePosition.y = static_cast<float>(y);
 	}
 
-	static void onMouseScroll(GLFWwindow* window, double deltaX, double deltaY)
+	static void OnMouseScroll(GLFWwindow* window, double deltaX, double deltaY)
 	{
-		mouseScroll.x = static_cast<float>(deltaX);
-		mouseScroll.y = static_cast<float>(deltaY);
+		m_MouseScroll.x = static_cast<float>(deltaX);
+		m_MouseScroll.y = static_cast<float>(deltaY);
 	}
 
 
 	void Init()
 	{
-		window = glfwGetCurrentContext();
+		m_Window = glfwGetCurrentContext();
 
-		assert(window != NULL);
+		assert(m_Window != NULL);
 
-		glfwSetKeyCallback(window, onKey);
-		glfwSetMouseButtonCallback(window, onMouseButton);
-		glfwSetCursorPosCallback(window, onMousePosition);
-		glfwSetScrollCallback(window, onMouseScroll);
+		glfwSetKeyCallback(m_Window, OnKey);
+		glfwSetMouseButtonCallback(m_Window, OnMouseButton);
+		glfwSetCursorPosCallback(m_Window, OnMousePosition);
+		glfwSetScrollCallback(m_Window, OnMouseScroll);
 	}
 
 	void PollEvents()
 	{
-		mouseLastPosition = mousePosition;
-		mouseScroll = { 0, 0 };
+		m_MouseLastPosition = m_MousePosition;
+		m_MouseScroll = { 0, 0 };
 		glfwPollEvents();
 	}
 
 	bool IsKeyPressed(KeyCode key)
 	{
-		return keyMap[key].pressed;
+		return m_KeyMap[key].pressed;
 	}
 
 	bool IsKeyDown(KeyCode key)
 	{
-		if (!keyMap[key].down)
+		if (!m_KeyMap[key].down)
 			return false;
 
-		keyMap[key].down = false;
+		m_KeyMap[key].down = false;
 		return true;
 	}
 
 	bool IsKeyUp(KeyCode key)
 	{
-		if (!keyMap[key].up)
+		if (!m_KeyMap[key].up)
 			return false;
 
-		keyMap[key].up = false;
+		m_KeyMap[key].up = false;
 		return true;
 	}
 	
 	Vector2& GetMousePosition()
 	{
-		return mousePosition;
+		return m_MousePosition;
 	}
 
 	Vector2& GetMouseDelta()
 	{
-		mouseDelta.x = mousePosition.x - mouseLastPosition.x;
-		mouseDelta.y = mousePosition.y - mouseLastPosition.y;
+		m_MouseDelta.x = m_MousePosition.x - m_MouseLastPosition.x;
+		m_MouseDelta.y = m_MousePosition.y - m_MouseLastPosition.y;
 
-		return mouseDelta;
+		return m_MouseDelta;
 	}
 
 	Vector2& GetMouseScroll()
 	{
-		return mouseScroll;
+		return m_MouseScroll;
 	}
 
 	void SetCursorLock(const bool lock)
 	{
-		isCursorLocked = lock;
+		m_IsCursorLocked = lock;
 
 		if (lock)
 		{
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-			glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetInputMode(m_Window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 		}
 		else
 		{
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_FALSE);
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			glfwSetInputMode(m_Window, GLFW_RAW_MOUSE_MOTION, GLFW_FALSE);
 		}
 	}
 
 	const bool IsCursorLocked()
 	{
-		return isCursorLocked;
+		return m_IsCursorLocked;
 	}
 }

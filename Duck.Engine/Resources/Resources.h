@@ -2,8 +2,6 @@
 
 namespace Duck::Resources
 {
-	inline std::string AssetsPath = "";
-
 	void Init();
 
 	template<typename T, typename ...Args>
@@ -11,6 +9,8 @@ namespace Duck::Resources
 
 	template<typename T, typename ...Args>
 	void Unload(const char* file, Args... args) { return nullptr; }
+
+	std::string GetAssetsPath();
 }
 
 #include "AssetTexture.h"

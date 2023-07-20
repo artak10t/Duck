@@ -67,7 +67,6 @@ namespace Duck
         cgltf_data* data = NULL;
         cgltf_result result = cgltf_parse_file(&options, path, &data);
 
-        //BETTER ERROR CHECKING
         if (result != cgltf_result_success) 
         {
             DUCK_ASSERT(false, "Model - Could not load '%s'", path);
@@ -90,22 +89,22 @@ namespace Duck
             return;
         }
 
-        processNode(&meshes, data->scene->nodes[0]);
+        processNode(&m_Meshes, data->scene->nodes[0]);
 
         cgltf_free(data);
     }
 
     Model::~Model()
     {
-        for (unsigned int i = 0; i < meshes.size(); i++)
-            delete meshes[i];
+        for (unsigned int i = 0; i < m_Meshes.size(); i++)
+            delete m_Meshes[i];
 
-        meshes.clear();
+        m_Meshes.clear();
     }
 
     const void Model::Draw()
     {
-        for (unsigned int i = 0; i < meshes.size(); i++)
-            meshes[i]->Draw();
+        for (unsigned int i = 0; i < m_Meshes.size(); i++)
+            m_Meshes[i]->Draw();
     }
 }

@@ -10,6 +10,6 @@ namespace Duck
 		virtual void RecalculateProjectionMatrix() override;
 
 	private:
-		float fov;
+		float m_Fov;
 	};
 }

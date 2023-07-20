@@ -2,7 +2,6 @@
 #include "../pch.h"
 #include <stdio.h>
 
-//Support colors for windows
 //ANSI Colors
 #define COLOR_TRACE "\033[0;90m"
 #define COLOR_DEBUG "\033[0;97m"
@@ -11,7 +10,7 @@
 #define COLOR_ERROR "\033[0;91m"
 #define COLOR_FATAL "\033[0;97;41m"
 
-//Assertions
+//Macros
 #define DUCK_ASSERT(x, ...) { if(!(x)) { Duck::Logger::Fatal(__VA_ARGS__); exit(-1); } }
 
 namespace Duck::Logger
