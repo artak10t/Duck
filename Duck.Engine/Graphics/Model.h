@@ -10,12 +10,11 @@ namespace Duck
 	class Model final
 	{
 	public:
-		Model(const char* path);
+		Model(const std::vector<Mesh*>& meshes);
 		~Model();
 		const void Draw();
 
 	private:
 		std::vector<Mesh*> m_Meshes;
-		std::vector<Texture*> m_Textures;
 	};
 }

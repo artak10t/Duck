@@ -15,3 +15,4 @@ namespace Duck::Resources
 
 #include "AssetTexture.h"
 #include "AssetShader.h"
+#include "AssetModel.h"

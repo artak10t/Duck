@@ -12,7 +12,7 @@ using namespace Duck;
 class Weapon : public Component
 {
 private:
-	Model m_Model = Model("C:/Users/Spartak/Desktop/Duck/Duck.Game/Assets/Weapon.glb");
+	Model* m_Model = Resources::Load<Model>("Weapon.glb");
 	Shader* m_Shader = Resources::Load<Shader>("Default.shader");
 	Texture* m_Texture = Resources::Load<Texture>("Weapon_texture.png", Texture::Filter::Point, Texture::Wrap::Clamp);
 
@@ -31,6 +31,6 @@ public:
 		m_Shader->SetVector3("light", Vector3(-15, 15, 15));
 		m_Texture->Bind();
 		m_Shader->Bind();
-		m_Model.Draw();
+		m_Model->Draw();
 	}
 };

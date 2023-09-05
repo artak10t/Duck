@@ -6,7 +6,6 @@ using namespace Duck;
 #include "Scripts/BoxComponent.h"
 #include "Scripts/Weapon.h"
 #include "Scripts/KinematicWeaponAnimation.h"
-//*Fix mesh, vertecies, uv's and normals should be separate. Take a look on Unity's mesh creation
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //*FIX AssetsPath string to be independent from system and fix green highlights
 //*Fix Null main camera
