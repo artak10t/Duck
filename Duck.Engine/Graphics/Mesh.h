@@ -20,7 +20,7 @@ namespace Duck
 		Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<unsigned int>& triangles);
 		Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<Vector2>& uv, const std::vector<unsigned int>& triangles);
 		~Mesh();
-		const void UploadMeshData();
+		const void UploadData();
 		const void Draw();
 
 	private:

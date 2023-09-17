@@ -22,7 +22,9 @@ namespace Duck
 		glGenBuffers(1, &m_VBO);
 		glGenBuffers(1, &m_EBO);
 
-		UploadMeshData();
+		UploadData();
+
+		//Vertex Attributes
 
 		// Bind VAO
 		glBindVertexArray(m_VAO);
@@ -36,15 +38,15 @@ namespace Duck
 		size_t vertices_size = vertices.size() * sizeof(Vector3);
 		size_t normals_size = normals.size() * sizeof(Vector3);
 
-		// Bind Position vertex attribute
+		// Bind Position Attribute
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)0);
 
-		// Bind Normal vertex attribute
+		// Bind Normal Attribute
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)(vertices_size));
 
-		// Bind UV vertex attribute
+		// Bind UV Attribute
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), (void*)(vertices_size + normals_size));
 
@@ -65,7 +67,7 @@ namespace Duck
 		glDeleteVertexArrays(1, &m_VAO);
 	}
 	
-	const void Mesh::UploadMeshData()
+	const void Mesh::UploadData()
 	{
 		// Bind VAO
 		glBindVertexArray(m_VAO);

@@ -5,9 +5,9 @@ using namespace Duck;
 #include "Scripts/FlyCamera.h"
 #include "Scripts/BoxComponent.h"
 //SCENE->SCENE SHOULD BE A CLASS
-//Model should not have pointer to meshes but rather keep meshes in it
 //FIX WHEN TWO SAME KEYS ARE DOWN (Reset in poll, check Game.cpp) BETTER MOUSE DELTA INPLEMENTATION
 //Add getters and setters for fullscreen, vsync, etc.
+//Model should not have pointer to meshes but rather keep meshes in it
 
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //*FIX AssetsPath string to be independent from system and fix green highlights
@@ -53,7 +53,7 @@ public:
 		if (Input::IsKeyPressed(Input::G))
 		{
 			boxComp->m_Mesh.vertices[0] += Vector3(0, deltaTime, 0);
-			boxComp->m_Mesh.UploadMeshData();
+			boxComp->m_Mesh.UploadData();
 		}
 
 		//FIX WHEN TWO SAME KEYS ARE DOWN (Reset in poll)
