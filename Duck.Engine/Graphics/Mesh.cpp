@@ -3,37 +3,50 @@
 
 namespace Duck
 {
-	Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
+	Mesh::Mesh() : Mesh(std::vector<Vector3> {}, std::vector<Vector3> {}, std::vector<Vector2> {}, std::vector<unsigned int> {}) {}
+
+	Mesh::Mesh(const std::vector<Vector3>& vertices, const std::vector<unsigned int>& triangles) : Mesh(vertices, std::vector<Vector3> {}, std::vector<Vector2> {}, triangles) {}
+
+	Mesh::Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector2>& uv, const std::vector<unsigned int>& triangles) : Mesh(vertices, std::vector<Vector3> {}, uv, triangles) {}
+
+	Mesh::Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<unsigned int>& triangles) : Mesh(vertices, normals, std::vector<Vector2>{}, triangles) {}
+
+	Mesh::Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<Vector2>& uv, const std::vector<unsigned int>& triangles)
 	{
-		m_Vertices = vertices;
-		m_Indices = indices;
+		this->vertices = vertices;
+		this->normals = normals;
+		this->uv = uv;
+		this->triangles = triangles;
 
 		glGenVertexArrays(1, &m_VAO);
 		glGenBuffers(1, &m_VBO);
 		glGenBuffers(1, &m_EBO);
+
+		UploadMeshData();
 
 		// Bind VAO
 		glBindVertexArray(m_VAO);
 
 		// Bind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
 		// Bind EBO
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+
+		size_t vertices_size = vertices.size() * sizeof(Vector3);
+		size_t normals_size = normals.size() * sizeof(Vector3);
 
 		// Bind Position vertex attribute
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)0);
 
 		// Bind Normal vertex attribute
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)(vertices_size));
 
 		// Bind UV vertex attribute
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), (void*)(vertices_size + normals_size));
 
 		// Unbind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -51,11 +64,54 @@ namespace Duck
 		glDeleteBuffers(1, &m_VBO);
 		glDeleteVertexArrays(1, &m_VAO);
 	}
+	
+	const void Mesh::UploadMeshData()
+	{
+		// Bind VAO
+		glBindVertexArray(m_VAO);
+
+		// Bind VBO
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+
+		size_t vertices_size = vertices.size() * sizeof(Vector3);
+		size_t normals_size = normals.size() * sizeof(Vector3);
+		size_t uv_size = uv.size() * sizeof(Vector2);
+
+		int current_allocated_size = 0;
+		glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &current_allocated_size);
+
+		if((vertices_size + normals_size + uv_size) != current_allocated_size)
+			glBufferData(GL_ARRAY_BUFFER, vertices_size + normals_size + uv_size, nullptr, GL_STATIC_DRAW);
+
+		if (vertices_size != 0)
+			glBufferSubData(GL_ARRAY_BUFFER, 0, vertices_size, &vertices[0]);
+
+		if (normals_size != 0)
+			glBufferSubData(GL_ARRAY_BUFFER, vertices_size, normals_size, &normals[0]);
+
+		if (uv_size != 0)
+			glBufferSubData(GL_ARRAY_BUFFER, vertices_size + normals_size, uv_size, &uv[0]);
+
+		// Bind EBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
+		if (triangles.size() != 0)
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->triangles.size() * sizeof(unsigned int), &this->triangles[0], GL_STATIC_DRAW);
+
+		// Unbind VBO
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		// Unbind VAO
+		glBindVertexArray(0);
+
+		// Unbind EBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 
 	const void Mesh::Draw()
 	{
 		glBindVertexArray(m_VAO);
-		glDrawElements(GL_TRIANGLES, GLsizei(m_Indices.size()), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, GLsizei(triangles.size()), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 }

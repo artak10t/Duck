@@ -67,7 +67,7 @@ namespace Duck::Resources
 		// Cache Shader
 		m_Cache.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
 
-		Logger::Info("Shader - '%s' Loaded", file);
+		Logger::Trace("Shader - '%s' Loaded", file);
 
 		return m_Cache.at(file);
 	}

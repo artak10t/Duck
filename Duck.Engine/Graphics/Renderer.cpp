@@ -42,7 +42,7 @@ namespace Duck::Renderer
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_LightingUBO);
 
-		Logger::Info("Renderer Initialized");
+		Logger::Trace("Renderer Initialized");
 	}
 
 	void ClearBuffer()

@@ -11,28 +11,34 @@ namespace Duck::Resources
 
     Mesh* processMesh(const cgltf_primitive* primitive)
     {
-        std::vector<Vertex> vertices;
+        std::vector<Vector3> vertices;
+        std::vector<Vector3> normals;
+        std::vector<Vector2> uvs;
         std::vector<unsigned int> indices;
 
         // Process Attributes
         for (unsigned int i = 0; i < primitive->attributes[0].data->count; i++)
         {
-            Vertex vertex = { Vector3(0), Vector3(0), Vector2(0) };
+            Vector3 vertex = Vector3(0);
+            Vector3 normal = Vector3(0);
+            Vector2 uv = Vector2(0);
 
             // Read Position
-            cgltf_accessor_read_float(primitive->attributes[0].data, i, &vertex.position[0], 3);
+            cgltf_accessor_read_float(primitive->attributes[0].data, i, &vertex[0], 3);
 
             // Read Normal
-            cgltf_accessor_read_float(primitive->attributes[1].data, i, &vertex.normal[0], 3);
+            cgltf_accessor_read_float(primitive->attributes[1].data, i, &normal[0], 3);
 
             // Read UV
-            cgltf_accessor_read_float(primitive->attributes[2].data, i, &vertex.uv[0], 2);
+            cgltf_accessor_read_float(primitive->attributes[2].data, i, &uv[0], 2);
 
             // Flip UV Vertically
-            vertex.uv.y *= -1;
-            vertex.uv.y += 1;
+            uv.y *= -1;
+            uv.y += 1;
 
             vertices.push_back(vertex);
+            normals.push_back(normal);
+            uvs.push_back(uv);
         }
 
         // Process Indices
@@ -43,7 +49,7 @@ namespace Duck::Resources
             indices.push_back(j);
         }
 
-        Mesh* m = new Mesh(vertices, indices);
+        Mesh* m = new Mesh(vertices, normals, uvs, indices);
         return m;
     }
 
@@ -137,7 +143,7 @@ namespace Duck::Resources
 		// Cache Model
 		m_Cache.emplace(file, new Model(tempMesh));
 
-		Logger::Info("Shader - '%s' Loaded", file);
+		Logger::Trace("Model - '%s' Loaded", file);
 
 		return m_Cache.at(file);
 	}

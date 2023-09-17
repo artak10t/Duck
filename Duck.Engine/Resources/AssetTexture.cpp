@@ -35,7 +35,7 @@ namespace Duck::Resources
 		m_Cache.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
 		stbi_image_free(textureData);
 
-		Logger::Info("Texture - '%s' Loaded", file);
+		Logger::Trace("Texture - '%s' Loaded", file);
 
 		return m_Cache.at(file);
 	}

@@ -6,24 +6,24 @@
 
 namespace Duck
 {
-	struct Vertex final
-	{
-		Vector3 position;
-		Vector3 normal;
-		Vector2 uv;
-	};
-
 	class Mesh final
 	{
 	public:
-		Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
+		std::vector<Vector3> vertices;
+		std::vector<Vector3> normals;
+		std::vector<Vector2> uv;
+		std::vector<unsigned int> triangles;
+
+		Mesh();
+		Mesh(const std::vector<Vector3>& vertices, const std::vector<unsigned int>& triangles);
+		Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector2>& uv, const std::vector<unsigned int>& triangles);
+		Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<unsigned int>& triangles);
+		Mesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<Vector2>& uv, const std::vector<unsigned int>& triangles);
 		~Mesh();
+		const void UploadMeshData();
 		const void Draw();
 
 	private:
-		std::vector<Vertex> m_Vertices;
-		std::vector<unsigned int> m_Indices;
-
 		unsigned int m_VAO = 0;
 		unsigned int m_VBO = 0;
 		unsigned int m_EBO = 0;

@@ -12,23 +12,37 @@ using namespace Duck;
 class BoxComponent : public Component
 {
 private:
-	std::vector<Vertex> m_Vertices =
-	{
-		{Vector3(1, 1, -1), Vector3(1, 1, -1), Vector2(1, 1)},
-		{Vector3(1, -1, -1), Vector3(1, -1, -1), Vector2(1, 0)},
-		{Vector3(-1, -1, -1), Vector3(-1, -1, -1), Vector2(0, 0)},
-		{Vector3(-1, 1, -1), Vector3(-1, 1, -1), Vector2(0, 1)},
-		{Vector3(1, 1, 1), Vector3(1, 1, 1), Vector2(0, 1)},
-		{Vector3(1, -1, 1), Vector3(1, -1, 1), Vector2(0, 0)},
-		{Vector3(-1, -1, 1), Vector3(-1, -1, 1), Vector2(1, 0)},
-		{Vector3(-1, 1, 1), Vector3(-1, 1, 1), Vector2(1, 1)},
-		{Vector3(-1, 1, 1), Vector3(-1, 1, 1), Vector2(0, 0)},
-		{Vector3(1, -1, 1), Vector3(1, -1, 1), Vector2(1, 1)},
-		{Vector3(1, 1, 1), Vector3(1, 1, 1), Vector2(1, 0)},
-		{Vector3(-1, -1, 1), Vector3(-1, -1, 1), Vector2(0, 1)},
+	std::vector<Vector3> vertices =
+	{	
+		Vector3(1, 1, -1), Vector3(1, -1, -1),
+		Vector3(-1, -1, -1), Vector3(-1, 1, -1),
+		Vector3(1, 1, 1), Vector3(1, -1, 1),
+		Vector3(-1, -1, 1), Vector3(-1, 1, 1),
+		Vector3(-1, 1, 1), Vector3(1, -1, 1),
+		Vector3(1, 1, 1), Vector3(-1, -1, 1)
 	};
 
-	std::vector<unsigned int> m_Indices =
+	std::vector<Vector3> normals =
+	{
+		Vector3(1, 1, -1), Vector3(1, -1, -1),
+		Vector3(-1, -1, -1), Vector3(-1, 1, -1),
+		Vector3(1, 1, 1), Vector3(1, -1, 1),
+		Vector3(-1, -1, 1), Vector3(-1, 1, 1),
+		Vector3(-1, 1, 1), Vector3(1, -1, 1),
+		Vector3(1, 1, 1), Vector3(-1, -1, 1)
+	};
+
+	std::vector<Vector2> uv =
+	{
+		Vector2(1, 1), Vector2(1, 0),
+		Vector2(0, 0), Vector2(0, 1),
+		Vector2(0, 1), Vector2(0, 0),
+		Vector2(1, 0), Vector2(1, 1),
+		Vector2(0, 0), Vector2(1, 1),
+		Vector2(1, 0), Vector2(0, 1)
+	};
+
+	std::vector<unsigned int> triangles =
 	{
 		0, 1, 3, 1, 2, 3,
 		0, 4, 1, 1, 4, 5,
@@ -38,11 +52,12 @@ private:
 		1, 9, 2, 2, 9, 11
 	};
 
-	Mesh m_Mesh = Mesh(m_Vertices, m_Indices);
 	Shader* m_Shader = Resources::Load<Shader>("Default.shader");
 	Texture* m_Texture = Resources::Load<Texture>("metalbox_diffuse.png");
 
 public:
+	Mesh m_Mesh = Mesh(vertices, normals, uv, triangles);
+
 	void Init()
 	{
 		m_Shader->SetInt("texture_0", 0);
