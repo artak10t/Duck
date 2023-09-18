@@ -144,6 +144,6 @@ namespace Duck::Window
 	void SetVSync(bool vsync)
 	{
 		glfwSwapInterval(vsync);
-		vsync = vsync;
+		m_Vsync = vsync;
 	}
 }

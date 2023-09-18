@@ -12,7 +12,7 @@ namespace Duck
 		static Camera* GetMain();
 		static void SetMain(Camera& camera);
 
-		Camera(const float& near = .1f, const float& far = 100.f);
+		Camera(const float& near = .1f, const float& far = 500.f);
 		~Camera();
 
 		const Matrix4& Projection();
@@ -23,7 +23,7 @@ namespace Duck
 		static Camera* m_MainCamera;
 
 	protected:
-		float m_Near = .1f, m_Far = 100.f;
+		float m_Near = .1f, m_Far = 500.f;
 		Matrix4 m_Projection = Matrix4(1);
 		Matrix4 m_View = Matrix4(1);
 	};
