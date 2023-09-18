@@ -32,10 +32,10 @@ namespace Duck::Resources
 			DUCK_ASSERT(false, "Texture - %s '%s'", stbi_failure_reason(), file);
 
 		// Cache Texture
+		Logger::Trace("Texture - '%s' Loading", file);
+
 		m_Cache.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
 		stbi_image_free(textureData);
-
-		Logger::Trace("Texture - '%s' Loaded", file);
 
 		return m_Cache.at(file);
 	}

@@ -9,15 +9,12 @@ using namespace Duck;
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //*FIX AssetsPath string to be independent from system and fix green highlights
-//*Fix Null main camera
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
 //Window - REFACTOR ALL CODE, Clearer code for _lastPosition, _lastWidth, _lastResoultion
 //*FIX ALL WARNINGS
 //Implement lighting, make Light class hold enum type of the light (Similar to Unity)
-//Refactor model loading and make sure everything works correctly
 //Layered rendering (Weapon always on top of everything)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
-//Events System (Cherno)
 //Text Rendering, UI (render always forward) renderer build native C++ with HTML/CSS UI, console
 //Particle systems
 //Make Scene class and have scene serialization
@@ -44,6 +41,7 @@ public:
 	void Update(float deltaTime)
 	{
 		scene.Update(deltaTime);
+
 		FlyCamera::Update(deltaTime);
 
 		if (Input::IsKey(Input::G))
@@ -54,12 +52,6 @@ public:
 
 		if (Input::IsKeyDown(Input::Space))
 		{
-			Logger::Debug("1");
-		}
-
-		if (Input::IsKeyDown(Input::Space))
-		{
-			Logger::Debug("2");
 			Lighting::AmbientLight.SetIntensity(Lighting::AmbientLight.GetIntensity() + 0.1f);
 		}
 	}

@@ -62,12 +62,12 @@ namespace Duck::Resources
 		// Load Shader
 		std::string vertexData;
 		std::string fragmentData;
+		Logger::Trace("Shader - '%s' Loading", file);
+
 		DUCK_ASSERT(ReadShaderFile(path.c_str(), vertexData, fragmentData), "Shader - File not found '%s'", file);
 
 		// Cache Shader
 		m_Cache.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
-
-		Logger::Trace("Shader - '%s' Loaded", file);
 
 		return m_Cache.at(file);
 	}

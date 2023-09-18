@@ -79,6 +79,7 @@ namespace Duck::Resources
 		std::string path = GetAssetsPath() + file;
 
 		// Load Model
+        Logger::Trace("Model - '%s' Loading", file);
         cgltf_options options = { cgltf_file_type_invalid, 0 };
         cgltf_data* data = NULL;
         cgltf_result result = cgltf_parse_file(&options, path.c_str(), &data);
@@ -142,8 +143,6 @@ namespace Duck::Resources
 
 		// Cache Model
 		m_Cache.emplace(file, new Model(tempMesh));
-
-		Logger::Trace("Model - '%s' Loaded", file);
 
 		return m_Cache.at(file);
 	}

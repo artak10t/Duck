@@ -15,23 +15,18 @@ namespace Duck
 		int success;
 		char infoLog[512];
 		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-			Logger::Error("Shader - Vertex failed to compile\n%s\n", infoLog);
-		}
+
+		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+		DUCK_ASSERT(success, "Shader - Vertex failed to compile\n%s\n", infoLog)
 
 		// Fragment Shader
 		unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragmentShader, 1, &fragment, NULL);
 		glCompileShader(fragmentShader);
-
 		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-			Logger::Error("Shader - Fragment failed to compile\n%s\n", infoLog);
-		}
+
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		DUCK_ASSERT(success, "Shader - Fragment failed to compile\n%s\n", infoLog)
 
 		// Shader Program
 		m_Program = glCreateProgram();
@@ -40,11 +35,8 @@ namespace Duck
 		glLinkProgram(m_Program);
 
 		glGetProgramiv(m_Program, GL_LINK_STATUS, &success);
-		if (!success) 
-		{
-			glGetProgramInfoLog(m_Program, 512, NULL, infoLog);
-			Logger::Error("Shader - Program failed to link\n%s\n", infoLog);
-		}
+		glGetProgramInfoLog(m_Program, 512, NULL, infoLog);
+		DUCK_ASSERT(success, "Shader - Program failed to link\n%s\n", infoLog)
 
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);

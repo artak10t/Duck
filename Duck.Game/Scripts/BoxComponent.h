@@ -71,6 +71,7 @@ public:
 			return;
 
 		m_Shader->SetMatrix4("model", entity->transform.LocalToWorld());
+		m_Shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * entity->transform.LocalToWorld());
 		m_Texture->Bind();
 		m_Shader->Bind();
 		m_Mesh.Draw();
