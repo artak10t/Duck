@@ -80,7 +80,7 @@ namespace Duck
 			Window::SwapBuffers();
 
 			//Events
-			Input::CleanEvents();
+			Input::ClearEvents();
 		}
 
 		// Destroy App

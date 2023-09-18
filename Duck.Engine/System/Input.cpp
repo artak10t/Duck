@@ -78,7 +78,7 @@ namespace Duck::Input
 		glfwPollEvents();
 	}
 
-	void CleanEvents()
+	void ClearEvents()
 	{
 		for (auto& it : m_KeyMap)
 		{

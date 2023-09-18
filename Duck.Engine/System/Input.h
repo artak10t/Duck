@@ -117,7 +117,7 @@ namespace Duck::Input
 
 	void Init();
 	void PollEvents();
-	void CleanEvents();
+	void ClearEvents();
 
 	bool IsKey(KeyCode key);
 	bool IsKeyDown(KeyCode key);
