@@ -78,7 +78,16 @@ namespace Duck::Input
 		glfwPollEvents();
 	}
 
-	bool IsKeyPressed(KeyCode key)
+	void CleanEvents()
+	{
+		for (auto& it : m_KeyMap)
+		{
+			it.second.down = false;
+			it.second.up = false;
+		}
+	}
+
+	bool IsKey(KeyCode key)
 	{
 		return m_KeyMap[key].pressed;
 	}
@@ -88,7 +97,6 @@ namespace Duck::Input
 		if (!m_KeyMap[key].down)
 			return false;
 
-		m_KeyMap[key].down = false;
 		return true;
 	}
 
@@ -97,7 +105,6 @@ namespace Duck::Input
 		if (!m_KeyMap[key].up)
 			return false;
 
-		m_KeyMap[key].up = false;
 		return true;
 	}
 	

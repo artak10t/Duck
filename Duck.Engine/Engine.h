@@ -66,7 +66,7 @@ namespace Duck
 			// Events
 			Input::PollEvents();
 
-			// Logic
+			// Logic Frame
 			float deltaTime = updateClock.Seconds();
 			app->Update(deltaTime);
 			//Scene::Update(deltaTime);
@@ -78,6 +78,9 @@ namespace Duck
 			app->Draw();
 			//Scene::Draw();
 			Window::SwapBuffers();
+
+			//Events
+			Input::CleanEvents();
 		}
 
 		// Destroy App

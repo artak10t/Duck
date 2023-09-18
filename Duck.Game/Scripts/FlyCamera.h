@@ -14,17 +14,17 @@ namespace FlyCamera
 
 	void Update(float deltaTime)
 	{
-		if (Input::IsKeyPressed(Input::W))
+		if (Input::IsKey(Input::W))
 			Camera::GetMain()->transform.position += Camera::GetMain()->transform.Forward() * deltaTime * m_Speed;
-		else if (Input::IsKeyPressed(Input::S))
+		else if (Input::IsKey(Input::S))
 			Camera::GetMain()->transform.position -= Camera::GetMain()->transform.Forward() * deltaTime * m_Speed;
-		if (Input::IsKeyPressed(Input::D))
+		if (Input::IsKey(Input::D))
 			Camera::GetMain()->transform.position += Camera::GetMain()->transform.Right() * deltaTime * m_Speed;
-		else if (Input::IsKeyPressed(Input::A))
+		else if (Input::IsKey(Input::A))
 			Camera::GetMain()->transform.position -= Camera::GetMain()->transform.Right() * deltaTime * m_Speed;
-		if (Input::IsKeyPressed(Input::E))
+		if (Input::IsKey(Input::E))
 			Camera::GetMain()->transform.position += Camera::GetMain()->transform.Up() * deltaTime * m_Speed;
-		else if (Input::IsKeyPressed(Input::Q))
+		else if (Input::IsKey(Input::Q))
 			Camera::GetMain()->transform.position -= Camera::GetMain()->transform.Up() * deltaTime * m_Speed;
 
 		m_Speed = std::clamp(m_Speed + Input::GetMouseScroll().y, 1.f, 1000.f);

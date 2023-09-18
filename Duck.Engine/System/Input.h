@@ -117,8 +117,9 @@ namespace Duck::Input
 
 	void Init();
 	void PollEvents();
+	void CleanEvents();
 
-	bool IsKeyPressed(KeyCode key);
+	bool IsKey(KeyCode key);
 	bool IsKeyDown(KeyCode key);
 	bool IsKeyUp(KeyCode key);
 	Vector2& GetMousePosition();
