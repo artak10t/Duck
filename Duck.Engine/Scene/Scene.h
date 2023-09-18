@@ -1,45 +1,52 @@
 #pragma once
 #include "Entity.h"
 
-namespace Duck::Scene
+namespace Duck
 {
-	std::vector<std::unique_ptr<Entity>> Entities;
-
-	void Refresh()
+	class Scene 
 	{
-		Entities.erase(std::remove_if(std::begin(Entities), std::end(Entities),
-			[](const std::unique_ptr<Entity>& mEntity)
-			{
-				return !mEntity->IsAlive();
-			}),
-			std::end(Entities));
-	}
+	private:
+		std::vector<std::unique_ptr<Entity>> entities;
 
-	void Update(float deltaTime)
-	{
-		for (int i = 0; i < Entities.size(); i++)
-			Entities[i]->Update(deltaTime);
-	}
+		void removeDestroyedEntites()
+		{
+			entities.erase(std::remove_if(std::begin(entities), std::end(entities),
+				[](const std::unique_ptr<Entity>& mEntity)
+				{
+					return !mEntity->IsAlive();
+				}),
+				std::end(entities));
+		}
 
-	void Draw()
-	{
-		for (int i = 0; i < Entities.size(); i++)
-			Entities[i]->Draw();
-	}
+	public:
+		void Update(float deltaTime)
+		{
+			for (int i = 0; i < entities.size(); i++)
+				entities[i]->Update(deltaTime);
+		}
 
-	void Destroy()
-	{
-		for (int i = 0; i < Entities.size(); i++)
-			Entities[i]->Destroy();
+		void Draw()
+		{
+			for (int i = 0; i < entities.size(); i++)
+				entities[i]->Draw();
 
-		Refresh();
-	}
+			removeDestroyedEntites();
+		}
 
-	Entity* AddEntity()
-	{
-		Entity* e = new Entity();
-		std::unique_ptr<Entity> uPtr{ e };
-		Entities.emplace_back(std::move(uPtr));
-		return e;
-	}
+		void Destroy()
+		{
+			for (int i = 0; i < entities.size(); i++)
+				entities[i]->Destroy();
+
+			removeDestroyedEntites();
+		}
+
+		Entity* AddEntity()
+		{
+			Entity* e = new Entity();
+			std::unique_ptr<Entity> uPtr{ e };
+			entities.emplace_back(std::move(uPtr));
+			return e;
+		}
+	};
 }

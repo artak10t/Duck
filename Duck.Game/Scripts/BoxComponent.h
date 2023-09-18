@@ -6,6 +6,7 @@
 #include <Graphics/Texture.h>
 #include <Graphics/Camera.h>
 #include <Resources/Resources.h>
+#include <System/Logger.h>
 
 using namespace Duck;
 
@@ -60,6 +61,7 @@ public:
 
 	void Init()
 	{
+		Logger::Debug("Init");
 		m_Shader->SetInt("texture_0", 0);
 	}
 

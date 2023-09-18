@@ -69,21 +69,20 @@ namespace Duck
 			// Logic
 			float deltaTime = updateClock.Seconds();
 			app->Update(deltaTime);
-			Scene::Update(deltaTime);
+			//Scene::Update(deltaTime);
 			updateClock.Restart();
 
 			// Rendering
 			Renderer::ClearBuffer();
 			Renderer::UpdateGlobalUBO();
 			app->Draw();
-			Scene::Draw();
-			Scene::Refresh();
+			//Scene::Draw();
 			Window::SwapBuffers();
 		}
 
 		// Destroy App
 		app->Destroy();
-		Scene::Destroy();
+		//Scene::Destroy();
 		delete app;
 
 		Window::Destroy();

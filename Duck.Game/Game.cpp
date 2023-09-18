@@ -4,7 +4,6 @@ using namespace Duck;
 
 #include "Scripts/FlyCamera.h"
 #include "Scripts/BoxComponent.h"
-//SCENE->SCENE SHOULD BE A CLASS
 //FIX WHEN TWO SAME KEYS ARE DOWN (Reset in poll, check Game.cpp) BETTER MOUSE DELTA INPLEMENTATION
 //Add getters and setters for fullscreen, vsync, etc.
 //Model should not have pointer to meshes but rather keep meshes in it
@@ -32,7 +31,8 @@ class Game : App
 {
 private:
 	CameraPerspective camera;
-	Entity* box = Scene::AddEntity();
+	Scene scene;
+	Entity* box = scene.AddEntity();
 	BoxComponent* boxComp;
 
 public:
@@ -48,6 +48,7 @@ public:
 
 	void Update(float deltaTime)
 	{
+		scene.Update(deltaTime);
 		FlyCamera::Update(deltaTime);
 
 		if (Input::IsKeyPressed(Input::G))
@@ -71,12 +72,12 @@ public:
 
 	void Draw()
 	{
-
+		scene.Draw();
 	}
 
 	void Destroy()
 	{
-
+		scene.Destroy();
 	}
 };
 
