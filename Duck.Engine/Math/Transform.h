@@ -11,6 +11,14 @@ namespace Duck
 	template<typename T>
 	struct TTransform<3, T> final
 	{
+	private:
+		//Cached Data
+		TVector<3, T> cached_Position;
+		TQuaternion<T> cached_Rotation;
+		TVector<3, T> cached_Scale;
+		TMatrix<4, 4, T> cached_LocalToWorld;
+
+	public:
 		//Data
 		TVector<3, T> position;
 		TQuaternion<T> rotation;
@@ -56,14 +64,21 @@ namespace Duck
 		//Matrices
 		TMatrix<4, 4, T> LocalToWorld()
 		{
-			TMatrix<4, 4, T> t = Matrix::Translate(TMatrix<4, 4, T>(), position);
-			TMatrix<4, 4, T> r = Matrix::Rotate(TMatrix<4, 4, T>(), rotation);
-			TMatrix<4, 4, T> s = Matrix::Scale(TMatrix<4, 4, T>(), scale);
+			if (cached_Position != position || cached_Rotation != rotation || cached_Scale != scale)
+			{
+				TMatrix<4, 4, T> t = Matrix::Translate(TMatrix<4, 4, T>(), position);
+				TMatrix<4, 4, T> r = Matrix::Rotate(TMatrix<4, 4, T>(), rotation);
+				TMatrix<4, 4, T> s = Matrix::Scale(TMatrix<4, 4, T>(), scale);
+				cached_Position = position;
+				cached_Rotation = rotation;
+				cached_Scale = scale;
+				cached_LocalToWorld = t * r * s;
+			}
 
 			if (parent)
-				return parent->LocalToWorld() * t * r * s;
-			
-			return t * r * s;
+				return parent->LocalToWorld() * cached_LocalToWorld;
+
+			return cached_LocalToWorld;
 		}
 
 		//Directions
