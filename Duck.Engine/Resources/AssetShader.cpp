@@ -9,7 +9,7 @@
 
 namespace Duck::Resources
 {
-	static std::unordered_map<const char*, Shader*> m_Cache;
+	static std::unordered_map<const char*, Shader*> cache;
 
 	static bool ReadShaderFile(const char* path, std::string& vertexData, std::string& fragmentData)
 	{
@@ -53,8 +53,8 @@ namespace Duck::Resources
 	template<>
 	Shader* Load<Shader>(const char* file)
 	{
-		if (m_Cache.find(file) != m_Cache.end())
-			return m_Cache.at(file);
+		if (cache.find(file) != cache.end())
+			return cache.at(file);
 
 		// Get Path
 		std::string path = GetAssetsPath() + file;
@@ -67,18 +67,18 @@ namespace Duck::Resources
 		DUCK_ASSERT(ReadShaderFile(path.c_str(), vertexData, fragmentData), "Shader - File not found '%s'", file);
 
 		// Cache Shader
-		m_Cache.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
+		cache.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));
 
-		return m_Cache.at(file);
+		return cache.at(file);
 	}
 
 	template<>
 	void Unload<Shader>(const char* file)
 	{
-		if (m_Cache.find(file) == m_Cache.end())
+		if (cache.find(file) == cache.end())
 			return;
 
-		delete m_Cache.at(file);
-		m_Cache.erase(file);
+		delete cache.at(file);
+		cache.erase(file);
 	}
 }

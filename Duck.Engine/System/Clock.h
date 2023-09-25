@@ -12,6 +12,6 @@ namespace Duck
 		void Restart();
 
 	private:
-		std::chrono::steady_clock::time_point m_Start;
+		std::chrono::steady_clock::time_point startTime;
 	};
 }

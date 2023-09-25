@@ -7,7 +7,7 @@
 
 namespace Duck::Resources
 {
-	static std::unordered_map<const char*, Texture*> m_Cache;
+	static std::unordered_map<const char*, Texture*> cache;
 
 	template<>
 	Texture* Load<Texture>(const char* file)
@@ -18,8 +18,8 @@ namespace Duck::Resources
 	template<>
 	Texture* Load<Texture>(const char* file, const Texture::Filter filtering, const Texture::Wrap wrapping)
 	{
-		if (m_Cache.find(file) != m_Cache.end())
-			return m_Cache.at(file);
+		if (cache.find(file) != cache.end())
+			return cache.at(file);
 
 		// Get Path
 		std::string path = GetAssetsPath() + file;
@@ -34,19 +34,19 @@ namespace Duck::Resources
 		// Cache Texture
 		Logger::Trace("Texture - '%s' Loading", file);
 
-		m_Cache.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
+		cache.emplace(file, new Texture(textureData, filtering, wrapping, width, height, channels));
 		stbi_image_free(textureData);
 
-		return m_Cache.at(file);
+		return cache.at(file);
 	}
 
 	template<>
 	void Unload<Texture>(const char* file)
 	{
-		if (m_Cache.find(file) == m_Cache.end())
+		if (cache.find(file) == cache.end())
 			return;
 
-		delete m_Cache.at(file);
-		m_Cache.erase(file);
+		delete cache.at(file);
+		cache.erase(file);
 	}
 }

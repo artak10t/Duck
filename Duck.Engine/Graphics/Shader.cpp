@@ -29,35 +29,35 @@ namespace Duck
 		DUCK_ASSERT(success, "Shader - Fragment failed to compile\n%s\n", infoLog)
 
 		// Shader Program
-		m_Program = glCreateProgram();
-		glAttachShader(m_Program, vertexShader);
-		glAttachShader(m_Program, fragmentShader);
-		glLinkProgram(m_Program);
+		program = glCreateProgram();
+		glAttachShader(program, vertexShader);
+		glAttachShader(program, fragmentShader);
+		glLinkProgram(program);
 
-		glGetProgramiv(m_Program, GL_LINK_STATUS, &success);
-		glGetProgramInfoLog(m_Program, 512, NULL, infoLog);
+		glGetProgramiv(program, GL_LINK_STATUS, &success);
+		glGetProgramInfoLog(program, 512, NULL, infoLog);
 		DUCK_ASSERT(success, "Shader - Program failed to link\n%s\n", infoLog)
 
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
 
 		// Bind Camera UBO
-		unsigned int uniformBlockCamera = glGetUniformBlockIndex(m_Program, "CameraUBO");
-		glUniformBlockBinding(m_Program, uniformBlockCamera, 0);
+		unsigned int uniformBlockCamera = glGetUniformBlockIndex(program, "CameraUBO");
+		glUniformBlockBinding(program, uniformBlockCamera, 0);
 
 		// Bind Lighting UBO
-		unsigned int uniformBlockLighting = glGetUniformBlockIndex(m_Program, "LightingUBO");
-		glUniformBlockBinding(m_Program, uniformBlockLighting, 1);
+		unsigned int uniformBlockLighting = glGetUniformBlockIndex(program, "LightingUBO");
+		glUniformBlockBinding(program, uniformBlockLighting, 1);
 	}
 
 	Shader::~Shader()
 	{
-		glDeleteProgram(m_Program);
+		glDeleteProgram(program);
 	}
 
 	void Shader::Bind()
 	{
-		glUseProgram(m_Program);
+		glUseProgram(program);
 	}
 
 	//Uniforms
@@ -100,17 +100,17 @@ namespace Duck
 	//Caching Uniforms
 	int Shader::GetUniformLocation(const char* name) const
 	{
-		if (m_Cache.find(name) != m_Cache.end())
-			return m_Cache[name];
+		if (cachedUniforms.find(name) != cachedUniforms.end())
+			return cachedUniforms[name];
 
-		int l = glGetUniformLocation(m_Program, name);
+		int l = glGetUniformLocation(program, name);
 		if (l == -1)
 		{
 			Logger::Error("Shader - '%s' Matrix4 Uniform doesn't exist", name);
 			return -1;
 		}
 
-		m_Cache[name] = l;
+		cachedUniforms[name] = l;
 		return l;
 	}
 }

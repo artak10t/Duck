@@ -53,16 +53,16 @@ private:
 		1, 9, 2, 2, 9, 11
 	};
 
-	Shader* m_Shader = Resources::Load<Shader>("Default.shader");
-	Texture* m_Texture = Resources::Load<Texture>("metalbox_diffuse.png");
+	Shader* shader = Resources::Load<Shader>("Default.shader");
+	Texture* texture = Resources::Load<Texture>("metalbox_diffuse.png");
 
 public:
-	Mesh m_Mesh = Mesh(vertices, normals, uv, triangles);
+	Mesh mesh = Mesh(vertices, normals, uv, triangles);
 
 	void Init()
 	{
 		Logger::Debug("Init");
-		m_Shader->SetInt("texture_0", 0);
+		shader->SetInt("texture_0", 0);
 	}
 
 	void Draw()
@@ -70,10 +70,10 @@ public:
 		if (!Camera::GetMain())
 			return;
 
-		m_Shader->SetMatrix4("model", entity->transform.LocalToWorld());
-		m_Shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * entity->transform.LocalToWorld());
-		m_Texture->Bind();
-		m_Shader->Bind();
-		m_Mesh.Draw();
+		shader->SetMatrix4("model", entity->transform.LocalToWorld());
+		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * entity->transform.LocalToWorld());
+		texture->Bind();
+		shader->Bind();
+		mesh.Draw();
 	}
 };

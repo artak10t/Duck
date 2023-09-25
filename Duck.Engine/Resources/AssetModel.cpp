@@ -7,7 +7,7 @@
 
 namespace Duck::Resources
 {
-	static std::unordered_map<const char*, Model*> m_Cache;
+	static std::unordered_map<const char*, Model*> cache;
 
     Mesh* processMesh(const cgltf_primitive* primitive)
     {
@@ -72,8 +72,8 @@ namespace Duck::Resources
 	template<>
 	Model* Load<Model>(const char* file)
 	{
-		if (m_Cache.find(file) != m_Cache.end())
-			return m_Cache.at(file);
+		if (cache.find(file) != cache.end())
+			return cache.at(file);
 
 		// Get Path
 		std::string path = GetAssetsPath() + file;
@@ -142,18 +142,18 @@ namespace Duck::Resources
         cgltf_free(data);
 
 		// Cache Model
-		m_Cache.emplace(file, new Model(tempMesh));
+		cache.emplace(file, new Model(tempMesh));
 
-		return m_Cache.at(file);
+		return cache.at(file);
 	}
 
 	template<>
 	void Unload<Model>(const char* file)
 	{
-		if (m_Cache.find(file) == m_Cache.end())
+		if (cache.find(file) == cache.end())
 			return;
 
-		delete m_Cache.at(file);
-		m_Cache.erase(file);
+		delete cache.at(file);
+		cache.erase(file);
 	}
 }

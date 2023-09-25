@@ -10,6 +10,6 @@ namespace Duck
 
 	void CameraOrthographic::RecalculateProjectionMatrix()
 	{
-		m_Projection = Matrix::Orthographic(-Window::GetAspectRatio(), Window::GetAspectRatio(), -1.0f, 1.0f, m_Near, m_Far);
+		projection = Matrix::Orthographic(-Window::GetAspectRatio(), Window::GetAspectRatio(), -1.0f, 1.0f, near, far);
 	}
 }

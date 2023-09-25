@@ -9,11 +9,11 @@ namespace Duck
 	class Entity
 	{
 	private:
-		static constexpr std::size_t m_MaxComponents = 32;
+		static constexpr std::size_t maxComponents = 32;
 
 		using ComponentID = std::size_t;
-		using ComponentBitSet = std::bitset<m_MaxComponents>;
-		using ComponentArray = std::array<Component*, m_MaxComponents>;
+		using ComponentBitSet = std::bitset<maxComponents>;
+		using ComponentArray = std::array<Component*, maxComponents>;
 
 		static inline ComponentID GetComponentTypeID()
 		{
@@ -28,41 +28,41 @@ namespace Duck
 			return typeID;
 		}
 
-		bool m_Alive = true;
-		std::vector<std::unique_ptr<Component>> m_Components;
-		ComponentArray m_ComponentArray = {};
-		ComponentBitSet m_ComponentBitSet;
+		bool isAlive = true;
+		std::vector<std::unique_ptr<Component>> components;
+		ComponentArray componentArray = {};
+		ComponentBitSet componentBitSet;
 
 	public:
 		Transform transform;
 
-		bool IsAlive() const { return m_Alive; }
-		void Destroy() { m_Alive = false; }
+		bool GetAlive() const { return isAlive; }
+		void Destroy() { isAlive = false; }
 
 		~Entity()
 		{
-			for (int i = 0; i < m_Components.size(); i++)
-				m_Components[i]->Destroy();
+			for (int i = 0; i < components.size(); i++)
+				components[i]->Destroy();
 		}
 
 		void Update(float deltaTime)
 		{
-			for (int i = 0; i < m_Components.size(); i++)
-				if (m_Components[i]->enabled)
-					m_Components[i]->Update(deltaTime);
+			for (int i = 0; i < components.size(); i++)
+				if (components[i]->enabled)
+					components[i]->Update(deltaTime);
 		}
 
 		void Draw()
 		{
-			for (int i = 0; i < m_Components.size(); i++)
-				if (m_Components[i]->enabled)
-					m_Components[i]->Draw();
+			for (int i = 0; i < components.size(); i++)
+				if (components[i]->enabled)
+					components[i]->Draw();
 		}
 
 		template<typename T>
 		bool HasComponent() const
 		{
-			return m_ComponentBitSet[GetComponentTypeID<T>];
+			return componentBitSet[GetComponentTypeID<T>];
 		}
 
 		template<typename T, typename... TArgs>
@@ -72,10 +72,10 @@ namespace Duck
 
 			c->entity = this;
 			std::unique_ptr<Component> uPtr{ c };
-			m_Components.emplace_back(std::move(uPtr));
+			components.emplace_back(std::move(uPtr));
 
-			m_ComponentArray[GetComponentTypeID<T>()] = c;
-			m_ComponentBitSet[GetComponentTypeID<T>()] = true;
+			componentArray[GetComponentTypeID<T>()] = c;
+			componentBitSet[GetComponentTypeID<T>()] = true;
 
 			c->Init();
 			return c;
@@ -84,7 +84,7 @@ namespace Duck
 		template<typename T>
 		T* GetComponent() const
 		{
-			auto ptr(m_ComponentArray[GetComponentTypeID<T>()]);
+			auto ptr(componentArray[GetComponentTypeID<T>()]);
 			return static_cast<T*>(ptr);
 		}
 	};

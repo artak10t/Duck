@@ -6,12 +6,12 @@ namespace Duck
 {
 	CameraPerspective::CameraPerspective(const float& fov, const float& near, const float& far) : Camera(near, far)
 	{
-		m_Fov = fov;
+		this->fov = fov;
 		RecalculateProjectionMatrix();
 	}
 
 	void CameraPerspective::RecalculateProjectionMatrix()
 	{
-		m_Projection = Matrix::Perspective(Math::ToRadians(m_Fov), Window::GetAspectRatio(), m_Near, m_Far);
+		projection = Matrix::Perspective(Math::ToRadians(fov), Window::GetAspectRatio(), near, far);
 	}
 }

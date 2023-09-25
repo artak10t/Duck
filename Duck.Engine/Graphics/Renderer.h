@@ -22,6 +22,7 @@ namespace Duck::Renderer
 	// Updates global uniform data for all shader programs.
 	void UpdateGlobalUBO();
 
-	// Set renderer shading mode.
+	// Renderer shading mode.
 	void SetView(View mode);
+	View GetView();
 }

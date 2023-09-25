@@ -20,11 +20,11 @@ namespace Duck
 		virtual void RecalculateProjectionMatrix() = 0;
 
 	private:
-		static Camera* m_MainCamera;
+		static Camera* mainCamera;
 
 	protected:
-		float m_Near = .1f, m_Far = 500.f;
-		Matrix4 m_Projection = Matrix4(1);
+		float near = .1f, far = 500.f;
+		Matrix4 projection = Matrix4(1);
 		Matrix4 m_View = Matrix4(1);
 	};
 }

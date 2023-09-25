@@ -24,8 +24,8 @@ namespace Duck
 		const void Draw();
 
 	private:
-		unsigned int m_VAO = 0;
-		unsigned int m_VBO = 0;
-		unsigned int m_EBO = 0;
+		unsigned int VAO = 0;
+		unsigned int VBO = 0;
+		unsigned int EBO = 0;
 	};
 }

@@ -9,9 +9,11 @@
 
 namespace Duck::Renderer
 {
+	static View viewMode = View::Shaded;
+
 	//Uniform Buffer Objects
-	static unsigned int m_CameraUBO = 0;
-	static unsigned int m_LightingUBO = 0;
+	static unsigned int cameraUBO = 0;
+	static unsigned int lightingUBO = 0;
 
 	void Init()
 	{
@@ -29,18 +31,18 @@ namespace Duck::Renderer
 		glFrontFace(GL_CW);
 
 		// Create Camera UBO
-		glGenBuffers(1, &m_CameraUBO);
-		glBindBuffer(GL_UNIFORM_BUFFER, m_CameraUBO);
+		glGenBuffers(1, &cameraUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 		glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(Matrix4) + sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_CameraUBO);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, cameraUBO);
 
 		// Create Lighting UBO
-		glGenBuffers(1, &m_LightingUBO);
-		glBindBuffer(GL_UNIFORM_BUFFER, m_LightingUBO);
+		glGenBuffers(1, &lightingUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_LightingUBO);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightingUBO);
 
 		Logger::Trace("Renderer Initialized");
 	}
@@ -56,7 +58,7 @@ namespace Duck::Renderer
 		// If main camera exists update global uniform camera data
 		if (Camera::GetMain())
 		{
-			glBindBuffer(GL_UNIFORM_BUFFER, m_CameraUBO);
+			glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
 			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrix4), &Camera::GetMain()->Projection()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(Matrix4), sizeof(Matrix4), &Camera::GetMain()->View()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(Matrix4), sizeof(Vector3), &Camera::GetMain()->transform.position);
@@ -64,14 +66,16 @@ namespace Duck::Renderer
 		}
 
 		//Lighting UBO
-		glBindBuffer(GL_UNIFORM_BUFFER, m_LightingUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &Lighting::AmbientLight.GetLight());
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
 	void SetView(View mode)
 	{
-		switch (mode)
+		viewMode = mode;
+
+		switch (viewMode)
 		{
 		case View::Shaded:
 			glEnable(GL_CULL_FACE);
@@ -82,5 +86,10 @@ namespace Duck::Renderer
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			break;
 		}
+	}
+
+	View GetView()
+	{
+		return viewMode;
 	}
 }

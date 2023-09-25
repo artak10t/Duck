@@ -6,20 +6,20 @@ namespace Duck
 {
     Model::Model(const std::vector<Mesh*>& meshes)
     {
-        m_Meshes = meshes;
+        this->meshes = meshes;
     }
 
     Model::~Model()
     {
-        for (unsigned int i = 0; i < m_Meshes.size(); i++)
-            delete m_Meshes[i];
+        for (unsigned int i = 0; i < meshes.size(); i++)
+            delete meshes[i];
 
-        m_Meshes.clear();
+        meshes.clear();
     }
 
     const void Model::Draw()
     {
-        for (unsigned int i = 0; i < m_Meshes.size(); i++)
-            m_Meshes[i]->Draw();
+        for (unsigned int i = 0; i < meshes.size(); i++)
+            meshes[i]->Draw();
     }
 }

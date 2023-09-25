@@ -3,37 +3,37 @@
 
 namespace Duck
 {
-	Camera* Camera::m_MainCamera = nullptr;
+	Camera* Camera::mainCamera = nullptr;
 
 	Camera* Camera::GetMain()
 	{
-		return m_MainCamera;
+		return mainCamera;
 	}
 
 	void Camera::SetMain(Camera& camera)
 	{
 		camera.RecalculateProjectionMatrix();
-		m_MainCamera = &camera;
+		mainCamera = &camera;
 	}
 
 	Camera::Camera(const float& near, const float& far)
 	{
-		if (!Camera::m_MainCamera)
-			Camera::m_MainCamera = this;
+		if (!Camera::mainCamera)
+			Camera::mainCamera = this;
 
-		m_Near = near;
-		m_Far = far;
+		this->near = near;
+		this->far = far;
 	}
 
 	Camera::~Camera()
 	{
-		if (Camera::m_MainCamera && Camera::m_MainCamera == this)
-			Camera::m_MainCamera = nullptr;
+		if (Camera::mainCamera && Camera::mainCamera == this)
+			Camera::mainCamera = nullptr;
 	}
 
 	const Matrix4& Camera::Projection()
 	{
-		return m_Projection;
+		return projection;
 	}
 
 	const Matrix4 Camera::View()

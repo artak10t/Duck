@@ -4,13 +4,11 @@ using namespace Duck;
 
 #include "Scripts/FlyCamera.h"
 #include "Scripts/BoxComponent.h"
-//Add getters and setters for fullscreen, vsync, etc.
+//*FIX AssetsPath string to be independent from system and fix green highlights
 //Model should not have pointer to meshes but rather keep meshes in it
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
-//*FIX AssetsPath string to be independent from system and fix green highlights
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
-//Window - REFACTOR ALL CODE, Clearer code for _lastPosition, _lastWidth, _lastResoultion
 //*FIX ALL WARNINGS
 //Implement lighting, make Light class hold enum type of the light (Similar to Unity)
 //Layered rendering (Weapon always on top of everything)
@@ -30,9 +28,6 @@ private:
 public:
 	void Init()
 	{
-		Window::SetResolution(800, 600);
-		Window::SetVSync(true);
-
 		boxComp = box->AddComponent<BoxComponent>();
 		box->transform.position = Vector3(0, 0, 5);
 		box->transform.scale = Vector3(1.f);
@@ -44,13 +39,13 @@ public:
 
 		FlyCamera::Update(deltaTime);
 
-		if (Input::IsKey(Input::G))
+		if (Input::GetKey(Input::G))
 		{
-			boxComp->m_Mesh.vertices[0] += Vector3(0, deltaTime, 0);
-			boxComp->m_Mesh.UploadData();
+			boxComp->mesh.vertices[0] += Vector3(0, deltaTime, 0);
+			boxComp->mesh.UploadData();
 		}
 
-		if (Input::IsKeyDown(Input::Space))
+		if (Input::GetKeyDown(Input::Space))
 		{
 			Lighting::AmbientLight.SetIntensity(Lighting::AmbientLight.GetIntensity() + 0.1f);
 		}

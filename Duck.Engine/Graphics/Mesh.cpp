@@ -18,22 +18,22 @@ namespace Duck
 		this->uv = uv;
 		this->triangles = triangles;
 
-		glGenVertexArrays(1, &m_VAO);
-		glGenBuffers(1, &m_VBO);
-		glGenBuffers(1, &m_EBO);
+		glGenVertexArrays(1, &VAO);
+		glGenBuffers(1, &VBO);
+		glGenBuffers(1, &EBO);
 
 		UploadData();
 
 		//Vertex Attributes
 
 		// Bind VAO
-		glBindVertexArray(m_VAO);
+		glBindVertexArray(VAO);
 
 		// Bind VBO
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 		// Bind EBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 		size_t vertices_size = vertices.size() * sizeof(Vector3);
 		size_t normals_size = normals.size() * sizeof(Vector3);
@@ -62,18 +62,18 @@ namespace Duck
 
 	Mesh::~Mesh()
 	{
-		glDeleteBuffers(1, &m_EBO);
-		glDeleteBuffers(1, &m_VBO);
-		glDeleteVertexArrays(1, &m_VAO);
+		glDeleteBuffers(1, &EBO);
+		glDeleteBuffers(1, &VBO);
+		glDeleteVertexArrays(1, &VAO);
 	}
 	
 	const void Mesh::UploadData()
 	{
 		// Bind VAO
-		glBindVertexArray(m_VAO);
+		glBindVertexArray(VAO);
 
 		// Bind VBO
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 		size_t vertices_size = vertices.size() * sizeof(Vector3);
 		size_t normals_size = normals.size() * sizeof(Vector3);
@@ -95,7 +95,7 @@ namespace Duck
 			glBufferSubData(GL_ARRAY_BUFFER, vertices_size + normals_size, uv_size, &uv[0]);
 
 		// Bind EBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 		if (triangles.size() != 0)
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->triangles.size() * sizeof(unsigned int), &this->triangles[0], GL_STATIC_DRAW);
@@ -112,7 +112,7 @@ namespace Duck
 
 	const void Mesh::Draw()
 	{
-		glBindVertexArray(m_VAO);
+		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, GLsizei(triangles.size()), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}

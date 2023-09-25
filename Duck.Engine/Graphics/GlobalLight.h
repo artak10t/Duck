@@ -6,41 +6,41 @@ namespace Duck
 	struct GlobalLight
 	{
 	private:
-		Vector3 m_Light = Vector3(1.f);
-		Vector3 m_Color = Vector3(1.f);
-		float m_Intensity = .5f;
+		Vector3 light = Vector3(1.f);
+		Vector3 color = Vector3(1.f);
+		float intensity = .5f;
 
 	public:
 		GlobalLight()
 		{
-			m_Light = m_Color * m_Intensity;
+			light = color * intensity;
 		}
 
 		inline const Vector3& GetColor()
 		{
-			return m_Color;
+			return color;
 		}
 
 		inline const float GetIntensity()
 		{
-			return m_Intensity;
+			return intensity;
 		}
 
 		inline void SetColor(const Vector3& color)
 		{
-			this->m_Color = color;
-			m_Light = color * m_Intensity;
+			this->color = color;
+			light = color * intensity;
 		}
 
 		inline void SetIntensity(const float& intensity)
 		{
-			this->m_Intensity = intensity;
-			m_Light = m_Color * intensity;
+			this->intensity = intensity;
+			light = color * intensity;
 		}
 
 		inline const Vector3& GetLight()
 		{
-			return m_Light;
+			return light;
 		}
 	};
 }
