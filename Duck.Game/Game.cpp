@@ -4,7 +4,6 @@ using namespace Duck;
 
 #include "Scripts/FlyCamera.h"
 #include "Scripts/BoxComponent.h"
-//*FIX AssetsPath string to be independent from system and fix green highlights
 //Model should not have pointer to meshes but rather keep meshes in it
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
