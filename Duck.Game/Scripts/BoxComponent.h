@@ -53,7 +53,7 @@ private:
 		1, 9, 2, 2, 9, 11
 	};
 
-	Shader* shader = Resources::Load<Shader>("Default.shader");
+	Shader* shader = Resources::Load<Shader>("Default.sdr");
 	Texture* texture = Resources::Load<Texture>("metalbox_diffuse.png");
 
 public:
@@ -75,5 +75,7 @@ public:
 		texture->Bind();
 		shader->Bind();
 		mesh.Draw();
+		shader->Unbind();
+		texture->Unbind();
 	}
 };

@@ -60,41 +60,52 @@ namespace Duck
 		glUseProgram(program);
 	}
 
+	void Shader::Unbind()
+	{
+		glUseProgram(0);
+	}
+
 	//Uniforms
 	void Shader::SetInt(const char* name, const int& i)
 	{
 		Bind();
 		glUniform1i(GetUniformLocation(name), i);
+		Unbind();
 	}
 
 	void Shader::SetFloat(const char* name, const float& f)
 	{
 		Bind();
 		glUniform1f(GetUniformLocation(name), f);
+		Unbind();
 	}
 	
 	void Shader::SetVector2(const char* name, const Vector2& v)
 	{
 		Bind();
 		glUniform2f(GetUniformLocation(name), v.x, v.y);
+		Unbind();
 	}
 
 	void Shader::SetVector3(const char* name, const Vector3& v)
 	{
 		Bind();
 		glUniform3f(GetUniformLocation(name), v.x, v.y, v.z);
+		Unbind();
 	}
 
 	void Shader::SetVector4(const char* name, const Vector4& v)
 	{
 		Bind();
 		glUniform4f(GetUniformLocation(name), v.x, v.y, v.z, v.w);
+		Unbind();
 	}
 
 	void Shader::SetMatrix4(const char* name, const Matrix4& m)
 	{
 		Bind();
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &m[0][0]);
+		Unbind();
 	}
 
 	//Caching Uniforms

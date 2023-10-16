@@ -54,11 +54,17 @@ namespace Duck
 			break;
 		}
 		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	void Texture::Bind(const unsigned int& slot)
 	{
 		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, texture);
+	}
+
+	void Texture::Unbind()
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

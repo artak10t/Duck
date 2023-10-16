@@ -14,6 +14,7 @@ namespace Duck
 		Shader(const char* vertex, const char* fragment);
 		~Shader();
 		void Bind();
+		void Unbind();
 
 		//Uniforms
 		void SetInt(const char* name, const int& i);

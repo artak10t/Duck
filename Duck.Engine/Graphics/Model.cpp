@@ -2,24 +2,23 @@
 
 #include "../System/Logger.h"
 
+#define CGLTF_IMPLEMENTATION
+#include <cgltf/cgltf.h>
+
 namespace Duck
 {
-    Model::Model(const std::vector<Mesh*>& meshes)
+    Model::Model(std::string_view file)
     {
-        this->meshes = meshes;
+       
     }
 
     Model::~Model()
     {
-        for (unsigned int i = 0; i < meshes.size(); i++)
-            delete meshes[i];
 
-        meshes.clear();
     }
 
     const void Model::Draw()
     {
-        for (unsigned int i = 0; i < meshes.size(); i++)
-            meshes[i]->Draw();
+
     }
 }

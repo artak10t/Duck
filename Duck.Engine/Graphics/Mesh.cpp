@@ -24,8 +24,6 @@ namespace Duck
 
 		UploadData();
 
-		//Vertex Attributes
-
 		// Bind VAO
 		glBindVertexArray(VAO);
 

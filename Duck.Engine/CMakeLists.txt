@@ -17,8 +17,8 @@ add_library($ENV{ENGINE_NAME} STATIC
 	"Resources/AssetTexture.cpp"
 	"Resources/AssetShader.h"
 	"Resources/AssetShader.cpp"
-	"Resources/AssetModel.h"
-	"Resources/AssetModel.cpp"
+	
+	
 
 	"Math/Matrix.h"
 	"Math/Matrix4.h"

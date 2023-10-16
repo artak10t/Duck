@@ -10,11 +10,10 @@ namespace Duck
 	class Model final
 	{
 	public:
-		Model(const std::vector<Mesh*>& meshes);
+		std::vector<Mesh> meshes;
+
+		Model(std::string_view file);
 		~Model();
 		const void Draw();
-
-	private:
-		std::vector<Mesh*> meshes;
 	};
 }

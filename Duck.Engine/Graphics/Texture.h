@@ -21,6 +21,7 @@ namespace Duck
 
 		Texture(unsigned char* textureData, const Filter& filtering = Filter::Bilinear, const Wrap& wrapping = Wrap::Repeat, int width = 64, int height = 64, int channels = 4);
 		void Bind(const unsigned int& slot = 0);
+		void Unbind();
 
 	private:
 		unsigned int texture = 0;

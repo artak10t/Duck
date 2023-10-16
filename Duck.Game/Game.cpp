@@ -8,7 +8,6 @@ using namespace Duck;
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
-//*FIX ALL WARNINGS
 //Implement lighting, make Light class hold enum type of the light (Similar to Unity)
 //Layered rendering (Weapon always on top of everything)
 //Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
@@ -23,11 +22,15 @@ private:
 	Scene scene;
 	Entity* box = scene.AddEntity();
 	BoxComponent* boxComp;
+	
+	Texture* texture = Resources::Load<Texture>("uv.png");
+	Shader* shader = Resources::Load<Shader>("Default.glsl");
+	Model model = Model("Suzanne.glb");
 
 public:
 	void Init()
 	{
-		boxComp = box->AddComponent<BoxComponent>();
+		//boxComp = box->AddComponent<BoxComponent>();
 		box->transform.position = Vector3(0, 0, 5);
 		box->transform.scale = Vector3(1.f);
 	}
@@ -53,6 +56,11 @@ public:
 	void Draw()
 	{
 		scene.Draw();
+
+		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View());
+		shader->Bind();
+		texture->Bind();
+		model.Draw();
 	}
 
 	void Destroy()
