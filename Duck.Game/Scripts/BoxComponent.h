@@ -53,7 +53,7 @@ private:
 		1, 9, 2, 2, 9, 11
 	};
 
-	Shader* shader = Resources::Load<Shader>("Default.sdr");
+	Shader* shader = Resources::Load<Shader>("Default.glsl");
 	Texture* texture = Resources::Load<Texture>("metalbox_diffuse.png");
 
 public:

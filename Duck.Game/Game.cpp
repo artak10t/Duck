@@ -4,6 +4,7 @@ using namespace Duck;
 
 #include "Scripts/FlyCamera.h"
 #include "Scripts/BoxComponent.h"
+//FIX MODEL TEXTURES
 //Model should not have pointer to meshes but rather keep meshes in it
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
@@ -25,7 +26,8 @@ private:
 	
 	Texture* texture = Resources::Load<Texture>("uv.png");
 	Shader* shader = Resources::Load<Shader>("Default.glsl");
-	Model model = Model("Suzanne.glb");
+	Model model = Model("C:/Projects/Duck/Duck.Game/Assets/plane.glb");
+	Transform transform;
 
 public:
 	void Init()
@@ -57,10 +59,15 @@ public:
 	{
 		scene.Draw();
 
-		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View());
-		shader->Bind();
+		shader->SetMatrix4("model", transform.LocalToWorld());
+		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * transform.LocalToWorld());
 		texture->Bind();
+		shader->Bind();
 		model.Draw();
+		shader->Unbind();
+		texture->Unbind();
+
+		//boxComp->Draw();
 	}
 
 	void Destroy()

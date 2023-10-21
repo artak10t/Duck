@@ -8,8 +8,7 @@ namespace Duck
 	struct TVector<2, T> final
 	{
 		//Data
-		union { T x, r; };
-		union { T y, g; };
+		T x, y;
 
 		//Component Accesses
 		inline constexpr T& operator[](int i)

@@ -10,7 +10,8 @@ namespace Duck
 	class Model final
 	{
 	public:
-		std::vector<Mesh> meshes;
+		std::vector<Mesh*> meshes;
+		std::vector<Texture*> textures;
 
 		Model(std::string_view file);
 		~Model();
