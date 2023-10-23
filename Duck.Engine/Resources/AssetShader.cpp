@@ -32,7 +32,7 @@ namespace Duck::Resources
 				size_t eol = shader.find_first_of("\r\n", pos);
 				size_t begin = pos + typeTokenLength + 1;
 				std::string type = shader.substr(begin, eol - begin);
-				DUCK_ASSERT(type == SHADER_TYPE_VERTEX || type == SHADER_TYPE_FRAGMENT, "Shader - Invalid shader type specification '%s'", path);
+				DUCK_ASSERT(type == SHADER_TYPE_VERTEX || type == SHADER_TYPE_FRAGMENT, "Shader - invalid shader type specification '%s'", path);
 
 				size_t nextLinePos = shader.find_first_not_of("\r\n", eol);
 				pos = shader.find(SHADER_TYPE_TOKEN, nextLinePos);
@@ -62,9 +62,9 @@ namespace Duck::Resources
 		// Load Shader
 		std::string vertexData;
 		std::string fragmentData;
-		Logger::Trace("Shader - '%s' Loading", file);
+		Logger::Trace("Shader - '%s' loading", file);
 
-		DUCK_ASSERT(ReadShaderFile(path.c_str(), vertexData, fragmentData), "Shader - File not found '%s'", file);
+		DUCK_ASSERT(ReadShaderFile(path.c_str(), vertexData, fragmentData), "Shader - '%s' file not found", file);
 
 		// Cache Shader
 		cache.emplace(file, new Shader(vertexData.c_str(), fragmentData.c_str()));

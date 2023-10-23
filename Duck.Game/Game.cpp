@@ -4,8 +4,6 @@ using namespace Duck;
 
 #include "Scripts/FlyCamera.h"
 #include "Scripts/BoxComponent.h"
-//FIX MODEL TEXTURES
-//Model should not have pointer to meshes but rather keep meshes in it
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
@@ -24,9 +22,9 @@ private:
 	Entity* box = scene.AddEntity();
 	BoxComponent* boxComp;
 	
-	Texture* texture = Resources::Load<Texture>("Default_albedo.jpg");
 	Shader* shader = Resources::Load<Shader>("Default.glsl");
-	Model model = Model("C:/Projects/Duck/Duck.Game/Assets/DamagedHelmet.gltf");
+	Texture* texture = Resources::Load<Texture>("Default_albedo.jpg");
+	Model* model = Resources::Load<Model>("DamagedHelmet.gltf");
 	Transform transform;
 
 public:
@@ -63,7 +61,7 @@ public:
 		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * transform.LocalToWorld());
 		texture->Bind();
 		shader->Bind();
-		model.Draw();
+		model->Draw();
 		shader->Unbind();
 		texture->Unbind();
 

@@ -5,6 +5,7 @@
 #define CGLTF_IMPLEMENTATION
 #include <cgltf/cgltf.h>
 
+#include "../System/Logger.h"
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
 #include "../Math/Vector4.h"
@@ -18,7 +19,40 @@ namespace Duck
         // Init GLTF
         cgltf_options options = {};
         cgltf_data* model = nullptr;
-        cgltf_parse_file(&options, file, &model);
+        cgltf_result result = cgltf_parse_file(&options, file, &model);
+        switch (result)
+        {
+        case cgltf_result_data_too_short:
+            DUCK_ASSERT(false, "Model - '%s' data too short", file);
+            break;
+        case cgltf_result_unknown_format:
+            DUCK_ASSERT(false, "Model - '%s' unknown format", file);
+            break;
+        case cgltf_result_invalid_json:
+            DUCK_ASSERT(false, "Model - '%s' invalid json", file);
+            break;
+        case cgltf_result_invalid_gltf:
+            DUCK_ASSERT(false, "Model - '%s' invalid gltf", file);
+            break;
+        case cgltf_result_invalid_options:
+            DUCK_ASSERT(false, "Model - '%s' invalid options", file);
+            break;
+        case cgltf_result_file_not_found:
+            DUCK_ASSERT(false, "Model - '%s' file not found", file);
+            break;
+        case cgltf_result_io_error:
+            DUCK_ASSERT(false, "Model - '%s' io error", file);
+            break;
+        case cgltf_result_out_of_memory:
+            DUCK_ASSERT(false, "Model - '%s' out of memory", file);
+            break;
+        case cgltf_result_legacy_gltf:
+            DUCK_ASSERT(false, "Model - '%s' legacy gltf", file);
+            break;
+        case cgltf_result_max_enum:
+            DUCK_ASSERT(false, "Model - '%s' max enum", file);
+            break;
+        }
         cgltf_load_buffers(&options, model, file);
 
         uint32_t transformIndex = 0;
@@ -160,6 +194,8 @@ namespace Duck
                 meshes.push_back(mesh);
             }
         }
+
+        cgltf_free(model);
     }
 
     Model::~Model()

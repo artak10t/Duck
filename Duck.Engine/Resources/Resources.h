@@ -13,5 +13,7 @@ namespace Duck::Resources
 	std::string GetAssetsPath();
 }
 
+// Include Assets
 #include "AssetTexture.h"
 #include "AssetShader.h"
+#include "AssetModel.h"

@@ -982,8 +982,8 @@ static cgltf_result cgltf_default_file_read(const struct cgltf_memory_options* m
 	(void)file_options;
 	void* (*memory_alloc)(void*, cgltf_size) = memory_options->alloc_func ? memory_options->alloc_func : &cgltf_default_alloc;
 	void (*memory_free)(void*, void*) = memory_options->free_func ? memory_options->free_func : &cgltf_default_free;
-	FILE* file = NULL;
-	fopen_s(&file, path, "rb");
+
+	FILE* file = fopen(path, "rb");
 	if (!file)
 	{
 		return cgltf_result_file_not_found;
