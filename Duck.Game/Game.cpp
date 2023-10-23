@@ -24,15 +24,15 @@ private:
 	Entity* box = scene.AddEntity();
 	BoxComponent* boxComp;
 	
-	Texture* texture = Resources::Load<Texture>("uv.png");
+	Texture* texture = Resources::Load<Texture>("Default_albedo.jpg");
 	Shader* shader = Resources::Load<Shader>("Default.glsl");
-	Model model = Model("C:/Projects/Duck/Duck.Game/Assets/plane.glb");
+	Model model = Model("C:/Projects/Duck/Duck.Game/Assets/DamagedHelmet.gltf");
 	Transform transform;
 
 public:
 	void Init()
 	{
-		//boxComp = box->AddComponent<BoxComponent>();
+		boxComp = box->AddComponent<BoxComponent>();
 		box->transform.position = Vector3(0, 0, 5);
 		box->transform.scale = Vector3(1.f);
 	}

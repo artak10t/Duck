@@ -23,39 +23,6 @@ namespace Duck
 		glGenBuffers(1, &EBO);
 
 		UploadData();
-
-		// Bind VAO
-		glBindVertexArray(VAO);
-
-		// Bind VBO
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-		// Bind EBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-		size_t vertices_size = vertices.size() * sizeof(Vector3);
-		size_t normals_size = normals.size() * sizeof(Vector3);
-
-		// Bind Position Attribute
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)0);
-
-		// Bind Normal Attribute
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)(vertices_size));
-
-		// Bind UV Attribute
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), (void*)(vertices_size + normals_size));
-
-		// Unbind VBO
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		// Unbind VAO
-		glBindVertexArray(0);
-
-		// Unbind EBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 	Mesh::~Mesh()
@@ -73,6 +40,9 @@ namespace Duck
 		// Bind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
+		// Bind EBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
 		size_t vertices_size = vertices.size() * sizeof(Vector3);
 		size_t normals_size = normals.size() * sizeof(Vector3);
 		size_t uv_size = uv.size() * sizeof(Vector2);
@@ -80,22 +50,42 @@ namespace Duck
 		int current_allocated_size = 0;
 		glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &current_allocated_size);
 
-		if((vertices_size + normals_size + uv_size) != current_allocated_size)
+		if ((vertices_size + normals_size + uv_size) != current_allocated_size)
+		{
 			glBufferData(GL_ARRAY_BUFFER, vertices_size + normals_size + uv_size, nullptr, GL_STATIC_DRAW);
 
-		if (vertices_size != 0)
+			// Bind Position Attribute
+			if (vertices_size > 0)
+			{
+				glEnableVertexAttribArray(0);
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)0);
+			}
+
+			// Bind Normal Attribute
+			if (normals_size > 0)
+			{
+				glEnableVertexAttribArray(1);
+				glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), (void*)(vertices_size));
+			}
+
+			// Bind UV Attribute
+			if (uv_size > 0)
+			{
+				glEnableVertexAttribArray(2);
+				glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2), (void*)(vertices_size + normals_size));
+			}
+		}
+
+		if (vertices_size > 0)
 			glBufferSubData(GL_ARRAY_BUFFER, 0, vertices_size, &vertices[0]);
 
-		if (normals_size != 0)
+		if (normals_size > 0)
 			glBufferSubData(GL_ARRAY_BUFFER, vertices_size, normals_size, &normals[0]);
 
-		if (uv_size != 0)
+		if (uv_size > 0)
 			glBufferSubData(GL_ARRAY_BUFFER, vertices_size + normals_size, uv_size, &uv[0]);
 
-		// Bind EBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-		if (triangles.size() != 0)
+		if (triangles.size() > 0)
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->triangles.size() * sizeof(unsigned int), &this->triangles[0], GL_STATIC_DRAW);
 
 		// Unbind VBO

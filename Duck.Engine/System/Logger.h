@@ -28,7 +28,7 @@ namespace Duck::Logger
 	inline std::mutex Mutex;
 
 	template<typename ...Args>
-	void Trace(const char* message, Args... args)
+	inline void Trace(const char* message, Args... args)
 	{
 		if (Priority > TrancePriority)
 			return;
@@ -40,7 +40,7 @@ namespace Duck::Logger
 	}
 
 	template<typename ...Args>
-	void Debug(const char* message, Args... args)
+	inline void Debug(const char* message, Args... args)
 	{
 		if (Priority > DebugPriority)
 			return;
@@ -52,7 +52,7 @@ namespace Duck::Logger
 	}
 
 	template<typename ...Args>
-	void Info(const char* message, Args... args)
+	inline void Info(const char* message, Args... args)
 	{
 		if (Priority > InfoPriority)
 			return;
@@ -64,7 +64,7 @@ namespace Duck::Logger
 	}
 
 	template<typename ...Args>
-	void Warn(const char* message, Args... args)
+	inline void Warn(const char* message, Args... args)
 	{
 		if (Priority > WarnPriority)
 			return;
@@ -76,7 +76,7 @@ namespace Duck::Logger
 	}
 
 	template<typename ...Args>
-	void Error(const char* message, Args... args)
+	inline void Error(const char* message, Args... args)
 	{
 		if (Priority > ErrorPriority)
 			return;
@@ -88,7 +88,7 @@ namespace Duck::Logger
 	}
 
 	template<typename ...Args>
-	void Fatal(const char* message, Args... args)
+	inline void Fatal(const char* message, Args... args)
 	{
 		if (Priority > FatalPriority)
 			return;

@@ -28,7 +28,7 @@ namespace Duck::Resources
 		stbi_set_flip_vertically_on_load(true);
 		int channels, width, height;
 		unsigned char* textureData = stbi_load(path.c_str(), &width, &height, &channels, 0);
-		if (stbi_failure_reason())
+		if (textureData == nullptr && stbi_failure_reason())
 			DUCK_ASSERT(false, "Texture - %s '%s'", stbi_failure_reason(), file);
 
 		// Cache Texture

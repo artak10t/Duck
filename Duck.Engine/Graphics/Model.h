@@ -13,7 +13,7 @@ namespace Duck
 		std::vector<Mesh*> meshes;
 		std::vector<Texture*> textures;
 
-		Model(std::string_view file);
+		Model(const char* file);
 		~Model();
 		const void Draw();
 	};
