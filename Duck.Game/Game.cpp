@@ -2,8 +2,8 @@
 
 using namespace Duck;
 
-#include "Scripts/FlyCamera.h"
-#include "Scripts/BoxComponent.h"
+#include "Script/FlyCamera.h"
+#include "Script/BoxComponent.h"
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
@@ -22,8 +22,8 @@ private:
 	Entity* box = scene.AddEntity();
 	BoxComponent* boxComp;
 	
-	Shader* shader = Resources::Load<Shader>("Default.glsl");
-	Texture* texture = Resources::Load<Texture>("Default_albedo.jpg");
+	Shader* shader = Resources::Load<Shader>("DefaultPBR.glsl");
+	Texture* texture = Resources::Load<Texture>("DamagedHelmet_albedo.jpg");
 	Model* model = Resources::Load<Model>("DamagedHelmet.gltf");
 	Transform transform;
 

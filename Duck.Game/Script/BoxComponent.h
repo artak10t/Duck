@@ -5,7 +5,7 @@
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Camera.h>
-#include <Resources/Resources.h>
+#include <Resource/Resource.h>
 #include <System/Logger.h>
 
 using namespace Duck;
@@ -53,7 +53,7 @@ private:
 		1, 9, 2, 2, 9, 11
 	};
 
-	Shader* shader = Resources::Load<Shader>("Default.glsl");
+	Shader* shader = Resources::Load<Shader>("DefaultPBR.glsl");
 	Texture* texture = Resources::Load<Texture>("metalbox_diffuse.png");
 
 public:

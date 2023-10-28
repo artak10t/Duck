@@ -1,10 +1,10 @@
-#include "Resources.h"
+#include "Resource.h"
 #include "../pch.h"
 
 #include <whereami/whereami.h>
 using whereami_func_t = int (*)(char* out, int capacity, int* dirname_length);
 
-#define ASSETS_FOLDER_NAME "Assets"
+#define ASSETS_FOLDER_NAME "Asset"
 
 namespace Duck::Resources
 {

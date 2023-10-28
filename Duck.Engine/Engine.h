@@ -5,7 +5,7 @@
 #include "System/Clock.h" 
 
 // Resources
-#include "Resources/Resources.h"
+#include "Resource/Resource.h"
 
 // Math
 #include "Math/Matrix.h"
