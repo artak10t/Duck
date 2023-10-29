@@ -53,16 +53,18 @@ private:
 		1, 9, 2, 2, 9, 11
 	};
 
-	Shader* shader = Resources::Load<Shader>("DefaultPBR.glsl");
-	Texture* texture = Resources::Load<Texture>("metalbox_diffuse.png");
+	Shader* shader = Resources::Load<Shader>("StandardPBR.glsl");
+	Texture* box_albedo = Resources::Load<Texture>("BoxAlbedo.png");
+	Texture* box_metallic = Resources::Load<Texture>("BoxMetallic.png");
 
 public:
 	Mesh mesh = Mesh(vertices, normals, uv, triangles);
 
 	void Init()
 	{
-		Logger::Debug("Init");
-		shader->SetInt("texture_0", 0);
+		shader->SetInt("material.albedoTexture", 0);
+		//shader->SetInt("material.metallicTexture", 1);
+		shader->SetFloat("material.metallic", 1);
 	}
 
 	void Draw()
@@ -72,10 +74,12 @@ public:
 
 		shader->SetMatrix4("model", entity->transform.LocalToWorld());
 		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * entity->transform.LocalToWorld());
-		texture->Bind();
+		box_albedo->Bind(0);
+		//box_metallic->Bind(1);
 		shader->Bind();
 		mesh.Draw();
 		shader->Unbind();
-		texture->Unbind();
+		box_albedo->Unbind();
+		//box_metallic->Unbind();
 	}
 };

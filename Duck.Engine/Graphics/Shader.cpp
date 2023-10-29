@@ -117,7 +117,7 @@ namespace Duck
 		int l = glGetUniformLocation(program, name);
 		if (l == -1)
 		{
-			Logger::Error("Shader - '%s' Matrix4 Uniform doesn't exist", name);
+			Logger::Error("Shader - '%s' uniform doesn't exist", name);
 			return -1;
 		}
 

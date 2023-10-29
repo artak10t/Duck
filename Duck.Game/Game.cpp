@@ -22,9 +22,9 @@ private:
 	Entity* box = scene.AddEntity();
 	BoxComponent* boxComp;
 	
-	Shader* shader = Resources::Load<Shader>("DefaultPBR.glsl");
-	Texture* texture = Resources::Load<Texture>("DamagedHelmet_albedo.jpg");
-	Model* model = Resources::Load<Model>("DamagedHelmet.gltf");
+	//Shader* shader = Resources::Load<Shader>("DefaultPBR.glsl");
+	//Texture* texture = Resources::Load<Texture>("DamagedHelmet_albedo.jpg");
+	//Model* model = Resources::Load<Model>("DamagedHelmet.gltf");
 	Transform transform;
 
 public:
@@ -57,13 +57,13 @@ public:
 	{
 		scene.Draw();
 
-		shader->SetMatrix4("model", transform.LocalToWorld());
-		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * transform.LocalToWorld());
-		texture->Bind();
-		shader->Bind();
-		model->Draw();
-		shader->Unbind();
-		texture->Unbind();
+		//shader->SetMatrix4("model", transform.LocalToWorld());
+		//shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * transform.LocalToWorld());
+		//texture->Bind();
+		//shader->Bind();
+		//model->Draw();
+		//shader->Unbind();
+		//texture->Unbind();
 
 		//boxComp->Draw();
 	}
