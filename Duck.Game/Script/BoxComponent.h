@@ -62,9 +62,8 @@ public:
 
 	void Init()
 	{
-		shader->SetInt("material.albedoTexture", 0);
-		//shader->SetInt("material.metallicTexture", 1);
-		shader->SetFloat("material.metallic", 1);
+		shader->SetInt("albedoMap", 0);
+		shader->SetInt("metallicMap", 1);
 	}
 
 	void Draw()
@@ -75,11 +74,11 @@ public:
 		shader->SetMatrix4("model", entity->transform.LocalToWorld());
 		shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * entity->transform.LocalToWorld());
 		box_albedo->Bind(0);
-		//box_metallic->Bind(1);
+		box_metallic->Bind(1);
 		shader->Bind();
 		mesh.Draw();
 		shader->Unbind();
 		box_albedo->Unbind();
-		//box_metallic->Unbind();
+		box_metallic->Unbind();
 	}
 };

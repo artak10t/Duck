@@ -13,6 +13,7 @@ using namespace Duck;
 //Text Rendering, UI (render always forward) renderer build native C++ with HTML/CSS UI, console
 //Particle systems
 //Make Scene class and have scene serialization
+//Add glfw icon and executable icon
 
 class Game : App
 {

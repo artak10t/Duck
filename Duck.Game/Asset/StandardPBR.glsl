@@ -37,33 +37,37 @@ layout(std140) uniform LightingUBO
 	vec3 ambientLight;
 };
 
-struct Material 
-{
-    sampler2D albedoTexture;
-    sampler2D metallicTexture;
-    float metallic;
-}; 
-uniform Material material;
+// Material
+uniform sampler2D albedoMap;
+uniform sampler2D metallicMap;
+uniform sampler2D emissionMap;
 
+uniform float metallic = float(10);
+
+// Light
 uniform vec3 light;
 
 out vec4 _fragColor;
 
 void main()
 {
+	// Ambient
+    vec3 ambient = ambientLight * texture(albedoMap, _uv).rgb;
+
 	// Diffuse
 	vec3 norm = normalize(_normal);
-	vec3 lightDir = normalize(light - _frag);
-	float diff = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = diff * vec3(1, 1, 1); //LightColor
-
+	vec3 dir = normalize(light - _frag);
+	float diff = max(dot(norm, dir), 0.0);
+    vec3 diffuse = vec3(1, 1, 1) * diff * texture(albedoMap, _uv).rgb;  
+				   //Light Diffuse
 	// Specular
-	vec3 viewDir = normalize(cameraPosition - _frag);
-	vec3 reflectDir = reflect(-lightDir, norm);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specular = material.metallic * spec * vec3(1, 1, 1); //LightColor 
+	vec3 view = normalize(cameraPosition - _frag);
+	vec3 ref = reflect(-dir, norm);
+	float spec = pow(max(dot(view, ref), 0.0), metallic);
+    vec3 specular = vec3(1, 1, 1) * spec * texture(metallicMap, _uv).rgb;  
+					//Light Specular
 
 	// Combined
-	vec3 result = (ambientLight + diffuse + specular);
-	_fragColor = texture(material.albedoTexture, _uv) * vec4(result, 1);
+    vec3 result = ambient + diffuse + specular;
+    _fragColor = vec4(result, 1.0);
 }
