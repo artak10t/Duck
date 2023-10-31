@@ -1,9 +1,12 @@
 #pragma once
 #include "Camera.h"
+#include "Light.h"
 #include "../Math/Vector4.h"
 
 namespace Duck::Renderer
 {
+	inline Light LightAmbient;
+
 	enum class View
 	{
 		Shaded,

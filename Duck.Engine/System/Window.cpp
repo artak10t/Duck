@@ -4,8 +4,8 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-#include "../Graphics/Renderer.h"
-#include "../Graphics/Camera.h"
+#include "../Renderer/Renderer.h"
+#include "../Renderer/Camera.h"
 
 #define DEFAULT_TITLE "App"
 #define DEFAULT_VSYNC true

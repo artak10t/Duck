@@ -46,7 +46,7 @@ namespace Duck
 		glUniformBlockBinding(program, uniformBlockCamera, 0);
 
 		// Bind Lighting UBO
-		unsigned int uniformBlockLighting = glGetUniformBlockIndex(program, "LightingUBO");
+		unsigned int uniformBlockLighting = glGetUniformBlockIndex(program, "LightUBO");
 		glUniformBlockBinding(program, uniformBlockLighting, 1);
 	}
 

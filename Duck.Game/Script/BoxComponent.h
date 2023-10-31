@@ -1,10 +1,10 @@
 #pragma once
 #include <Scene/Component.h>
 #include <Scene/Entity.h>
-#include <Graphics/Mesh.h>
-#include <Graphics/Shader.h>
-#include <Graphics/Texture.h>
-#include <Graphics/Camera.h>
+#include <Renderer/Mesh.h>
+#include <Renderer/Shader.h>
+#include <Renderer/Texture.h>
+#include <Renderer/Camera.h>
 #include <Resource/Resource.h>
 #include <System/Logger.h>
 

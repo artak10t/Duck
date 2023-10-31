@@ -1,7 +1,7 @@
 #pragma once
 #include <System/Input.h>
-#include <Graphics/Camera.h>
-#include <Graphics/Renderer.h>
+#include <Renderer/Camera.h>
+#include <Renderer/Renderer.h>
 #include <System/Window.h>
 
 using namespace Duck;

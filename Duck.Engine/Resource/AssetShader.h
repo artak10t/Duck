@@ -1,6 +1,6 @@
 #pragma once
 #include "Resource.h"
-#include "../Graphics/Shader.h"
+#include "../Renderer/Shader.h"
 
 namespace Duck::Resources
 {

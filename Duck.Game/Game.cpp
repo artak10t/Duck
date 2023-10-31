@@ -7,13 +7,10 @@ using namespace Duck;
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)
-//Implement lighting, make Light class hold enum type of the light (Similar to Unity)
 //Layered rendering (Weapon always on top of everything)
-//Make engine as submodule of the game in github. Move Vendor into Engine and rename Duck.Engine into Duck.
-//Text Rendering, UI (render always forward) renderer build native C++ with HTML/CSS UI, console
-//Particle systems
-//Make Scene class and have scene serialization
+//Text Rendering
 //Add glfw icon and executable icon
+//Connect scene and lights
 
 class Game : App
 {
@@ -29,14 +26,14 @@ private:
 	Transform transform;
 
 public:
-	void Init()
+	void Init() override
 	{
 		boxComp = box->AddComponent<BoxComponent>();
 		box->transform.position = Vector3(0, 0, 5);
 		box->transform.scale = Vector3(1.f);
 	}
 
-	void Update(float deltaTime)
+	void Update(float deltaTime) override
 	{
 		scene.Update(deltaTime);
 
@@ -50,11 +47,11 @@ public:
 
 		if (Input::GetKeyDown(Input::Space))
 		{
-			Lighting::AmbientLight.SetIntensity(Lighting::AmbientLight.GetIntensity() + 0.1f);
+			Renderer::LightAmbient.SetIntensity(Renderer::LightAmbient.GetIntensity() + 0.1f);
 		}
 	}
 
-	void Draw()
+	void Draw() override
 	{
 		scene.Draw();
 
@@ -69,7 +66,7 @@ public:
 		//boxComp->Draw();
 	}
 
-	void Destroy()
+	void Destroy() override
 	{
 		scene.Destroy();
 	}

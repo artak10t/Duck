@@ -32,9 +32,9 @@ layout(std140) uniform CameraUBO
 	vec3 cameraPosition;
 };
 
-layout(std140) uniform LightingUBO
+layout(std140) uniform LightUBO
 {
-	vec3 ambientLight;
+	vec3 ambient;
 };
 
 // Material
@@ -48,26 +48,27 @@ uniform float metallic = float(10);
 uniform vec3 light;
 
 out vec4 _fragColor;
+float v = 0;
 
 void main()
 {
 	// Ambient
-    vec3 ambient = ambientLight * texture(albedoMap, _uv).rgb;
+    vec3 ambientColor = ambient * texture(albedoMap, _uv).rgb;
 
 	// Diffuse
-	vec3 norm = normalize(_normal);
-	vec3 dir = normalize(light - _frag);
-	float diff = max(dot(norm, dir), 0.0);
-    vec3 diffuse = vec3(1, 1, 1) * diff * texture(albedoMap, _uv).rgb;  
-				   //Light Diffuse
+	vec3 normal = normalize(_normal);
+	vec3 direction = normalize(light - _frag);
+	float diffuse = max(dot(normal, direction), 0.0);
+    vec3 diffuseColor = vec3(1, 1, 1) * diffuse * texture(albedoMap, _uv).rgb;  
+						//Light Diffuse
 	// Specular
 	vec3 view = normalize(cameraPosition - _frag);
-	vec3 ref = reflect(-dir, norm);
-	float spec = pow(max(dot(view, ref), 0.0), metallic);
-    vec3 specular = vec3(1, 1, 1) * spec * texture(metallicMap, _uv).rgb;  
-					//Light Specular
+	vec3 reflection = reflect(-direction, normal);
+	float specular = pow(max(dot(view, reflection), 0.0), metallic);
+    vec3 specularColor = vec3(1, 1, 1) * specular * texture(metallicMap, _uv).rgb;  
+						//Light Specular
 
 	// Combined
-    vec3 result = ambient + diffuse + specular;
-    _fragColor = vec4(result, 1.0);
+    vec3 resultColor = ambientColor + diffuseColor + specularColor;
+    _fragColor = vec4(resultColor, 1.0);
 }

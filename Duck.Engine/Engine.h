@@ -20,16 +20,14 @@
 #include "Math/Vector4.h"
 
 // Graphics
-#include "Graphics/Renderer.h"
-#include "Graphics/Lighting.h"
-#include "Graphics/GlobalLight.h"
-#include "Graphics/Camera.h"
-#include "Graphics/CameraPerspective.h"
-#include "Graphics/CameraOrthographic.h"
-#include "Graphics/Mesh.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Texture.h"
-#include "Graphics/Model.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Camera.h"
+#include "Renderer/CameraPerspective.h"
+#include "Renderer/CameraOrthographic.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Shader.h"
+#include "Renderer/Texture.h"
+#include "Renderer/Model.h"
 
 // Scene
 #include "Scene/Entity.h"
@@ -69,16 +67,16 @@ namespace Duck
 			// Logic Frame
 			float deltaTime = updateClock.Seconds();
 			app->Update(deltaTime);
-			//Scene::Update(deltaTime);
 			updateClock.Restart();
 
 			// Rendering
 			Renderer::ClearBuffer();
 			Renderer::UpdateGlobalUBO();
 			app->Draw();
+
 			//Scene::Draw();
 			Window::SwapBuffers();
-
+			
 			//Events
 			Input::ClearEvents();
 		}

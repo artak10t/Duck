@@ -3,7 +3,6 @@
 #include <glfw/glfw3.h>
 
 #include "Camera.h"
-#include "Lighting.h"
 
 #include "../System/Logger.h"
 
@@ -11,9 +10,9 @@ namespace Duck::Renderer
 {
 	static View viewMode = View::Shaded;
 
-	//Uniform Buffer Objects
+	// Uniform Buffer Objects
 	static unsigned int cameraUBO = 0;
-	static unsigned int lightingUBO = 0;
+	static unsigned int lightUBO = 0;
 
 	void Init()
 	{
@@ -38,11 +37,11 @@ namespace Duck::Renderer
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, cameraUBO);
 
 		// Create Lighting UBO
-		glGenBuffers(1, &lightingUBO);
-		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
+		glGenBuffers(1, &lightUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, lightUBO);
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(Vector3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightingUBO);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightUBO);
 
 		Logger::Trace("Renderer Initialized");
 	}
@@ -65,9 +64,9 @@ namespace Duck::Renderer
 			glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		}
 
-		//Lighting UBO
-		glBindBuffer(GL_UNIFORM_BUFFER, lightingUBO);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &Lighting::AmbientLight.GetLight());
+		// Update Light UBO
+		glBindBuffer(GL_UNIFORM_BUFFER, lightUBO);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &LightAmbient.GetLight());
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
