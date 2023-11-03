@@ -5,7 +5,7 @@
 
 namespace Duck::Renderer
 {
-	inline Light LightAmbient;
+	inline Light AmbientLight;
 
 	enum class View
 	{

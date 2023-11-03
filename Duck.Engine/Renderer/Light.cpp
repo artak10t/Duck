@@ -2,42 +2,29 @@
 
 namespace Duck
 {
-	Light::Light(Vector3 color, float intensity)
+	Light::Light(Vector3 diffuseColor, Vector3 specularColor)
 	{
-		this->color = color;
-		this->intensity = intensity;
-		CalculateLight();
+		this->diffuseColor = diffuseColor;
+		this->specularColor = specularColor;
 	}
 
-	void Light::CalculateLight()
+	inline const Vector3& Light::GetDiffuseColor()
 	{
-		this->light = color * intensity;
+		return diffuseColor;
 	}
 
-	inline const Vector3& Light::GetLight()
+	inline void Light::SetDiffuseColor(const Vector3& color)
 	{
-		return light;
+		this->diffuseColor = color;
 	}
 
-	inline const Vector3 Light::GetColor()
+	inline const Vector3& Light::GetSpecularColor()
 	{
-		return color;
+		return specularColor;
 	}
 
-	inline const float Light::GetIntensity()
+	inline void Light::SetSpecularColor(const Vector3& color)
 	{
-		return intensity;
-	}
-
-	inline void Light::SetColor(const Vector3& color)
-	{
-		this->color = color;
-		CalculateLight();
-	}
-
-	inline void Light::SetIntensity(const float& intensity)
-	{
-		this->intensity = intensity;
-		CalculateLight();
+		this->specularColor = color;
 	}
 }

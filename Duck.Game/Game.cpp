@@ -31,6 +31,13 @@ public:
 		boxComp = box->AddComponent<BoxComponent>();
 		box->transform.position = Vector3(0, 0, 5);
 		box->transform.scale = Vector3(1.f);
+
+		for (int i = 0; i < 15; i++)
+		{
+			Entity* b = scene.AddEntity();
+			b->transform.position = Vector3(Random::Range(-10, 10), Random::Range(-10, 10), Random::Range(-10, 10));
+			b->AddComponent<BoxComponent>();
+		}
 	}
 
 	void Update(float deltaTime) override
@@ -43,11 +50,6 @@ public:
 		{
 			boxComp->mesh.vertices[0] += Vector3(0, deltaTime, 0);
 			boxComp->mesh.UploadData();
-		}
-
-		if (Input::GetKeyDown(Input::Space))
-		{
-			Renderer::LightAmbient.SetIntensity(Renderer::LightAmbient.GetIntensity() + 0.1f);
 		}
 	}
 

@@ -66,7 +66,7 @@ namespace Duck::Renderer
 
 		// Update Light UBO
 		glBindBuffer(GL_UNIFORM_BUFFER, lightUBO);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &LightAmbient.GetLight());
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &AmbientLight.GetDiffuseColor());
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
