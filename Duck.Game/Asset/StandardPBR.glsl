@@ -1,5 +1,6 @@
 @type vertex
 #version 330 core
+
 layout(location = 0) in vec3 in_vertex;
 layout(location = 1) in vec3 in_normal;
 layout(location = 2) in vec2 in_uv;
@@ -21,9 +22,12 @@ void main()
 
 @type fragment
 #version 330 core
+
 in vec3 _normal;
 in vec2 _uv;
 in vec3 _frag;
+
+out vec4 _fragColor;
 
 layout(std140) uniform CameraUBO
 {
@@ -44,12 +48,6 @@ uniform sampler2D emissionMap;
 
 uniform float metallic = float(10);
 
-// Light
-uniform vec3 light;
-
-out vec4 _fragColor;
-float v = 0;
-
 void main()
 {
 	// Ambient
@@ -57,7 +55,8 @@ void main()
 
 	// Diffuse
 	vec3 normal = normalize(_normal);
-	vec3 direction = normalize(light - _frag);
+							//Light pos
+	vec3 direction = normalize(vec3(0, 0, 0) - _frag);
 	float diffuse = max(dot(normal, direction), 0.0);
     vec3 diffuseColor = vec3(1, 1, 1) * diffuse * texture(albedoMap, _uv).rgb;  
 						//Light Diffuse
