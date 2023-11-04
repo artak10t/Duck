@@ -1,11 +1,13 @@
 #pragma once
 #include "Camera.h"
 #include "Light.h"
+#include "LightDirectional.h"
 #include "../Math/Vector4.h"
 
 namespace Duck::Renderer
 {
 	inline Light AmbientLight;
+	inline LightDirectional DirectionalLight;
 
 	enum class View
 	{

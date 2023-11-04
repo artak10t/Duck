@@ -5,10 +5,10 @@ namespace Duck
 	LightSpot::LightSpot(
 		Vector3 position, 
 		Vector3 direction, 
-		Vector3 diffuseColor, 
-		Vector3 specularColor, 
+		Vector3 diffuse, 
+		Vector3 specular, 
 		float cutoff) 
-		: Light(diffuseColor, specularColor)
+		: Light(diffuse, specular)
 	{
 		this->position = position;
 		this->direction = direction;

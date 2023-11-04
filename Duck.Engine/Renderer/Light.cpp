@@ -2,9 +2,9 @@
 
 namespace Duck
 {
-	Light::Light(Vector3 diffuseColor, Vector3 specularColor)
+	Light::Light(Vector3 diffuse, Vector3 specular)
 	{
-		this->diffuseColor = diffuseColor;
-		this->specularColor = specularColor;
+		this->diffuse = diffuse;
+		this->specular = specular;
 	}
 }

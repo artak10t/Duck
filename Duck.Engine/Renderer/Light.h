@@ -1,15 +1,16 @@
 #pragma once
 #include "../Math/Vector3.h"
+#include "../Math/Vector4.h"
 
 namespace Duck
 {
-	struct Light
+	struct alignas(sizeof(Vector4) * 2) Light
 	{
-		Vector3 diffuseColor = { .5f, .5f, .5f };
-		Vector3 specularColor = { 1.f, 1.f, 1.f };
+		Vector3 diffuse = { .35f, .35f, .35f };
+		Vector3 specular = { 1.f, 1.f, 1.f };
 
 		Light(
-			Vector3 diffuseColor = { .5f, .5f, .5f }, 
-			Vector3 specularColor = { 1.f, 1.f, 1.f });
+			Vector3 diffuse = { .35f, .35f, .35f },
+			Vector3 specular = { 1.f, 1.f, 1.f });
 	};
 }

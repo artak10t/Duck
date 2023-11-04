@@ -51,12 +51,16 @@ public:
 			boxComp->mesh.vertices[0] += Vector3(0, deltaTime, 0);
 			boxComp->mesh.UploadData();
 		}
+
+		if (Input::GetKeyDown(Input::Space))
+		{
+			Renderer::DirectionalLight.direction.y *= -1;
+		}
 	}
 
 	void Draw() override
 	{
 		scene.Draw();
-
 		//shader->SetMatrix4("model", transform.LocalToWorld());
 		//shader->SetMatrix4("mvp", Camera::GetMain()->Projection() * Camera::GetMain()->View() * transform.LocalToWorld());
 		//texture->Bind();

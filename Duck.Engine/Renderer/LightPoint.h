@@ -14,8 +14,8 @@ namespace Duck
 
 		LightPoint(
 			Vector3 position = { 1.f, 0.f, 1.f }, 
-			Vector3 diffuseColor = { .5f, .5f, .5f }, 
-			Vector3 specularColor = { 1.f, 1.f, 1.f },
+			Vector3 diffuse = { .5f, .5f, .5f }, 
+			Vector3 specular = { 1.f, 1.f, 1.f },
 			float constant = 1.f,
 			float linear = .09f,
 			float quadratic = .032f);

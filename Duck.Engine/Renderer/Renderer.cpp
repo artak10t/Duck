@@ -6,6 +6,9 @@
 
 #include "../System/Logger.h"
 
+#define MAX_POINT_LIGHTS 256
+#define MAX_SPOT_LIGHTS 256
+
 namespace Duck::Renderer
 {
 	static View viewMode = View::Shaded;
@@ -39,7 +42,7 @@ namespace Duck::Renderer
 		// Create Lighting UBO
 		glGenBuffers(1, &lightUBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, lightUBO);
-		glBufferData(GL_UNIFORM_BUFFER, sizeof(Vector3), NULL, GL_STATIC_DRAW);
+		glBufferData(GL_UNIFORM_BUFFER, sizeof(Light) + sizeof(LightDirectional), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightUBO);
 
@@ -54,7 +57,7 @@ namespace Duck::Renderer
 
 	void UpdateGlobalUBO()
 	{
-		// If main camera exists update global uniform camera data
+		// Update Camera UBO
 		if (Camera::GetMain())
 		{
 			glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
@@ -66,7 +69,16 @@ namespace Duck::Renderer
 
 		// Update Light UBO
 		glBindBuffer(GL_UNIFORM_BUFFER, lightUBO);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &AmbientLight.diffuseColor);
+		
+		// Pass Ambient Light
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &AmbientLight.diffuse);
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(Vector4), sizeof(Vector3), &AmbientLight.specular);
+
+		// Pass Directional Light
+		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(Vector4), sizeof(Vector3), &DirectionalLight.diffuse);
+		glBufferSubData(GL_UNIFORM_BUFFER, 3 * sizeof(Vector4), sizeof(Vector3), &DirectionalLight.specular);
+		glBufferSubData(GL_UNIFORM_BUFFER, 4 * sizeof(Vector4), sizeof(Vector3), &DirectionalLight.direction);
+
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 

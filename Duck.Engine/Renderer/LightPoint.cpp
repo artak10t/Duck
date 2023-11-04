@@ -4,12 +4,12 @@ namespace Duck
 {
 	LightPoint::LightPoint(
 		Vector3 position, 
-		Vector3 diffuseColor, 
-		Vector3 specularColor, 
+		Vector3 diffuse, 
+		Vector3 specular, 
 		float constant, 
 		float linear, 
 		float quadratic) 
-		: Light(diffuseColor, specularColor)
+		: Light(diffuse, specular)
 	{
 		this->position = position;
 		this->constant = constant;

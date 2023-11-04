@@ -28,6 +28,10 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Model.h"
+#include "Renderer/Light.h"
+#include "Renderer/LightDirectional.h"
+#include "Renderer/LightPoint.h"
+#include "Renderer/LightSpot.h"
 
 // Scene
 #include "Scene/Entity.h"
@@ -83,6 +87,7 @@ namespace Duck
 
 		// Destroy App
 		app->Destroy();
+
 		//Scene::Destroy();
 		delete app;
 
