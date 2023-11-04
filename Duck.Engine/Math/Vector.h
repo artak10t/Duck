@@ -6,10 +6,10 @@ namespace Duck
 {
 	template<int L, typename T> struct TVector;
 
-	//Methods
+	// Methods
 	namespace Vector
 	{
-		//Dot
+		// Dot
 		template<typename T>
 		inline T Dot(TVector<2, T> const& a, TVector<2, T> const& b)
 		{
@@ -37,7 +37,7 @@ namespace Duck
 			return tmp.x + tmp.y + tmp.z + tmp.w;
 		}
 
-		//Cross
+		// Cross
 		template<typename T>
 		inline TVector<3, T> Cross(TVector<3, T> const& a, TVector<3, T> const& b)
 		{
@@ -49,7 +49,7 @@ namespace Duck
 				a.x * b.y - b.x * a.y);
 		}
 
-		//Magnitude
+		// Magnitude
 		template<int L, typename T>
 		inline T SqrMagnitude(TVector<L, T> const& v)
 		{
@@ -62,14 +62,14 @@ namespace Duck
 			return std::sqrt(Dot(v, v));
 		}
 
-		//Distance
+		// Distance
 		template<int L, typename T>
 		inline T Distance(TVector<L, T> const& a, TVector<L, T> const& b)
 		{
 			return Magnitude(a - b);
 		}
 
-		//Normalize
+		// Normalize
 		template<int L, typename T>
 		inline TVector<L, T> Normalize(TVector<L, T> const& v)
 		{
@@ -78,7 +78,7 @@ namespace Duck
 			return v * (static_cast<T>(1) / (Dot(v, v)));
 		}
 
-		//Lerp
+		// Lerp
 		template<int L, typename T>
 		inline TVector<L, T> Lerp(TVector<L, T> const& a, TVector<L, T> const& b, T x)
 		{
@@ -87,7 +87,7 @@ namespace Duck
 			return TVector<L, T>(TVector<L, T>(a) * (static_cast<T>(1) - x) + TVector<L, T>(b) * x);
 		}
 
-		//Angle
+		// Angle
 		template<int L, typename T>
 		inline T Angle(TVector<L, T> const& x, TVector<L, T> const& y)
 		{

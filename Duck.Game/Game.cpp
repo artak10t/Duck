@@ -28,6 +28,10 @@ private:
 public:
 	void Init() override
 	{
+		Renderer::AmbientLight.diffuse = 0.05f;
+		Renderer::BackgroundColor = 0;
+		Renderer::DirectionalLight.specular = 0;
+		Renderer::DirectionalLight.direction.z = 0;
 		boxComp = box->AddComponent<BoxComponent>();
 		box->transform.position = Vector3(0, 0, 5);
 		box->transform.scale = Vector3(1.f);
@@ -52,10 +56,8 @@ public:
 			boxComp->mesh.UploadData();
 		}
 
-		if (Input::GetKeyDown(Input::Space))
-		{
-			Renderer::DirectionalLight.direction.y *= -1;
-		}
+		Renderer::DirectionalLight.direction.x = Renderer::DirectionalLight.direction.x * cos(deltaTime) - Renderer::DirectionalLight.direction.y * sin(deltaTime);
+		Renderer::DirectionalLight.direction.y = Renderer::DirectionalLight.direction.x * sin(deltaTime) + Renderer::DirectionalLight.direction.y * cos(deltaTime);
 	}
 
 	void Draw() override

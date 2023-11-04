@@ -11,7 +11,7 @@ namespace Duck
 
 		LightDirectional(
 			Vector3 direction = { 1.f, -.5f, .5f },
-			Vector3 diffuse = { .5f, .5f, .5f }, 
+			Vector3 diffuse = { .35f, .35f, .35f },
 			Vector3 specular = { 1.f, 1.f, 1.f });
 	};
 }

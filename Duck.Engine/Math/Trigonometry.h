@@ -8,7 +8,7 @@
 
 namespace Duck::Math
 {
-	//Radians
+	// Radians
 	template<typename T>
 	inline constexpr T ToRadians(T degrees)
 	{
@@ -17,12 +17,39 @@ namespace Duck::Math
 		return degrees * static_cast<T>(RADIANS);
 	}
 
-	//Degrees
+	// Degrees
 	template<typename T>
 	inline constexpr T ToDegrees(T radians)
 	{
 		static_assert(std::numeric_limits<T>::is_iec559, "'degrees' only accept floating-point input");
 
 		return radians * static_cast<T>(DEGREES);
+	}
+
+	// Sin
+	template<typename T>
+	inline constexpr T Sin(T radians)
+	{
+		static_assert(std::numeric_limits<T>::is_iec559, "'degrees' only accept floating-point input");
+
+		return static_cast<T>(std::sin(radians));
+	}
+
+	// Cos
+	template<typename T>
+	inline constexpr T Cos(T radians)
+	{
+		static_assert(std::numeric_limits<T>::is_iec559, "'degrees' only accept floating-point input");
+
+		return static_cast<T>(std::cos(radians));
+	}
+
+	// Tan
+	template<typename T>
+	inline constexpr T Tan(T radians)
+	{
+		static_assert(std::numeric_limits<T>::is_iec559, "'degrees' only accept floating-point input");
+
+		return static_cast<T>(std::tan(radians));
 	}
 }
