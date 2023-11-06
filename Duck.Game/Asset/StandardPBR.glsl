@@ -1,5 +1,5 @@
 @type vertex
-#version 330 core
+#version 430 core
 
 layout(location = 0) in vec3 in_vertex;
 layout(location = 1) in vec3 in_normal;
@@ -21,7 +21,7 @@ void main()
 }
 
 @type fragment
-#version 330 core
+#version 430 core
 
 in vec3 _normal;
 in vec2 _uv;

@@ -7,6 +7,9 @@
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Camera.h"
 
+#define OPENGL_MAJOR 4
+#define OPENGL_MINOR 3
+
 #define DEFAULT_TITLE "App"
 #define DEFAULT_VSYNC true
 #define DEFAULT_FULLSCREEN false
@@ -49,8 +52,8 @@ namespace Duck::Window
 	{
 		// Initialize
 		glfwInit();
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		glfw_monitor = glfwGetPrimaryMonitor();
