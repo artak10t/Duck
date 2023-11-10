@@ -3,6 +3,7 @@
 #include <Renderer/Camera.h>
 #include <Renderer/Renderer.h>
 #include <System/Window.h>
+#include <Math/Math.h>
 
 using namespace Duck;
 
@@ -26,7 +27,7 @@ namespace FlyCamera
 		else if (Input::GetKey(Input::Q))
 			Camera::GetMain()->transform.position -= Camera::GetMain()->transform.Up() * deltaTime * speed;
 
-		speed = std::clamp(speed + Input::GetMouseScroll().y, 1.f, 1000.f);
+		speed = Math::Clamp(speed + Input::GetMouseScroll().y, 1.f, 1000.f);
 
 		if (Input::GetKeyDown(Input::Tab))
 			Input::SetCursorLock(!Input::GetCursorLocked());

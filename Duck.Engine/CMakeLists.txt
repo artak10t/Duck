@@ -3,6 +3,7 @@
 add_library($ENV{ENGINE_NAME} STATIC 
 	"Engine.h"
 
+	"Math/Math.h"
 	"Math/Matrix.h"
 	"Math/Matrix4.h"
 	"Math/Quaternion.h"

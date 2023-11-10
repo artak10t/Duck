@@ -79,10 +79,10 @@ namespace Duck::Input
 
 	void ClearEvents()
 	{
-		for (auto& it : keyMap)
+		for (std::pair<const int, KeyState>& pair : keyMap)
 		{
-			it.second.down = false;
-			it.second.up = false;
+			pair.second.down = false;
+			pair.second.up = false;
 		}
 	}
 

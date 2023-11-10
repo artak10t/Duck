@@ -4,6 +4,9 @@ using namespace Duck;
 
 #include "Script/FlyCamera.h"
 #include "Script/BoxComponent.h"
+//Scene manager with current scene and a way to change scenes
+//UpdateGlobalUBO which takes pointer to lights and camera and updates UBO according to given data
+//Scene keeps track of lights
 //*VERIFY MODEL LOADER HIERARCHY
 //*VERIFY IF TRANSFORM CHILD HAS CORRECT SCALE IN CASE OF PARENT SCALING AND ROTATION
 //Remove Graphics Camera dependency from Window (Somehow pass aspect ration as argument)

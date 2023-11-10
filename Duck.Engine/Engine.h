@@ -8,6 +8,7 @@
 #include "Resource/Resource.h"
 
 // Math
+#include "Math/Math.h"
 #include "Math/Matrix.h"
 #include "Math/Matrix4.h"
 #include "Math/Quaternion.h"
