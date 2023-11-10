@@ -33,7 +33,8 @@ Duck is a cross-platform game engine for creating 2D and 3D games. Uses an ECS s
 
 ### Building
 
-## :mag: [Documentation](https://github.com/artak10t/Duck/wiki)
+## :mag: Documentation
+The official documentation is hosted on [Duck Wiki](https://github.com/artak10t/Duck/wiki).
 
 ## :clipboard: Meta
 
