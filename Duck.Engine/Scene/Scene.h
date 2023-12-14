@@ -19,6 +19,27 @@ namespace Duck
 		}
 
 	public:
+		static Scene* CurrentScene;
+		// On Save (YAML), if current scene name used will overwrite https://github.com/biojppm/rapidyaml
+		// Save Renderer Ambient and Directional Lights
+		// Iterate over entities and save their transform, // IMPORTANT
+		// save their components,  // IMPORTANT
+		// and save primitive data from components with [Serialize] field
+		static void Save(const char* name);
+		// On Load
+		// Clean renderer point and spot lights
+		// Clean ambient and directional light
+		// When loading lightComponent 
+		// it automatically will create new light and add to renderer
+		// Somehow know component type when load https://stackoverflow.com/questions/582331/is-there-a-way-to-instantiate-objects-from-a-string-holding-their-class-name
+		// Take class name using c++ function and in constructor of each component register class. Make sure it is constexpr registery
+		static void Load(const char* name);
+
+		Scene(const char* name = "Scene")
+		{
+
+		}
+
 		void Update(float deltaTime)
 		{
 			for (int i = 0; i < entities.size(); i++)

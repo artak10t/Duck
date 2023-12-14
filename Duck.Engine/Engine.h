@@ -41,7 +41,6 @@
 
 namespace Duck
 {
-	// Pure virtual class App
 	class App
 	{
 	public:
@@ -49,49 +48,47 @@ namespace Duck
 		virtual void Update(float deltaTime) = 0;
 		virtual void Draw() = 0;
 		virtual void Destroy() = 0;
-	};
 
-	template<typename App>
-	void Start()
-	{
-		// Init App
-		Window::Init();
-		Input::Init();
-		Resources::Init();
-
-		App* app = new App{};
-		app->Init();
-		Clock updateClock;
-
-		// App Loop
-		while (Window::IsOpen())
+		template<typename App>
+		static void Start()
 		{
-			// Events
-			Input::PollEvents();
+			// Init App
+			Window::Init();
+			Input::Init();
+			Resources::Init();
 
-			// Logic Frame
-			float deltaTime = updateClock.Seconds();
-			app->Update(deltaTime);
-			updateClock.Restart();
+			App* app = new App{};
+			app->Init();
+			Clock updateClock;
 
-			// Rendering
-			Renderer::ClearBuffer();
-			Renderer::UpdateGlobalUBO();
-			app->Draw();
+			// App Loop
+			while (Window::IsOpen())
+			{
+				// Events
+				Input::PollEvents();
 
-			//Scene::Draw();
-			Window::SwapBuffers();
-			
-			//Events
-			Input::ClearEvents();
+				// Logic Frame
+				float deltaTime = updateClock.Seconds();
+				app->Update(deltaTime);
+				updateClock.Restart();
+
+				// Rendering
+				Renderer::ClearBuffer();
+				Renderer::UpdateCameraUBO();
+				Renderer::UpdateLightUBO();
+				app->Draw();
+
+				//Scene::Draw();
+				Window::SwapBuffers();
+
+				//Events
+				Input::ClearEvents();
+			}
+
+			// Destroy App
+			app->Destroy();
+			delete app;
+			Window::Destroy();
 		}
-
-		// Destroy App
-		app->Destroy();
-
-		//Scene::Destroy();
-		delete app;
-
-		Window::Destroy();
-	}
+	};
 }

@@ -34,6 +34,7 @@ namespace Duck
 		ComponentBitSet componentBitSet;
 
 	public:
+		const char* name = "Entity";
 		Transform transform;
 
 		bool GetAlive() const { return isAlive; }

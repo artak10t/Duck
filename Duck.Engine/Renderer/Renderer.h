@@ -2,32 +2,43 @@
 #include "Camera.h"
 #include "Light.h"
 #include "LightDirectional.h"
+#include "LightPoint.h"
+#include "LightSpot.h"
 #include "../Math/Vector4.h"
 
-namespace Duck::Renderer
+namespace Duck
 {
-	inline Light AmbientLight;
-	inline LightDirectional DirectionalLight;
-
-	enum class View
+	class Renderer
 	{
-		Shaded,
-		Wireframe
+	public:
+		enum class View
+		{
+			Shaded,
+			Wireframe
+		};
+
+		// Light
+		static Light AmbientLight;
+		static LightDirectional DirectionalLight;
+		friend struct LightPoint;
+		friend struct LightSpot;
+
+		// Ambient
+		static Vector4 BackgroundColor;
+
+		static void Init();
+		static void ClearBuffer();
+		static void UpdateCameraUBO();
+		static void UpdateLightUBO();
+		static void SetView(View mode);
+		static View GetView();
+
+	private:
+		static View viewMode;
+		static std::vector<LightPoint*> pointLights;
+		static std::vector<LightSpot*> spotLights;
+
+		static unsigned int cameraUBO;
+		static unsigned int lightUBO;
 	};
-
-	// Default buffer color after clear.
-	inline Vector4 BackgroundColor = { 0.6f, 0.7f, 0.9f, 1 };
-
-	// Initialization of renderer. Should be done after window creation.
-	void Init();
-
-	// Clear current window's buffer.
-	void ClearBuffer();
-
-	// Updates global uniform data for all shader programs.
-	void UpdateGlobalUBO();
-
-	// Renderer shading mode.
-	void SetView(View mode);
-	View GetView();
 }

@@ -19,5 +19,10 @@ namespace Duck
 			float constant = 1.f,
 			float linear = .09f,
 			float quadratic = .032f);
+
+		~LightPoint();
+		
+	private:
+		size_t index;
 	};
 }

@@ -9,15 +9,17 @@
 #define MAX_POINT_LIGHTS 256
 #define MAX_SPOT_LIGHTS 256
 
-namespace Duck::Renderer
+namespace Duck
 {
-	static View viewMode = View::Shaded;
+	Light Renderer::AmbientLight;
+	LightDirectional Renderer::DirectionalLight;
+	Vector4 Renderer::BackgroundColor = { 0.6f, 0.7f, 0.9f, 1 };
+	Renderer::View Renderer::viewMode = View::Shaded;
 
-	// Uniform Buffer Objects
-	static unsigned int cameraUBO = 0;
-	static unsigned int lightUBO = 0;
+	unsigned int Renderer::cameraUBO = 0;
+	unsigned int Renderer::lightUBO = 0;
 
-	void Init()
+	void Renderer::Init()
 	{
 		gladLoadGL();
 
@@ -49,32 +51,35 @@ namespace Duck::Renderer
 		Logger::Trace("Renderer Initialized");
 	}
 
-	void ClearBuffer()
+	void Renderer::ClearBuffer()
 	{
 		glClearColor(BackgroundColor.x, BackgroundColor.y, BackgroundColor.z, BackgroundColor.w);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void UpdateGlobalUBO()
+	void Renderer::UpdateCameraUBO()
 	{
-		// Update Camera UBO
 		if (Camera::GetMain())
 		{
 			glBindBuffer(GL_UNIFORM_BUFFER, cameraUBO);
+
 			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Matrix4), &Camera::GetMain()->Projection()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(Matrix4), sizeof(Matrix4), &Camera::GetMain()->View()[0][0]);
 			glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(Matrix4), sizeof(Vector3), &Camera::GetMain()->transform.position);
+
 			glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		}
+	}
 
-		// Update Light UBO
+	void Renderer::UpdateLightUBO()
+	{
 		glBindBuffer(GL_UNIFORM_BUFFER, lightUBO);
-		
-		// Pass Ambient Light
+
+		// Ambient Light
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Vector3), &AmbientLight.diffuse);
 		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(Vector4), sizeof(Vector3), &AmbientLight.specular);
 
-		// Pass Directional Light
+		// Directional Light
 		glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(Vector4), sizeof(Vector3), &DirectionalLight.diffuse);
 		glBufferSubData(GL_UNIFORM_BUFFER, 3 * sizeof(Vector4), sizeof(Vector3), &DirectionalLight.specular);
 		glBufferSubData(GL_UNIFORM_BUFFER, 4 * sizeof(Vector4), sizeof(Vector3), &DirectionalLight.direction);
@@ -82,7 +87,7 @@ namespace Duck::Renderer
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
-	void SetView(View mode)
+	void Renderer::SetView(Renderer::View mode)
 	{
 		viewMode = mode;
 
@@ -99,7 +104,7 @@ namespace Duck::Renderer
 		}
 	}
 
-	View GetView()
+	Renderer::View Renderer::GetView()
 	{
 		return viewMode;
 	}

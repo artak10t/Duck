@@ -17,5 +17,10 @@ namespace Duck
 			Vector3 diffuse = { .35f, .35f, .35f },
 			Vector3 specular = { 1.f, 1.f, 1.f },
 			float cutoff = .976f);
+
+		~LightSpot();
+
+	private:
+		size_t index;
 	};
 }

@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
 
-add_executable ($ENV{GAME_NAME} "Game.cpp" "Script/FlyCamera.h" "Script/BoxComponent.h"  )
+add_executable ($ENV{GAME_NAME} "Game.cpp" )
 target_link_libraries($ENV{GAME_NAME} $ENV{ENGINE_NAME})
 target_include_directories($ENV{GAME_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/$ENV{ENGINE_NAME}")
 
