@@ -1,4 +1,4 @@
-#include "AssetTexture.h"
+#include "DataTexture.h"
 
 #include "../System/Logger.h"
 
@@ -22,7 +22,7 @@ namespace Duck::Resources
 			return cache.at(file);
 
 		// Get Path
-		std::string path = GetAssetsPath() + file;
+		std::string path = GetDataPath() + file;
 
 		// Load Texture
 		stbi_set_flip_vertically_on_load(true);

@@ -10,10 +10,10 @@ namespace Duck::Resources
 	template<typename T, typename ...Args>
 	void Unload(const char* file, Args... args) { return nullptr; }
 
-	std::string GetAssetsPath();
+	std::string GetDataPath();
 }
 
-// Include Assets
-#include "AssetTexture.h"
-#include "AssetShader.h"
-#include "AssetModel.h"
+// Include Data
+#include "DataTexture.h"
+#include "DataShader.h"
+#include "DataModel.h"

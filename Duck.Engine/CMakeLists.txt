@@ -42,12 +42,12 @@ add_library($ENV{ENGINE_NAME} STATIC
 
 	"Resource/Resource.h"
 	"Resource/Resource.cpp"
-	"Resource/AssetTexture.h"
-	"Resource/AssetTexture.cpp"
-	"Resource/AssetShader.h"
-	"Resource/AssetShader.cpp"
-	"Resource/AssetModel.h"
-	"Resource/AssetModel.cpp"
+	"Resource/DataTexture.h"
+	"Resource/DataTexture.cpp"
+	"Resource/DataShader.h"
+	"Resource/DataShader.cpp"
+	"Resource/DataModel.h"
+	"Resource/DataModel.cpp"
 
 	"Scene/Entity.h"
 	"Scene/Component.h"

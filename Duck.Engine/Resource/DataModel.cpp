@@ -1,4 +1,4 @@
-#include "AssetModel.h"
+#include "DataModel.h"
 
 #include "../System/Logger.h"
 
@@ -13,7 +13,7 @@ namespace Duck::Resources
 			return cache.at(file);
 
 		// Get Path
-		std::string path = GetAssetsPath() + file;
+		std::string path = GetDataPath() + file;
 
 		// Cache Model
 		Logger::Trace("Model - '%s' loading", file);

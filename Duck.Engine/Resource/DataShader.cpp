@@ -1,4 +1,4 @@
-#include "AssetTexture.h"
+#include "DataShader.h"
 
 #include "../System/Logger.h"
 
@@ -57,7 +57,7 @@ namespace Duck::Resources
 			return cache.at(file);
 
 		// Get Path
-		std::string path = GetAssetsPath() + file;
+		std::string path = GetDataPath() + file;
 
 		// Load Shader
 		std::string vertexData;

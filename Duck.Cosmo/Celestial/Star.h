@@ -1,10 +1,9 @@
 #pragma once
-#include "../Math/ISolver.h"
-#include "../Generation/IGenerator.h"
+#include "Celestial.h"
 
 namespace Duck::Cosmo
 {
-	class Star : public ISolver, public IGenerator
+	class Star : public Celestial
 	{
 	public:
 		enum class SpectralType
@@ -49,14 +48,12 @@ namespace Duck::Cosmo
 
 			// Black Hole
 			X,
-
-			// Wormhole
-			Z
 		};
 
 		enum class LuminosityClass
 		{
 			Unknown,
+
 			Ia0, // Hypergiant
 			Ia,  // Luminous Supergiant
 			Iab, // Intermediate Supergiant
@@ -65,23 +62,15 @@ namespace Duck::Cosmo
 			III, // Giant
 			IV,  // Subgiant
 			V,   // Main-Sequence
-			sd,  // Subdwarf
+			Sd,  // Subdwarf
 			D    // White Dwarf
 		};
 
-		// Parameters
-		const char* name = "";
+	private:
 		char subtype = -1;
 		SpectralType spectralType = SpectralType::Unknown;
 		LuminosityClass luminosityClass = LuminosityClass::Unknown;
 
-		unsigned int temperature = 0; // Kelvin
-		float mass = -1;              // Solar Masses
-		float radius = -1;            // Solar Radii
-		float luminosity = -1;        // Solar Luminosity
-
-		// Methods
 		void Solve() override;
-		void Generate() override;
 	};
 }

@@ -6,9 +6,4 @@ namespace Duck::Cosmo
 	{
 
 	}
-
-	void Star::Generate()
-	{
-
-	}
 }

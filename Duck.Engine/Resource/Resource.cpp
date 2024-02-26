@@ -4,12 +4,12 @@
 #include <whereami/whereami.h>
 using whereami_func_t = int (*)(char* out, int capacity, int* dirname_length);
 
-#define ASSETS_FOLDER_NAME "Asset"
+#define DATA_FOLDER_NAME "Data"
 
 namespace Duck::Resources
 {
 	// Find Cross-Platform Path
-	static std::string assetsPath = "";
+	static std::string dataPath = "";
 
 	static std::string whereami_path(whereami_func_t whereami_func) 
 	{
@@ -36,12 +36,12 @@ namespace Duck::Resources
 
 	void Init()
 	{
-		assetsPath = whereami_segmented(wai_getExecutablePath).first;
-		assetsPath.append("\\" + std::string(ASSETS_FOLDER_NAME) + "\\");
+		dataPath = whereami_segmented(wai_getExecutablePath).first;
+		dataPath.append("\\" + std::string(DATA_FOLDER_NAME) + "\\");
 	}
 
-	std::string GetAssetsPath()
+	std::string GetDataPath()
 	{
-		return assetsPath;
+		return dataPath;
 	}
 }
