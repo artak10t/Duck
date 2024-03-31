@@ -5,9 +5,6 @@ add_executable ($ENV{GAME_NAME} "Game.cpp" )
 target_link_libraries($ENV{GAME_NAME} $ENV{ENGINE_NAME})
 target_include_directories($ENV{GAME_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/$ENV{ENGINE_NAME}")
 
-target_link_libraries($ENV{GAME_NAME} $ENV{COSMO_NAME})
-target_include_directories($ENV{GAME_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/$ENV{COSMO_NAME}")
-
 # Copy data into executable folder
 file (GLOB_RECURSE ALL_DATA "Data/*.*")
 foreach(data ${ALL_DATA})
