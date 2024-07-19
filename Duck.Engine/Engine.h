@@ -50,7 +50,7 @@ namespace Duck
 		virtual void Destroy() = 0;
 
 		template<typename App>
-		static void Start()
+		static void Run()
 		{
 			// Init App
 			Window::Init();
@@ -67,7 +67,7 @@ namespace Duck
 				// Events
 				Input::PollEvents();
 
-				// Logic Frame
+				// Logic
 				float deltaTime = updateClock.Seconds();
 				app->Update(deltaTime);
 				updateClock.Restart();

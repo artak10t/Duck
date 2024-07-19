@@ -31,6 +31,5 @@ public:
 
 int main()
 {
-	App::Start<Game>();
-	return 0;
+	App::Run<Game>();
 }
