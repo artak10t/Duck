@@ -15,8 +15,8 @@ Duck is a cross-platform game engine for creating 2D and 3D games. Uses an ECS s
 - [x] Advanced 3D/2D Rendering
 - [x] Entity Component System/Native Scripting
 - [x] Resource Manager
+- [ ] Debug Gizmos/Scene Inspector
 - [ ] UI Rendering
-- [ ] Debug Gizmos/Inspector
 - [ ] 3D Audio System
 - [ ] Particles/Line Renderer
 - [ ] Animations/Skeletal Animation
